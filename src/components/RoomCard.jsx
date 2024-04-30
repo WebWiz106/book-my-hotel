@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RoomImage from "../assets/9381Anandha_Inn_17 1.png"
+import AuthContext from '../context/AuthProvider'
 
-const RoomCard = () => {
+const RoomCard = ({toggleAccordion}) => {
+    const {setisRoomSelected} = useContext(AuthContext)
     return (
         <div>
             <div className="flex flex-col gap-5">
@@ -86,12 +88,12 @@ const RoomCard = () => {
                             </div>
                         </div>
                     </div>
-                    <button className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
+                    <button onClick={()=>{toggleAccordion(3);setisRoomSelected(true)}}  className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
                         Book
                     </button>
                 </div>
 
-                <div className="flex gap-5 justify-between w-full text-base max-md:flex-wrap max-md:max-w-full">
+                {/* <div className="flex gap-5 justify-between w-full text-base max-md:flex-wrap max-md:max-w-full">
                     <div className="flex gap-5 justify-between my-auto max-md:flex-wrap max-md:max-w-full">
                         <div className="gap-0 text-neutral-700">Room with Breakfast</div>
                         <div className="flex gap-2">
@@ -102,10 +104,10 @@ const RoomCard = () => {
                             </div>
                         </div>
                     </div>
-                    <button className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
+                    <button  onClick={()=>{toggleAccordion(3);setisRoomSelected(true)}} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
                         Book
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     )

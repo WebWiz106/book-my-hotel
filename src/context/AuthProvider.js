@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
@@ -20,6 +20,21 @@ export const AuthProvider = ({ children }) => {
         "children": "0",
     });
 
+    const today = new Date().toISOString().split('T')[0];
+
+    // Get tomorrow's date by adding 1 day to the current date
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const tomorrow = tomorrowDate.toISOString().split('T')[0];
+
+    const [checkinInDate,setcheckinInDate] = useState(today)
+    const [checkoutDate,setcheckoutDate] = useState(tomorrow)
+    const [Adults,setAdults] = useState(1)
+    const [kids,setkids] = useState(0)
+
+    const [Rooms,setRooms] = useState([])
+    const [isRoomSelected,setisRoomSelected] = useState(false)
+
 
 
 
@@ -28,7 +43,14 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 hotelDetails, setHotelDetails,
-                checkForAvailbilityInfo, setCheckForAvailbilityInfo
+                checkForAvailbilityInfo, setCheckForAvailbilityInfo,
+
+                checkinInDate,setcheckinInDate,
+                checkoutDate,setcheckoutDate,
+                Adults,setAdults,
+                kids,setkids,
+                Rooms,setRooms,
+                isRoomSelected,setisRoomSelected
             }}
         >
             {children}
