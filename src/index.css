@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.maxwidth {
+  max-width: 1280px;
+}
+
+
+.calender {
+  outline: 0;
+  position: relative;
+}
+
+.calender:focus {
+  outline: none;
+}
+
+.calender::-webkit-calendar-picker-indicator {
+  bottom: 0;
+  background: transparent;
+  position: absolute;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+
+.LazyLoad {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.is-visible {
+  opacity: 1;
+}
