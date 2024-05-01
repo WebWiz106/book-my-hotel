@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react'
-import AuthContext from '../context/AuthProvider'
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import React, { useContext } from 'react';
+import { FaSquareMinus, FaSquarePlus } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 import "swiper/css";
 import "swiper/css/pagination";
-import { useNavigate } from 'react-router-dom';
-import { FaSquareMinus, FaSquarePlus } from 'react-icons/fa6';
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import AuthContext from '../context/AuthProvider';
+
 
 
 const RoomCard = ({ toggleAccordion, roomData }) => {
@@ -13,20 +14,62 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
     const { customPrice, setCustomPrice, } = useContext(AuthContext);
 
     const navigation = useNavigate();
-    const { setisRoomSelected, setSelectedRoomDetails } = useContext(AuthContext);
+    const { setisRoomSelected, setSelectedRoomDetails,selectedRooms, setSelectedRooms } = useContext(AuthContext);
 
-    let [selectedRooms, setSelectedRooms] = useState({});
+   
 
     // roomtype check into selected 
 
+    
     const handleSelectedRoomCounter = (roomType) => {
-        if (roomType in selectedRooms) {
-            selectedRooms[roomType] += 1;
-        }
-        else {
-            selectedRooms[roomType] = 1;
-        }
+        setSelectedRooms(prevSelectedRooms => {
+            // Create a copy of the previous state
+            let maxvalue = 5;
+            const updatedSelectedRooms = { ...prevSelectedRooms };
+    
+
+            if (roomType in updatedSelectedRooms) {
+                updatedSelectedRooms[roomType] += 1;
+                if(updatedSelectedRooms[roomType]>maxvalue){
+                    updatedSelectedRooms[roomType] = maxvalue;
+                }
+            }
+            else {
+                updatedSelectedRooms[roomType] = 1;
+            }
+    
+            // Log the updated state
+            console.log(updatedSelectedRooms);
+    
+            // Return the updated state to update the state
+            return updatedSelectedRooms;
+        });
     }
+
+    const handleSelectedRoomCounterDescrease = (roomType) => {
+        setSelectedRooms(prevSelectedRooms => {
+            // Create a copy of the previous state
+            const updatedSelectedRooms = { ...prevSelectedRooms };
+    
+
+            if (roomType in updatedSelectedRooms) {
+                updatedSelectedRooms[roomType] -= 1;
+                if(updatedSelectedRooms[roomType]<0){
+                    updatedSelectedRooms[roomType] = 0;
+                }
+            }
+            else {
+                updatedSelectedRooms[roomType] = 1;
+            }
+    
+            // Log the updated state
+           
+    
+            // Return the updated state to update the state
+            return updatedSelectedRooms;
+        });
+    }
+    
 
 
 
@@ -141,7 +184,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                         <div className="gap-0 text-neutral-700">Room Only</div>
                         <div className="flex gap-2">
                             {/* <div className="gap-0 text-neutral-400">7,600.00</div> */}
-                            <div className="gap-0 text-sky-900">{customPrice[roomData.roomType].Price}</div>
+                            <div className="gap-0 text-sky-900">{roomData.roomType in selectedRooms && selectedRooms[roomData.roomType]!=0?selectedRooms[roomData.roomType]*Number(customPrice[roomData.roomType].Price):customPrice[roomData.roomType].Price}</div>
                             <div className="gap-0 my-auto text-xs text-neutral-700">
                                 INR / Night
                             </div>
@@ -152,13 +195,17 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     {/* <button onClick={() => { toggleAccordion(3); setisRoomSelected(true) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
                         Book
                     </button> */}
-                    <button onClick={handleSelectedRoomCounter}>Book</button>
-
-                    {/* <div className='flex items-center gap-5'>
-                        <FaSquareMinus  size={18} className='text-zinc-700 cursor-pointer' />
-                        {"1"}
-                        <FaSquarePlus size={18} className='text-zinc-700 cursor-pointer' />
-                    </div> */}
+                    {roomData.roomType in selectedRooms && selectedRooms[roomData.roomType]!=0?<div className='flex items-center gap-5'>
+                        <FaSquareMinus onClick={()=>{handleSelectedRoomCounterDescrease(roomData.roomType)}}  size={18} className='text-zinc-700 cursor-pointer' />
+                        {selectedRooms[roomData.roomType]}
+                        <FaSquarePlus onClick={()=>{handleSelectedRoomCounter(roomData.roomType)}} size={18} className='text-zinc-700 cursor-pointer' />
+                    </div>
+                    
+                    :
+                    
+                    <button onClick={()=>{handleSelectedRoomCounter(roomData.roomType)}}>Book</button>
+                
+                    }
                 </div>
 
                 {/* <div className="flex gap-5 justify-between w-full text-base max-md:flex-wrap max-md:max-w-full">
