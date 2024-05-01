@@ -52,7 +52,7 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
     const { Rooms, setRooms, checkinInDate,
         checkoutDate,
         Adults,
-        kids, isRoomSelected, setisRoomSelected, selectedRooms } = useContext(AuthContext);
+        kids, isRoomSelected, setisRoomSelected, selectedRooms,RoomTypeToName } = useContext(AuthContext);
 
     console.log("line -57 ", selectedRooms)
 
@@ -153,7 +153,14 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
                                 >
                                     <div className="flex gap-5 justify-between md:px-5 py-2.5 text-white rounded-xl bg-zinc-700 w-full max-md:flex-wrap max-md:px-5">
                                         <div className="flex gap-2 justify-between my-auto text-base">
-                                            <div className="gap-0">Room 1 - 2, Room 2 - 1</div>
+                                            <div className="gap-0">{Object.keys(selectedRooms).map((key) => {
+                                                const roomLabel = RoomTypeToName[key] || `Room-${key}`; // Use the label from RoomLabels if available, otherwise use a default label
+                                                return (
+                                                    <div key={key}>
+                                                        <p>{roomLabel}:- {selectedRooms[key]} rooms</p>
+                                                    </div>
+                                                );
+                                            })}</div>
                                         </div>
                                         <button onClick={() => toggleAccordion(index)} className="flex gap-2 px-3 py-1 text-lg whitespace-nowrap rounded-md border border-white border-solid">
                                             <img

@@ -45,9 +45,10 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
 
     const [Rooms, setRooms] = useState([]);
+    const [RoomTypeToName,setRoomTypeToName] = useState({})
     const [customPrice, setCustomPrice] = useState({});
 
-    const [isRoomSelected, setisRoomSelected] = useState(false)
+    const [isRoomSelected, setisRoomSelected] = useState(false);
     const [selectedRooms, setSelectedRooms] = useState({});
 
 
@@ -79,6 +80,7 @@ export const AuthProvider = ({ children }) => {
                 isRoomSelected, setisRoomSelected,
                 loading, setLoading, selectedRooms, setSelectedRooms,
                 fetchDynamicRoomInventory, setFetchDynamicRoomInventory,
+                RoomTypeToName,setRoomTypeToName,
 
 
 

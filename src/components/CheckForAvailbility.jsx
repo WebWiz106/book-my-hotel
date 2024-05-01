@@ -6,7 +6,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
 
     const { checkForAvailbilityInfo, setCheckForAvailbilityInfo, checkinInDate, setcheckinInDate,
         checkoutDate, setcheckoutDate, Adults, setAdults,
-        kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice, } = useContext(AuthContext);
+        kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice,RoomTypeToName,setRoomTypeToName } = useContext(AuthContext);
 
     console.log(checkForAvailbilityInfo);
 
@@ -109,6 +109,11 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
             if (response.ok) {
                 const data = await response.json();
                 setRooms(data.Details);
+                const dictionary = data.Details.reduce((acc, curr) => {
+                    acc[curr.roomType] = curr.roomName;
+                    return acc;
+                }, {});
+                setRoomTypeToName(dictionary);
                 setCustomPrice(data.Price);
                 setLoading(false);
                 toggleAccordion(2)
