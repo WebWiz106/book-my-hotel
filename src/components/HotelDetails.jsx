@@ -1,9 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import AuthContext from '../context/AuthProvider'
 
 const HotelDetails = () => {
     const { hotelDetails, setHotelDetails } = useContext(AuthContext);
     console.log(hotelDetails);
+
+
+
+    useEffect(() => {
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth" // Smooth scrolling behavior
+            });
+        };
+
+        scrollToTop();
+    }, [])
     return (
         <div className="flex flex-col">
             <div className="justify-center items-start px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg  border border-solid border-zinc-700">

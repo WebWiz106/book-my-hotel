@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from "@mui/joy";
 import { IoShareOutline } from "react-icons/io5";
 import { CiHeart } from "react-icons/ci";
@@ -6,14 +6,16 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { Star } from '@mui/icons-material';
-
-
-
-
-
+import AuthContext from '../context/AuthProvider';
 
 
 const RoomDetails = () => {
+
+
+    const { selectedRoomDetails, setSelectedRoomDetails } = useContext(AuthContext);
+
+    console.log("roomData:", selectedRoomDetails);
+
 
 
     const dummyData = {
@@ -40,8 +42,8 @@ const RoomDetails = () => {
 
 
     return (
-        <div>
-            <div className="flex justify-between items-center pt-4">
+        <div className='maxwidth mx-auto px-5'>
+            <div className=" flex justify-between items-center pt-4">
                 <Link to="/">
                     <h1 className="flex items-center space-x-2 font-semibold text-xl">
                         <IoChevronBackSharp />
@@ -62,41 +64,41 @@ const RoomDetails = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 h-10 py-6 w-full h-full">
                 <div className="hidden md:block col-span-1 md:col-span-1 lg:col-span-2 row-span-2">
                     <img
-                        src="https://empire-s3-production.bobvila.com/articles/wp-content/uploads/2022/06/offbeat_airbnb-2.jpg"
+                        src={selectedRoomDetails?.roomImage[0]}
                         alt="Image 1"
                         className="w-full h-full object-cover hover:opacity-90 rounded-tl-xl rounded-bl-xl"
                     />
                 </div>
                 <div className="hidden md:block col-span-1 md:col-span-1 lg:col-span-1">
                     <img
-                        src="https://www.meganstarr.com/wp-content/uploads/2021/02/Casa-Moab.jpg"
+                        src={selectedRoomDetails?.roomImage[1]}
                         alt="Image 2"
                         className="w-full h-full object-cover"
                     />
                 </div>
                 <div className="hidden md:block col-span-1 md:col-span-1 lg:col-span-1">
                     <img
-                        src="https://empire-s3-production.bobvila.com/articles/wp-content/uploads/2022/06/offbeat_airbnb-2.jpg"
+                        src={selectedRoomDetails?.roomImage[2]}
                         alt="Image 3"
                         className="w-full h-full object-cover rounded-tr-xl"
                     />
                 </div>
                 <div className="hidden md:block col-span-1 md:col-span-1 lg:col-span-1">
                     <img
-                        src="https://empire-s3-production.bobvila.com/articles/wp-content/uploads/2022/06/offbeat_airbnb-2.jpg"
+                        src={selectedRoomDetails?.roomImage[3]}
                         alt="Image 4"
                         className="w-full h-full object-cover"
                     />
                 </div>
                 <div className="hidden md:block col-span-1 md:col-span-1 lg:col-span-1">
                     <img
-                        src="https://www.meganstarr.com/wp-content/uploads/2021/02/Casa-Moab.jpg"
+                        src={selectedRoomDetails?.roomImage[0]}
                         alt="Image 4"
                         className="w-full h-full object-cover  rounded-br-xl"
                     />
                 </div>
                 <div className="md:hidden">
-                    {/* <MobileView /> */}
+                    <MobileView />
                 </div>
             </div>
             <div>
@@ -141,31 +143,31 @@ const RoomDetails = () => {
 }
 
 
-// const MobileView = () => {
-//     return (
-//         <Splide aria-label="My Favorite Images">
-//             <SplideSlide>
-//                 <img
-//                     src="https://empire-s3-production.bobvila.com/articles/wp-content/uploads/2022/06/offbeat_airbnb-2.jpg"
-//                     alt="Image 1"
-//                     className="rouded-xl"
-//                 />
-//             </SplideSlide>
-//             <SplideSlide>
-//                 <img
-//                     src="https://www.meganstarr.com/wp-content/uploads/2021/02/Casa-Moab.jpg"
-//                     alt="Image 2"
-//                 />
-//             </SplideSlide>
-//         </Splide>
-//     );
-// };
+const MobileView = () => {
+    return (
+        <Splide aria-label="My Favorite Images">
+            <SplideSlide>
+                <img
+                    src="https://empire-s3-production.bobvila.com/articles/wp-content/uploads/2022/06/offbeat_airbnb-2.jpg"
+                    alt="Image 1"
+                    className="rouded-xl"
+                />
+            </SplideSlide>
+            <SplideSlide>
+                <img
+                    src="https://www.meganstarr.com/wp-content/uploads/2021/02/Casa-Moab.jpg"
+                    alt="Image 2"
+                />
+            </SplideSlide>
+        </Splide>
+    );
+};
 
 const TestimonialCard = ({ name, avatar, content }) => (
-    <div className="w-full mx-auto rounded-lg bg-white  p-5 text-gray-800 font-light  h-full">
+    <div className="w-full mx-auto rounded-lg bg-white text-gray-800 font-light  h-full">
         <div className="w-full flex mb-4 items-center">
             <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
-                {/* <img src={avatar} alt={name} /> */}
+                <img src={avatar} alt={name} />
             </div>
             <div className="flex-grow pl-3">
                 <h6 className="font-bold text-sm uppercase text-gray-600">{name}</h6>
@@ -210,12 +212,12 @@ const Testimonials = () => {
         },
     ];
     return (
-        <div className="  flex items-center justify-start py-5">
+        <div className=" flex items-center justify-start py-5 mt-5">
             <div className="w-full  mx-auto">
-                <div className="grid  grid-cols-1 md:grid-cols-2 gap-2 items-start">
+                <div className="grid  grid-cols-1 md:grid-cols-2 gap-5 items-start">
                     {dummyTestimonials.map((testimonial, index) => (
                         <div className=" w-full h-full" key={index}>
-                            <TestimonialCard name={"kjfa"} avatar="fbks" content="nmbfsd" />
+                            <TestimonialCard name={testimonial.name} avatar={testimonial.avatar} content={testimonial.content} />
                         </div>
                     ))}
                 </div>

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
@@ -20,6 +20,14 @@ export const AuthProvider = ({ children }) => {
         "children": "0",
     });
 
+    useEffect(() => {
+        localStorage.setItem("jiniId", "c94fcd4b-2625-4d5c-9177-2b62fbda9fe1");
+        localStorage.setItem("hId", "45813642");
+    }, []);
+
+
+
+
     const today = new Date().toISOString().split('T')[0];
 
     // Get tomorrow's date by adding 1 day to the current date
@@ -27,17 +35,28 @@ export const AuthProvider = ({ children }) => {
     tomorrowDate.setDate(tomorrowDate.getDate() + 1);
     const tomorrow = tomorrowDate.toISOString().split('T')[0];
 
-    const [checkinInDate,setcheckinInDate] = useState(today)
-    const [checkoutDate,setcheckoutDate] = useState(tomorrow)
-    const [Adults,setAdults] = useState(1)
-    const [kids,setkids] = useState(0)
+    const [checkinInDate, setcheckinInDate] = useState(today)
+    const [checkoutDate, setcheckoutDate] = useState(tomorrow)
+    const [Adults, setAdults] = useState(1)
+    const [kids, setkids] = useState(0)
 
-    const [Rooms,setRooms] = useState([])
-    const [isRoomSelected,setisRoomSelected] = useState(false)
+    // Check Availability loader
+
+    const [loading, setLoading] = useState(false)
+
+    const [Rooms, setRooms] = useState([]);
+    const [customPrice, setCustomPrice] = useState({});
+    const [isRoomSelected, setisRoomSelected] = useState(false)
 
 
 
 
+
+
+
+
+    // View Selected Room Details
+    const [selectedRoomDetails, setSelectedRoomDetails] = useState({});
 
     return (
         <AuthContext.Provider
@@ -45,12 +64,20 @@ export const AuthProvider = ({ children }) => {
                 hotelDetails, setHotelDetails,
                 checkForAvailbilityInfo, setCheckForAvailbilityInfo,
 
-                checkinInDate,setcheckinInDate,
-                checkoutDate,setcheckoutDate,
-                Adults,setAdults,
-                kids,setkids,
-                Rooms,setRooms,
-                isRoomSelected,setisRoomSelected
+                checkinInDate, setcheckinInDate,
+                checkoutDate, setcheckoutDate,
+                Adults, setAdults,
+                kids, setkids,
+                Rooms, setRooms,
+                customPrice, setCustomPrice,
+                isRoomSelected, setisRoomSelected,
+                loading, setLoading,
+
+
+
+
+
+                selectedRoomDetails, setSelectedRoomDetails
             }}
         >
             {children}
