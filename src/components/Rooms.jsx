@@ -5,7 +5,9 @@ import AuthContext from '../context/AuthProvider';
 const Rooms = ({ toggleAccordion }) => {
 
 
-    const { Rooms, setRooms } = useContext(AuthContext);
+    const { Rooms, setRooms, setisRoomSelected, selectedRooms } = useContext(AuthContext);
+
+    console.log()
     return (
         <div className='flex flex-col gap-10'>
             {
@@ -16,6 +18,7 @@ const Rooms = ({ toggleAccordion }) => {
                 ))
             }
 
+            {Object.keys(selectedRooms).length >= 1 ? <button onClick={() => { toggleAccordion(3); setisRoomSelected(true) }} className='text-center justify-center items-center px-5 py-2.5 text-white bg-sky-900 rounded-md max-md:px-5'>Confirm Booking</button> : ""}
         </div>
     )
 }

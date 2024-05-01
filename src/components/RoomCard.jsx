@@ -14,33 +14,35 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
     const { customPrice, setCustomPrice, } = useContext(AuthContext);
 
     const navigation = useNavigate();
-    const { setisRoomSelected, setSelectedRoomDetails,selectedRooms, setSelectedRooms } = useContext(AuthContext);
+    const { setisRoomSelected, setSelectedRoomDetails, selectedRooms, setSelectedRooms, fetchDynamicRoomInventory, setFetchDynamicRoomInventory } = useContext(AuthContext);
 
-   
+
 
     // roomtype check into selected 
 
-    
+
     const handleSelectedRoomCounter = (roomType) => {
         setSelectedRooms(prevSelectedRooms => {
             // Create a copy of the previous state
-            let maxvalue = 5;
+
+            let maxvalue = fetchDynamicRoomInventory[roomType];
+            console.log(maxvalue)
             const updatedSelectedRooms = { ...prevSelectedRooms };
-    
+
 
             if (roomType in updatedSelectedRooms) {
                 updatedSelectedRooms[roomType] += 1;
-                if(updatedSelectedRooms[roomType]>maxvalue){
+                if (updatedSelectedRooms[roomType] > maxvalue) {
                     updatedSelectedRooms[roomType] = maxvalue;
                 }
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
             }
-    
+
             // Log the updated state
             console.log(updatedSelectedRooms);
-    
+
             // Return the updated state to update the state
             return updatedSelectedRooms;
         });
@@ -50,26 +52,28 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
         setSelectedRooms(prevSelectedRooms => {
             // Create a copy of the previous state
             const updatedSelectedRooms = { ...prevSelectedRooms };
-    
+
 
             if (roomType in updatedSelectedRooms) {
                 updatedSelectedRooms[roomType] -= 1;
-                if(updatedSelectedRooms[roomType]<0){
-                    updatedSelectedRooms[roomType] = 0;
+                if (updatedSelectedRooms[roomType] <= 0) {
+
+                    delete updatedSelectedRooms[roomType];
+                    // updatedSelectedRooms[roomType] = 0;
                 }
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
             }
-    
+
             // Log the updated state
-           
-    
+
+
             // Return the updated state to update the state
             return updatedSelectedRooms;
         });
     }
-    
+
 
 
 
@@ -184,7 +188,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                         <div className="gap-0 text-neutral-700">Room Only</div>
                         <div className="flex gap-2">
                             {/* <div className="gap-0 text-neutral-400">7,600.00</div> */}
-                            <div className="gap-0 text-sky-900">{roomData.roomType in selectedRooms && selectedRooms[roomData.roomType]!=0?selectedRooms[roomData.roomType]*Number(customPrice[roomData.roomType].Price):customPrice[roomData.roomType].Price}</div>
+                            <div className="gap-0 text-sky-900">{roomData.roomType in selectedRooms && selectedRooms[roomData.roomType] != 0 ? selectedRooms[roomData.roomType] * Number(customPrice[roomData.roomType].Price) : customPrice[roomData.roomType].Price}</div>
                             <div className="gap-0 my-auto text-xs text-neutral-700">
                                 INR / Night
                             </div>
@@ -195,16 +199,17 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     {/* <button onClick={() => { toggleAccordion(3); setisRoomSelected(true) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-sky-900 rounded-md leading-[150%] max-md:px-5">
                         Book
                     </button> */}
-                    {roomData.roomType in selectedRooms && selectedRooms[roomData.roomType]!=0?<div className='flex items-center gap-5'>
-                        <FaSquareMinus onClick={()=>{handleSelectedRoomCounterDescrease(roomData.roomType)}}  size={18} className='text-zinc-700 cursor-pointer' />
-                        {selectedRooms[roomData.roomType]}
-                        <FaSquarePlus onClick={()=>{handleSelectedRoomCounter(roomData.roomType)}} size={18} className='text-zinc-700 cursor-pointer' />
+                    {roomData.roomType in selectedRooms && selectedRooms[roomData.roomType] != 0 ? <div className='flex items-center gap-5'>
+                        <FaSquareMinus onClick={() => { handleSelectedRoomCounterDescrease(roomData.roomType) }} size={24} className='text-zinc-700 cursor-pointer ' />
+                        <p className='py-2 text-sky-900 text-[20px] '>{selectedRooms[roomData.roomType]}</p>
+                        <FaSquarePlus onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} size={24} className='text-zinc-700 cursor-pointer' />
                     </div>
-                    
-                    :
-                    
-                    <button onClick={()=>{handleSelectedRoomCounter(roomData.roomType)}}>Book</button>
-                
+
+                        :
+
+                        <button onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-zinc-700 rounded-md leading-[150%] max-md:px-5">
+                            {fetchDynamicRoomInventory[roomData.roomType] === 0 ? "Sold" : "Book"}</button>
+
                     }
                 </div>
 

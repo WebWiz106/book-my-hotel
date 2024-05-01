@@ -123,6 +123,23 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
         }
     }
 
+
+    const fetchDynamicRoomInventory = {
+        "DELUX": 5,
+        "EliteSuite": 0,
+        "ExclusiveRetreat": 0,
+        "GrandDeluxe": 0,
+        "ImperialSuite": 0,
+        "PREMIUM": 0,
+        "PremiereRetreat": 0,
+        "PrestigeSuite": 0,
+        "RoyalDeluxe": 0,
+        "SUITE": 0,
+        "SUPERDELUX": 0,
+        "SupremeRetreat": 0
+    }
+
+
     return (
         <div className='py-2'>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 flex-grow'>

@@ -46,11 +46,15 @@ export const AuthProvider = ({ children }) => {
 
     const [Rooms, setRooms] = useState([]);
     const [customPrice, setCustomPrice] = useState({});
-    
+
     const [isRoomSelected, setisRoomSelected] = useState(false)
     const [selectedRooms, setSelectedRooms] = useState({});
 
 
+    const [fetchDynamicRoomInventory, setFetchDynamicRoomInventory] = useState({
+        "1": 5,
+        "2": 2,
+    })
 
 
 
@@ -73,13 +77,14 @@ export const AuthProvider = ({ children }) => {
                 Rooms, setRooms,
                 customPrice, setCustomPrice,
                 isRoomSelected, setisRoomSelected,
-                loading, setLoading,selectedRooms, setSelectedRooms,
+                loading, setLoading, selectedRooms, setSelectedRooms,
+                fetchDynamicRoomInventory, setFetchDynamicRoomInventory,
 
 
 
 
 
-                selectedRoomDetails, setSelectedRoomDetails
+                selectedRoomDetails, setSelectedRoomDetails,
             }}
         >
             {children}
