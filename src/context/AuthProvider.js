@@ -40,6 +40,16 @@ export const AuthProvider = ({ children }) => {
     const [Adults, setAdults] = useState(1)
     const [kids, setkids] = useState(0)
 
+    //   login-page-popup
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState("");
+
+    // menu-option
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [menuType, setMenuType] = useState("")
+
     // Check Availability loader
 
     const [loading, setLoading] = useState(false)
@@ -81,6 +91,10 @@ export const AuthProvider = ({ children }) => {
                 loading, setLoading, selectedRooms, setSelectedRooms,
                 fetchDynamicRoomInventory, setFetchDynamicRoomInventory,
                 RoomTypeToName,setRoomTypeToName,
+                isModalOpen, setIsModalOpen,
+                modalType, setModalType,
+                isMenuOpen, setIsMenuOpen,
+                menuType, setMenuType,
 
 
 

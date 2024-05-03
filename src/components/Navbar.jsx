@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Logo from "../assets/images/logo/logo-grey.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Page from './Auth/Page';
 import MenuPage from './MenuPage';
+import AuthContext from '../context/AuthProvider';
 
 const Navbar = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalType, setModalType] = useState("");
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [menuType, setMenuType] = useState("")
+    const {isModalOpen, setIsModalOpen, modalType, setModalType,isMenuOpen, setIsMenuOpen,menuType, setMenuType} = useContext(AuthContext);
 
+    
     const openModal = (type) => {
         setModalType(type);
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    
     const menuOpen = (type) => {
         setMenuType(type);
         setIsMenuOpen(true);
@@ -37,10 +34,10 @@ const Navbar = () => {
                     <GiHamburgerMenu size={24} className='text-zinc-700 cursor-pointer' onClick={() => menuOpen("menu")} />
                 </div>
             </div>
-            {isModalOpen && <Page modalType={modalType} closeModal={closeModal} />
+            {isModalOpen && <Page />
             }
             {
-                isMenuOpen && <MenuPage menuType={menuType} isMenuOpen={isMenuOpen} />
+                isMenuOpen && <MenuPage  />
             }
         </div>
     );
