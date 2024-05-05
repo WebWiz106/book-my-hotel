@@ -28,7 +28,7 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen)
     }
 
-    const isAuthenticated = false;
+    const isAuthenticated = true;
 
 
     const handleRoute = () => {

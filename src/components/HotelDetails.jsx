@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../context/AuthProvider'
 
 const HotelDetails = () => {
@@ -6,6 +6,17 @@ const HotelDetails = () => {
     console.log(hotelDetails);
 
 
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Email submitted:', email);
+        setEmail('');
+    };
+
+    const handleChange = (e) => {
+        setEmail(e.target.value);
+    };
 
     useEffect(() => {
         const scrollToTop = () => {
@@ -38,6 +49,31 @@ const HotelDetails = () => {
                 </div>
                 <div className=" text-sm text-sky-900">Reservation Policy</div>
                 <div className=" text-sm text-sky-900">Cancellation Policy</div>
+            </div>
+
+            <div className='mt-3 max-md:mt-3'>
+
+                <div className="justify-center items-start px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg  border border-solid border-zinc-700">
+                    Subscribe to our newsletter
+
+                </div>
+
+                <form className='rounded-b-lg overflow-hidden flex flex-col gap-2' onSubmit={handleSubmit}>
+                    <div className='px-4'>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Your email"
+                            value={email}
+                            onChange={handleChange}
+                            required
+                            className='py-3 outline-none border-b-2 w-full'
+                        />
+                    </div>
+                    <button type="submit" className='border rounded-b-lg py-2 bg-orange-600 text-white'>Subscribe</button>
+                </form>
             </div>
         </div>
     )

@@ -7,9 +7,9 @@ export const AuthProvider = ({ children }) => {
     const [hotelDetails, setHotelDetails] = useState({
         "hotelName": "Ritz-Carlton Hotel",
         "hotelSlogan": "Stay once, carry memories forever",
-        "phone": "9528295631",
-        "alternatePhone": "9528295631",
-        "hotelEmail": "abhijeet@webjini.com",
+        "phone": "9724384753",
+        "alternatePhone": "9724384753",
+        "hotelEmail": "sam@webjini.com",
         "hotelAddress": "Sultanpur, Lucknow, UttarPradesh",
     });
 
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
 
     const [Rooms, setRooms] = useState([]);
-    const [RoomTypeToName,setRoomTypeToName] = useState({})
+    const [RoomTypeToName, setRoomTypeToName] = useState({})
     const [customPrice, setCustomPrice] = useState({});
 
     const [isRoomSelected, setisRoomSelected] = useState(false);
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
                 isRoomSelected, setisRoomSelected,
                 loading, setLoading, selectedRooms, setSelectedRooms,
                 fetchDynamicRoomInventory, setFetchDynamicRoomInventory,
-                RoomTypeToName,setRoomTypeToName,
+                RoomTypeToName, setRoomTypeToName,
                 isModalOpen, setIsModalOpen,
                 modalType, setModalType,
                 isMenuOpen, setIsMenuOpen,

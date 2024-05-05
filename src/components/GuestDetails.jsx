@@ -6,9 +6,8 @@ import AuthContext from '../context/AuthProvider';
 const GuestDetails = () => {
 
 
-
     return (
-        <div>
+        <div >
             <div className="justify-center items-start px-2 md:px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg ">
                 Guest Details
             </div>
@@ -22,7 +21,7 @@ const GuestDetails = () => {
                 </div>
 
             </div>
-        </div>
+        </div >
 
     )
 }
@@ -30,12 +29,19 @@ const GuestDetails = () => {
 
 const Guest = () => {
 
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
     const handlePayment = () => {
         alert('You are almost done')
     }
     return (
         <div className='w-full'>
             <div className="flex flex-col gap-2 px-0  md:px-5 py-3 text-sm leading-6  text-neutral-400">
+
                 <div className='w-full'>
                     <input placeholder='Name*' className=" outline-none w-full justify-center items-start px-5  text-neutral-700 py-3 whitespace-nowrap bg-white rounded-md border" />
 
@@ -53,9 +59,15 @@ const Guest = () => {
 
                 <div className='flex flex-col gap-5  text-neutral-700 bg-white rounded-md mt-2 border px-2 py-4 md:px-5 hover:border-blue-400 cursor-pointer'>
                     <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
-                        <div className='flex gap-2 items-center'>
-                            <input type='radio' />
-                            <div className='text-[16px] font-semibold  '>I prefer to pay 25% now</div>
+                        <div className='flex gap-2 items-center' htmlFor="option1">
+                            <input
+                                type="radio"
+                                id="option1"
+                                name="option"
+                                value="option1"
+                                checked={selectedOption === "option1"}
+                                onChange={handleOptionChange} />
+                            <label htmlFor="option1" className='text-[16px] font-semibold'>I prefer to pay 25% now</label>
                         </div>
 
                         <div>
@@ -71,9 +83,16 @@ const Guest = () => {
                         </div>
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
-                        <div className='flex gap-2 items-center'>
-                            <input type='radio' />
-                            <div className='text-[16px] font-semibold'>I prefer to pay 50% now</div>
+                        <div className='flex gap-2 items-center' htmlFor="option2">
+                            <input
+                                type="radio"
+                                id="option2"
+                                name="option"
+                                value="option2"
+                                checked={selectedOption === "option2"}
+                                onChange={handleOptionChange}
+                            />
+                            <label htmlFor="option2" className='text-[16px] font-semibold'>I prefer to pay 50% now</label>
                         </div>
 
                         <div>
@@ -89,9 +108,16 @@ const Guest = () => {
                         </div>
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 items-center '>
-                        <div className='flex gap-2 items-center'>
-                            <input type='radio' />
-                            <div className='text-[16px] font-semibold'>I prefer to pay 100% now</div>
+                        <div className='flex gap-2 items-center' htmlFor="option3">
+                            <input
+                                type="radio"
+                                id="option3"
+                                name="option"
+                                value="option3"
+                                checked={selectedOption === "option3"}
+                                onChange={handleOptionChange}
+                            />
+                            <label htmlFor="option3" className='text-[16px] font-semibold'>I prefer to pay 100% now</label>
                         </div>
 
                         <div>
