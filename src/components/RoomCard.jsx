@@ -35,13 +35,11 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
             console.log(maxvalue)
             const updatedSelectedRooms = { ...prevSelectedRooms };
 
-            const updatedSelectedPrice = { ...prevSelectedPrice };
 
             if (roomType in updatedSelectedRooms) {
                 updatedSelectedRooms[roomType] += 1;
                 if (updatedSelectedRooms[roomType] > maxvalue) {
                     updatedSelectedRooms[roomType] = maxvalue;
-                    updatedSelectedPrice[roomType] *= maxvalue
                 }
             }
             else {
