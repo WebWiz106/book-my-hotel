@@ -14,7 +14,13 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
     const { customPrice, setCustomPrice, } = useContext(AuthContext);
 
     const navigation = useNavigate();
-    const { setisRoomSelected, setSelectedRoomDetails, selectedRooms, setSelectedRooms, fetchDynamicRoomInventory, setFetchDynamicRoomInventory } = useContext(AuthContext);
+    const { setisRoomSelected, setSelectedRoomDetails,
+        selectedRooms, setSelectedRooms, fetchDynamicRoomInventory,
+        setFetchDynamicRoomInventory,
+        subTotal, setSubTotal,
+        taxes, setTaxes,
+        grandTotal, setGrandTotals,
+    } = useContext(AuthContext);
 
 
 
@@ -29,21 +35,21 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
             console.log(maxvalue)
             const updatedSelectedRooms = { ...prevSelectedRooms };
 
+            const updatedSelectedPrice = { ...prevSelectedPrice };
 
             if (roomType in updatedSelectedRooms) {
                 updatedSelectedRooms[roomType] += 1;
                 if (updatedSelectedRooms[roomType] > maxvalue) {
                     updatedSelectedRooms[roomType] = maxvalue;
+                    updatedSelectedPrice[roomType] *= maxvalue
                 }
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
             }
 
-            // Log the updated state
             console.log(updatedSelectedRooms);
 
-            // Return the updated state to update the state
             return updatedSelectedRooms;
         });
     }

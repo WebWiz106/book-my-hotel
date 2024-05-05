@@ -75,6 +75,14 @@ export const AuthProvider = ({ children }) => {
     // View Selected Room Details
     const [selectedRoomDetails, setSelectedRoomDetails] = useState({});
 
+
+    // selected Room Price
+
+    const [subTotal, setSubTotal] = useState("")
+    const [taxes, setTaxes] = useState("")
+    const [grandTotal, setGrandTotals] = useState("");
+
+
     return (
         <AuthContext.Provider
             value={{
@@ -96,11 +104,17 @@ export const AuthProvider = ({ children }) => {
                 isMenuOpen, setIsMenuOpen,
                 menuType, setMenuType,
 
+                subTotal, setSubTotal,
+                taxes, setTaxes,
+                grandTotal, setGrandTotals,
+
 
 
 
 
                 selectedRoomDetails, setSelectedRoomDetails,
+
+
             }}
         >
             {children}

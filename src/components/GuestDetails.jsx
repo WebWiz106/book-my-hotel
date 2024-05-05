@@ -21,7 +21,7 @@ const GuestDetails = () => {
                 </div>
 
             </div>
-        </div >
+        </div>
 
     )
 }
@@ -200,8 +200,19 @@ const BookingDetails = () => {
                 <div className='flex justify-between px-2  md:px-5 '>
                     <div>Room</div>
                     <div className='flex flex-col items-end'>
-                        <div className='text-[16px]'>Two Bedroom Premium</div>
-                        <div className='text-[16px]'>Apartment (Ganges Facing) </div>
+
+
+                        {Object.keys(selectedRooms).map((key) => {
+                            const roomLabel = RoomTypeToName[key] || `Room-${key}`; // Use the label from RoomLabels if available, otherwise use a default label
+                            return (
+
+                                <div key={key}>
+                                    <p className='text-[16px]'>{roomLabel}:- {selectedRooms[key]} rooms {""}</p>
+                                </div>
+                            );
+                        })}
+
+
                     </div>
                 </div>
                 <div className=' flex justify-between  px-2  md:px-5'>
