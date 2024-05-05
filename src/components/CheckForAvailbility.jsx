@@ -6,7 +6,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
 
     const { checkForAvailbilityInfo, setCheckForAvailbilityInfo, checkinInDate, setcheckinInDate,
         checkoutDate, setcheckoutDate, Adults, setAdults,
-        kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice,RoomTypeToName,setRoomTypeToName } = useContext(AuthContext);
+        kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice, RoomTypeToName, setRoomTypeToName } = useContext(AuthContext);
 
     console.log(checkForAvailbilityInfo);
 
@@ -190,7 +190,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
 
                     Enter Promo Code
                 </button>
-                <button className="mt-2 text-center justify-center items-center px-5 py-2.5 text-white bg-sky-900 rounded-md max-md:px-5" onClick={() => { CheckRoomsAvaiblity() }}>
+                <button className="mt-2 text-center justify-center items-center px-5 py-2.5 text-white bg-orange-600 hover:bg-orange-700  rounded-md max-md:px-5" onClick={() => { CheckRoomsAvaiblity() }}>
                     {loading ? <div role="status">
                         <svg aria-hidden="true" class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />

@@ -18,7 +18,7 @@ const Rooms = ({ toggleAccordion }) => {
                 ))
             }
 
-            {Object.keys(selectedRooms).length >= 1 ? <button onClick={() => { toggleAccordion(3); setisRoomSelected(true) }} className='text-center justify-center items-center px-5 py-2.5 text-white bg-sky-900 rounded-md max-md:px-5'>Confirm Booking</button> : ""}
+            {Object.keys(selectedRooms).length >= 1 ? <button onClick={() => { toggleAccordion(3); setisRoomSelected(true) }} className='text-center justify-center items-center px-5 py-2.5 text-white bg-orange-600 hover:bg-orange-700  rounded-md max-md:px-5'>Confirm Booking</button> : ""}
         </div>
     )
 }

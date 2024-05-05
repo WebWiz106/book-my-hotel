@@ -59,13 +59,11 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
     function formatDate(inputDate) {
         const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
-        // Parse input date string
         const dateParts = inputDate.split('-');
-        const year = dateParts[0].slice(2); // Extract last two digits of the year
-        const monthIndex = parseInt(dateParts[1]) - 1; // Adjust month index (0-based)
+        const year = dateParts[0].slice(2);
+        const monthIndex = parseInt(dateParts[1]) - 1;
         const day = parseInt(dateParts[2]);
 
-        // Format date in 'DDMON' format
         const formattedDate = `${day} ${months[monthIndex]}'${year}`;
 
         return formattedDate;
@@ -100,16 +98,16 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
                     {index === 1 ?
                         <button
                             type="button"
-                            className={`flex items-center justify-between w-full text-lg text-white bg-zinc-700 ${isOpen ? "rounded-t-lg" : "rounded-lg"}   gap-3`}
+                            className={`flex md:items-center justify-between w-full text-lg text-white bg-zinc-700 ${isOpen ? "rounded-t-lg" : "rounded-lg"}   gap-3`}
 
                             aria-expanded={isOpen}
                             aria-controls={`accordion-collapse-body-${index}`}
                         >
                             <div className="flex gap-5 justify-between md:px-5 py-2.5 text-white rounded-xl bg-zinc-700 w-full max-md:flex-wrap max-md:px-5">
                                 <div className="flex gap-2 justify-between my-auto text-base">
-                                    <div className="gap-0">{formatDate(checkinInDate)} - {formatDate(checkoutDate)}</div>
+                                    <div className="gap-0 max-md:text-start">{formatDate(checkinInDate)} - {formatDate(checkoutDate)}</div>
                                     <div>|</div>
-                                    <div className="gap-0">{Adults} Adults, {kids} Children</div>
+                                    <div className="gap-0 ">{Adults} Adults, {kids} Kids</div>
                                 </div>
                                 <button onClick={() => toggleAccordion(index)} className="flex gap-2 px-3 py-1 text-lg whitespace-nowrap rounded-md border border-white border-solid">
                                     <img
@@ -202,7 +200,7 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
 
             <div
                 id={`accordion-collapse-body-${index}`}
-                className={`${isOpen ? `block border-2 border-t-0 rounded-b-lg  border-gray-200 ${isOpen && index === 3 ? "p-0 rounded-t-lg" : "p-5"}` : 'hidden'}`}
+                className={`${isOpen ? `block  border-t-0 rounded-b-lg  bg-[#F8F8F8] ${isOpen && index === 3 ? "p-0 rounded-t-lg" : "p-5"}` : 'hidden'}`}
                 aria-labelledby={`accordion-collapse-heading-${index}`}
             >
                 {content}

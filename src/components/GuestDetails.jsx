@@ -1,27 +1,118 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { IoMdCheckmarkCircle } from "react-icons/io";
+import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthProvider';
 
 const GuestDetails = () => {
+
+
+
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2  gap-5'>
-            <Guest />
-            <BookingDetails />
+        <div>
+            <div className="justify-center items-start px-2 md:px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg ">
+                Guest Details
+            </div>
+            <div className='flex flex-col md:flex-row '>
+                <div className='w-full md:w-[50%] lg:w-[40%] md:order-2'>
+                    <BookingDetails />
+                </div>
+                <div className='w-full md:w-[50%] lg:w-[60%]'>
+                    <Guest />
+
+                </div>
+
+            </div>
         </div>
+
     )
 }
 
 
 const Guest = () => {
-    return (
-        <div>
-            <div className="justify-center items-start px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg  border border-solid border-zinc-700">
-                Guest Details
-            </div>
-            <div className="flex flex-col gap-2 px-5 py-3 text-sm leading-6  text-neutral-400">
-                <input placeholder='Name' className="justify-center items-start px-6 py-3 whitespace-nowrap bg-white rounded-md border" />
-                <input placeholder='Phone Number' className="justify-center items-start px-6 py-3 whitespace-nowrap bg-white rounded-md border" />
-                <input placeholder='Email' className="justify-center items-start px-6 py-3 whitespace-nowrap bg-white rounded-md border" />
-                <textarea placeholder='Special Request' className=" h-[125px] justify-center items-start px-6 py-3 whitespace-nowrap bg-white rounded-md border" />
 
+    const handlePayment = () => {
+        alert('You are almost done')
+    }
+    return (
+        <div className='w-full'>
+            <div className="flex flex-col gap-2 px-0  md:px-5 py-3 text-sm leading-6  text-neutral-400">
+                <div className='w-full'>
+                    <input placeholder='Name*' className=" outline-none w-full justify-center items-start px-5  text-neutral-700 py-3 whitespace-nowrap bg-white rounded-md border" />
+
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                    <input placeholder='Email*' className=" outline-none justify-center items-start px-5 py-3  text-neutral-700 whitespace-nowrap bg-white rounded-md border" />
+
+                    <input placeholder='Phone Number*' className=" outline-none justify-center items-start px-5  text-neutral-700 py-3 whitespace-nowrap bg-white rounded-md border" />
+
+                </div>
+                <div>
+                    <textarea placeholder='Special Request' className=" outline-none w-full h-[75px] justify-center  text-neutral-700 items-start px-5 py-3 whitespace-nowrap bg-white rounded-md border" />
+
+                </div>
+
+                <div className='flex flex-col gap-5  text-neutral-700 bg-white rounded-md mt-2 border px-2 py-4 md:px-5 hover:border-blue-400 cursor-pointer'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
+                        <div className='flex gap-2 items-center'>
+                            <input type='radio' />
+                            <div className='text-[16px] font-semibold  '>I prefer to pay 25% now</div>
+                        </div>
+
+                        <div>
+                            <div className='flex justify-between'>
+                                <div>Pay Now</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                            </div>
+                            <div className=' flex justify-between'>
+                                <div>Pay later</div>
+                                <div>37849₹</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
+                        <div className='flex gap-2 items-center'>
+                            <input type='radio' />
+                            <div className='text-[16px] font-semibold'>I prefer to pay 50% now</div>
+                        </div>
+
+                        <div>
+                            <div className='flex justify-between'>
+                                <div>Pay Now</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                            </div>
+                            <div className=' flex justify-between'>
+                                <div>Pay later</div>
+                                <div>37849₹</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 items-center '>
+                        <div className='flex gap-2 items-center'>
+                            <input type='radio' />
+                            <div className='text-[16px] font-semibold'>I prefer to pay 100% now</div>
+                        </div>
+
+                        <div>
+                            <div className='flex justify-between'>
+                                <div>Pay Now</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                            </div>
+                            <div className=' flex justify-between'>
+                                <div>Pay later</div>
+                                <div>37849₹</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div className='flex flex-col items-center py-2 text-neutral-700'>
+                    <div className='text-[#05db5c]'>Secure your stay before the prices change!</div>
+                    <div>By completing this reservation you are accepting our <Link to="" className="text-blue-900">Terms & Conditions</Link></div>
+                    <button onClick={handlePayment} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now & Pay Later</button>
+                </div>
             </div>
         </div>
     )
@@ -29,15 +120,102 @@ const Guest = () => {
 
 
 const BookingDetails = () => {
+
+
+
+
+    const { Rooms, setRooms, checkinInDate,
+        checkoutDate,
+        Adults,
+        kids, isRoomSelected, setisRoomSelected, selectedRooms, RoomTypeToName } = useContext(AuthContext);
+    const [numberOfNights, setNumberOfNights] = useState(0);
+
+
+    function formatDate(inputDate) {
+        const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+        const dateParts = inputDate.split('-');
+        const year = dateParts[0].slice(2);
+        const monthIndex = parseInt(dateParts[1]) - 1;
+        const day = parseInt(dateParts[2]);
+
+        const formattedDate = `${day} ${months[monthIndex]}'${year}`;
+
+        return formattedDate;
+    }
+
+    function handleCalculateNumberOfNights(checkinInDate, checkoutDate) {
+        const checkin = new Date(checkinInDate);
+        const checkout = new Date(checkoutDate);
+        const differenceInTime = checkout.getTime() - checkin.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        return differenceInDays;
+    }
+
     return (
         <div className=''>
-            <div className="justify-center items-start px-4 py-3.5 w-full text-lg text-white bg-zinc-700 rounded-t-lg  border-2 border-solid border-zinc-700">
-                Booking Details
-            </div>
-            <div className="flex flex-col gap-2 px-5 py-3 text-sm leading-6  text-neutral-400">
+
+            <div className="flex flex-col gap-5 py-3 text-sm leading-6  text-neutral-700">
+                <div className='grid grid-cols-1 md:grid-cols-2 px-2  md:px-5 '>
+                    <div className='max-md:flex max-md:items-center max-md:justify-between'>
+                        <div>Check In</div>
+                        <div className='text-[18px]  font-[500]'>{formatDate(checkinInDate)}</div>
+                    </div>
+                    <div className='max-md:flex max-md:items-center max-md:justify-between max-md:mt-5'>
+                        <div>Check Out</div>
+                        <div className='text-[18px]  font-[500]'>{formatDate(checkoutDate)}</div>
+                    </div>
+                </div>
+
+                <div className=' flex justify-between  px-2  md:px-5 '>
+                    <div>No of Nights</div>
+                    <div className='text-[16px] '>{handleCalculateNumberOfNights(checkinInDate, checkoutDate)} Night</div>
+                </div>
+                <div className='flex justify-between px-2  md:px-5 '>
+                    <div>Room</div>
+                    <div className='flex flex-col items-end'>
+                        <div className='text-[16px]'>Two Bedroom Premium</div>
+                        <div className='text-[16px]'>Apartment (Ganges Facing) </div>
+                    </div>
+                </div>
+                <div className=' flex justify-between  px-2  md:px-5'>
+                    <div>Guest</div>
+                    <div className='text-[16px]'>{Adults} Adults, {kids} Kids</div>
+                </div>
+                <div className='flex flex-col gap-4 h-[100%] border rounded-md p-5 bg-white'>
+                    <div className='flex justify-between'>
+                        <div className='flex items-start gap-1'>
+                            <IoMdCheckmarkCircle size={20} className='text-zinc-700 mt-[3px]' />
+                            <div >Rooms only</div>
+                        </div>
+                        <div>
+                            <div className='text-[16px]'>INR 45678</div>
+                        </div>
+                    </div>
+
+                    <div className=' flex justify-between'>
+                        <div>{formatDate(checkinInDate)}</div>
+                        <div className='text-[14px]'>₹price</div>
+                    </div>
+                    <div className=' flex justify-between'>
+                        <div>Sub Total</div>
+                        <div className='text-[16px]' >37849₹</div>
+                    </div>
+                    <div className=' flex justify-between'>
+                        <div>Taxes and Fees</div>
+                        <div className='text-[16px]'>37849₹</div>
+                    </div>
+                    <hr class="h-px my-2 bg-zinc-400 border-0"></hr>
+
+                    <div className=' flex justify-between'>
+                        <div className='text-[18px] font-medium'>Grand Total</div>
+                        <div className='text-[24px] font-semibold'>37849₹</div>
+                    </div>
+                    <p className='text-center'>You are saving <span className='text-[#05db5c]'>INR 7434</span>  on this deal!</p>
+                </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 
