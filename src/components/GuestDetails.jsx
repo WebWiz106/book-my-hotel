@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { IoMdCheckmarkCircle } from "react-icons/io";
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 
 const GuestDetails = () => {
+    const {subTotal} = useContext(AuthContext)
 
+
+    console.log(subTotal)
+    
 
     return (
         <div >
@@ -28,8 +31,9 @@ const GuestDetails = () => {
 
 
 const Guest = () => {
-
+    const {grandTotal} = useContext(AuthContext)
     const [selectedOption, setSelectedOption] = useState(null);
+
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -73,11 +77,11 @@ const Guest = () => {
                         <div>
                             <div className='flex justify-between'>
                                 <div>Pay Now</div>
-                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>₹ {0.25*grandTotal}</div>
                             </div>
                             <div className=' flex justify-between'>
                                 <div>Pay later</div>
-                                <div>37849₹</div>
+                                <div>₹ {grandTotal - 0.25*grandTotal}</div>
                             </div>
 
                         </div>
@@ -98,11 +102,11 @@ const Guest = () => {
                         <div>
                             <div className='flex justify-between'>
                                 <div>Pay Now</div>
-                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>₹ {0.50*grandTotal}</div>
                             </div>
                             <div className=' flex justify-between'>
                                 <div>Pay later</div>
-                                <div>37849₹</div>
+                                <div>₹ {grandTotal - 0.50*grandTotal}</div>
                             </div>
 
                         </div>
@@ -123,11 +127,11 @@ const Guest = () => {
                         <div>
                             <div className='flex justify-between'>
                                 <div>Pay Now</div>
-                                <div className='text-[20px] text-[#05db5c] font-semibold'>37849₹</div>
+                                <div className='text-[20px] text-[#05db5c] font-semibold'>₹ {grandTotal}</div>
                             </div>
                             <div className=' flex justify-between'>
                                 <div>Pay later</div>
-                                <div>37849₹</div>
+                                <div>₹ {grandTotal - grandTotal}</div>
                             </div>
 
                         </div>
@@ -154,7 +158,25 @@ const BookingDetails = () => {
         checkoutDate,
         Adults,
         kids, isRoomSelected, setisRoomSelected, selectedRooms, RoomTypeToName } = useContext(AuthContext);
+        const {subTotal,taxes, setTaxes,grandTotal, setGrandTotals} = useContext(AuthContext)
     const [numberOfNights, setNumberOfNights] = useState(0);
+
+
+        
+    const computeTotalPrice=()=>{
+        let totalPrice = 0;
+    
+        // Iterate over keys in the dictionary
+        for (let key in subTotal) {
+            // Convert the value to a number and add it to totalPrice
+            totalPrice += parseInt(subTotal[key]);
+        }
+        setTaxes(0.18*totalPrice)
+        setGrandTotals(0.18*totalPrice+totalPrice)
+        return totalPrice;
+    }
+
+    
 
 
     function formatDate(inputDate) {
@@ -220,7 +242,7 @@ const BookingDetails = () => {
                     <div className='text-[16px]'>{Adults} Adults, {kids} Kids</div>
                 </div>
                 <div className='flex flex-col gap-4 h-[100%] border rounded-md p-5 bg-white'>
-                    <div className='flex justify-between'>
+                    {/* <div className='flex justify-between'>
                         <div className='flex items-start gap-1'>
                             <IoMdCheckmarkCircle size={20} className='text-zinc-700 mt-[3px]' />
                             <div >Rooms only</div>
@@ -228,27 +250,27 @@ const BookingDetails = () => {
                         <div>
                             <div className='text-[16px]'>INR 45678</div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className=' flex justify-between'>
+                    {/* <div className=' flex justify-between'>
                         <div>{formatDate(checkinInDate)}</div>
                         <div className='text-[14px]'>₹price</div>
-                    </div>
+                    </div> */}
                     <div className=' flex justify-between'>
                         <div>Sub Total</div>
-                        <div className='text-[16px]' >37849₹</div>
+                        <div className='text-[16px]' >₹ {computeTotalPrice()}</div>
                     </div>
                     <div className=' flex justify-between'>
                         <div>Taxes and Fees</div>
-                        <div className='text-[16px]'>37849₹</div>
+                        <div className='text-[16px]'>₹ {taxes}</div>
                     </div>
                     <hr class="h-px my-2 bg-zinc-400 border-0"></hr>
 
                     <div className=' flex justify-between'>
                         <div className='text-[18px] font-medium'>Grand Total</div>
-                        <div className='text-[24px] font-semibold'>37849₹</div>
+                        <div className='text-[24px] font-semibold'>₹ {grandTotal}</div>
                     </div>
-                    <p className='text-center'>You are saving <span className='text-[#05db5c]'>INR 7434</span>  on this deal!</p>
+                    <p className='text-center'>You are saving <span className='text-[#05db5c]'>INR {0.20*grandTotal}</span>  on this deal!</p>
                 </div>
             </div>
 

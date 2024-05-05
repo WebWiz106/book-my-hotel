@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     const [checkoutDate, setcheckoutDate] = useState(tomorrow)
     const [Adults, setAdults] = useState(1)
     const [kids, setkids] = useState(0)
+    const [maxAdult,setmaxAdult] = useState({})
 
     //   login-page-popup
 
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
     const [fetchDynamicRoomInventory, setFetchDynamicRoomInventory] = useState({
         "1": 5,
-        "2": 2,
+        "2": 3,
     })
 
 
@@ -78,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
     // selected Room Price
 
-    const [subTotal, setSubTotal] = useState("")
+    const [subTotal, setSubTotal] = useState({})
     const [taxes, setTaxes] = useState("")
     const [grandTotal, setGrandTotals] = useState("");
 
@@ -107,6 +108,7 @@ export const AuthProvider = ({ children }) => {
                 subTotal, setSubTotal,
                 taxes, setTaxes,
                 grandTotal, setGrandTotals,
+                maxAdult,setmaxAdult,
 
 
 

@@ -14,17 +14,49 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
     const { customPrice, setCustomPrice, } = useContext(AuthContext);
 
     const navigation = useNavigate();
-    const { setisRoomSelected, setSelectedRoomDetails,
+    const { setisRoomSelected, setSelectedRoomDetails,Adults,
         selectedRooms, setSelectedRooms, fetchDynamicRoomInventory,
         setFetchDynamicRoomInventory,
         subTotal, setSubTotal,
         taxes, setTaxes,
-        grandTotal, setGrandTotals,
+        grandTotal, setGrandTotals,maxAdult,setmaxAdult
     } = useContext(AuthContext);
 
 
 
+
+
     // roomtype check into selected 
+    const handleUpdatePrice = (roomType,price,counter)=>{
+        setSubTotal(prevSelectedPrice => {
+            // Create a copy of the previous state
+            const updatedSelectedPrice = { ...prevSelectedPrice };
+
+           
+            updatedSelectedPrice[roomType] = price*counter
+
+            
+
+            return updatedSelectedPrice;
+        });
+
+    }
+
+    const handleUpdateMaxAdult = (roomType,adult,counter)=>{
+        setmaxAdult(prevSelectedadult => {
+            // Create a copy of the previous state
+            const updatedSelectedadults = { ...prevSelectedadult };
+
+           
+            updatedSelectedadults[roomType] = adult*counter
+
+            
+
+            return updatedSelectedadults;
+        });
+
+    }
+
 
 
     const handleSelectedRoomCounter = (roomType) => {
@@ -32,23 +64,27 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
             // Create a copy of the previous state
 
             let maxvalue = fetchDynamicRoomInventory[roomType];
-            console.log(maxvalue)
+            
             const updatedSelectedRooms = { ...prevSelectedRooms };
-
-            const updatedSelectedPrice = { ...prevSelectedPrice };
 
             if (roomType in updatedSelectedRooms) {
                 updatedSelectedRooms[roomType] += 1;
                 if (updatedSelectedRooms[roomType] > maxvalue) {
                     updatedSelectedRooms[roomType] = maxvalue;
-                    updatedSelectedPrice[roomType] *= maxvalue
+                    handleUpdatePrice(roomType,customPrice[roomType].Price,maxvalue)
+                    handleUpdateMaxAdult(roomType,roomData.adult,maxvalue)
+                   
                 }
+                handleUpdatePrice(roomType,customPrice[roomType].Price,updatedSelectedRooms[roomType])
+                handleUpdateMaxAdult(roomType,roomData.adult,updatedSelectedRooms[roomType])
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
+                handleUpdatePrice(roomType,customPrice[roomType].Price,1)
+                handleUpdateMaxAdult(roomType,roomData.adult,1)
             }
 
-            console.log(updatedSelectedRooms);
+            
 
             return updatedSelectedRooms;
         });
@@ -66,10 +102,16 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
                     delete updatedSelectedRooms[roomType];
                     // updatedSelectedRooms[roomType] = 0;
+                    handleUpdatePrice(roomType,customPrice[roomType].Price,0)
+                    handleUpdateMaxAdult(roomType,roomData.adult,0)
                 }
+                handleUpdatePrice(roomType,customPrice[roomType].Price,updatedSelectedRooms[roomType])
+                handleUpdateMaxAdult(roomType,roomData.adult,updatedSelectedRooms[roomType])
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
+                handleUpdatePrice(roomType,customPrice[roomType].Price,1)
+                handleUpdateMaxAdult(roomType,roomData.adult,1)
             }
 
             // Log the updated state
@@ -80,6 +122,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
         });
     }
 
+   
 
 
 
@@ -213,8 +256,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
                         :
 
-                        <button onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-zinc-700 rounded-md leading-[150%] max-md:px-5">
-                            {fetchDynamicRoomInventory[roomData.roomType] === 0 ? "Sold" : "Book"}</button>
+                        fetchDynamicRoomInventory[roomData.roomType]!==0?<button onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-zinc-700 rounded-md leading-[150%] max-md:px-5">Book</button>:"Sold out"
 
                     }
                 </div>
