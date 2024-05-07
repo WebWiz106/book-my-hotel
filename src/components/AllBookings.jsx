@@ -4,23 +4,31 @@ import React, { useState } from 'react'
 export const AllBookings = () => {
   const [dateRange, setDateRange] = useState(false);
   const [singleBookingSearch, setSingleBookingSearch] = useState(false)
+  const [all, setAll]=useState(false);
 
   const handleRadioChange = (event) => {
     if (event.target.id === "3") {
       setSingleBookingSearch(false);
+      setAll(false);
       setDateRange(true)
     } else if (event.target.id === "4") {
+      setAll(false);
       setDateRange(false);
       setSingleBookingSearch(true);
-    } else {
+    } else if(event.target.id==="1") {
       setDateRange(false);
       setSingleBookingSearch(false);
+      setAll(true);
+    }else{
+      setDateRange(false);
+      setSingleBookingSearch(false);
+      setAll(false);
     }
   }
 
   return (
     <div className="maxwidth px-5 mx-auto">
-      <div className="radio flex justify-start gap-4">
+      <div className="radio flex justify-start md:gap-4 max-md:flex-col flex-wrap">
         <div className='flex items-center'>
           <input type="radio" id='1' name="bookingType" className="mt-[2px]" onChange={handleRadioChange}  />
           <label htmlFor="1" className='ms-1'>All</label>
@@ -63,7 +71,7 @@ export const AllBookings = () => {
           <button className='p-3 border-2 border-blue-500 text-blue-500 px-[18px] rounded-md hover:bg-blue-500 hover:text-white hover:cursor-pointer'>Show Bookings</button>
         </div>
       </div>}
-      <div className="checkbox flex justify-start gap-4 mt-2">
+      {all && <div className="checkbox flex justify-start gap-4 mt-2">
         <div className='flex items-center'>
           <input type="checkbox" id='1' className="mt-[2px]" style={{ borderRadius: '0' }} />
           <label htmlFor="1" className='ms-1'>ADVANCED</label>
@@ -72,10 +80,10 @@ export const AllBookings = () => {
           <input type="checkbox" id='2' className="mt-[2px]" />
           <label htmlFor="2" className='ms-1'>SUCCESS</label>
         </div>
-      </div>
+      </div>}
       <div class="relative overflow-x-auto mt-4">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-sm text-left rtl:text-right">
+          <thead class="text-xs text-white uppercase bg-zinc-700">
             <tr>
               <th scope="col" class="px-6 py-3">
                 Product name
@@ -100,9 +108,9 @@ export const AllBookings = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <tbody className='bg-neutral-200'>
+            <tr class=" border-b">
+              <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap">
                 Apple MacBook Pro 17"
               </th>
               <td class="px-6 py-4">
@@ -127,8 +135,8 @@ export const AllBookings = () => {
                 </div>
               </td>
             </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr class=" border-b">
+              <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
                 Microsoft Surface Pro
               </th>
               <td class="px-6 py-4">
@@ -153,8 +161,8 @@ export const AllBookings = () => {
                 </div>
               </td>
             </tr>
-            <tr class="bg-white dark:bg-gray-800">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr class="">
+              <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">
                 Magic Mouse 2
               </th>
               <td class="px-6 py-4">
