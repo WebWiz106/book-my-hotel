@@ -54,7 +54,7 @@ const AccordionItem = ({ index, heading, content, isOpen, toggleAccordion, fille
         Adults,
         kids, isRoomSelected, setisRoomSelected, selectedRooms, RoomTypeToName } = useContext(AuthContext);
 
-    console.log("line -57 ", selectedRooms)
+    // console.log("line -57 ", selectedRooms)
 
     function formatDate(inputDate) {
         const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];

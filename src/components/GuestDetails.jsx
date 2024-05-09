@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import useRazorpay from "react-razorpay";
-import AuthContext from '../context/AuthProvider';
 import { ToastContainer, toast } from 'react-custom-alert';
 import 'react-custom-alert/dist/index.css'; // import css file from root.
+import useRazorpay from "react-razorpay";
+import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthProvider';
 
 const GuestDetails = () => {
     const { subTotal } = useContext(AuthContext)
 
 
-    console.log(subTotal)
+    // console.log(subTotal)
 
 
     return (
@@ -90,7 +90,7 @@ const Guest = () => {
         const { name, value } = e.target;
 
         setBookingDetails({ ...bookingDetails, [name]: value });
-        console.log(bookingDetails)
+        // console.log(bookingDetails)
 
     }
 
@@ -330,7 +330,7 @@ const BookingDetails = () => {
 
     const computeTotalPrice = () => {
         let totalPrice = 0;
-
+       
         // Iterate over keys in the dictionary
         for (let key in subTotal) {
             // Convert the value to a number and add it to totalPrice
@@ -338,6 +338,8 @@ const BookingDetails = () => {
         }
         setTaxes(0.18 * totalPrice)
         setGrandTotals(0.18 * totalPrice + totalPrice)
+
+        console.log(totalPrice)
         return totalPrice;
     }
 

@@ -8,7 +8,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
         checkoutDate, setcheckoutDate, Adults, setAdults,
         kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice, RoomTypeToName, setRoomTypeToName } = useContext(AuthContext);
 
-    console.log(checkForAvailbilityInfo);
+    // console.log(checkForAvailbilityInfo);
 
 
 
@@ -59,7 +59,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
 
         let nextSelectDate = nextDate.toISOString().split('T')[0];
 
-        console.log(nextSelectDate)
+        // console.log(nextSelectDate)
         setcheckoutDate(nextSelectDate);
 
         setcheckinInDate(event.target.value);
@@ -119,12 +119,12 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
                 toggleAccordion(2)
             }
             else {
-                console.log("Error:", response.statusText);
+                // console.log("Error:", response.statusText);
             }
 
         } catch (error) {
             setLoading(false);
-            console.log("Error", error);
+            // console.log("Error", error);
         }
     }
 

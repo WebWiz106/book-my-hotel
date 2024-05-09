@@ -75,8 +75,10 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     handleUpdateMaxAdult(roomType, roomData.adult, maxvalue)
 
                 }
-                handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
-                handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
+                else{
+                    handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
+                    handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
+                }
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
@@ -85,7 +87,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
             }
 
 
-
+            console.log(updatedSelectedRooms)
             return updatedSelectedRooms;
         });
     }
@@ -105,8 +107,10 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     handleUpdatePrice(roomType, customPrice[roomType].Price, 0)
                     handleUpdateMaxAdult(roomType, roomData.adult, 0)
                 }
-                handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
-                handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
+                else{
+                    handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
+                    handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
+                }
             }
             else {
                 updatedSelectedRooms[roomType] = 1;
@@ -118,6 +122,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
 
             // Return the updated state to update the state
+            console.log(updatedSelectedRooms)
             return updatedSelectedRooms;
         });
     }
