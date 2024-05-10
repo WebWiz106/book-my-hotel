@@ -20,6 +20,14 @@ export const AuthProvider = ({ children }) => {
         "children": "0",
     });
 
+
+    const [bookingDetails, setBookingDetails] = useState({
+        "name": "",
+        "phone": "",
+        "email": "",
+        "request": ""
+    })
+
     useEffect(() => {
         localStorage.setItem("jiniId", "c94fcd4b-2625-4d5c-9177-2b62fbda9fe1");
         localStorage.setItem("hId", "45813642");
@@ -39,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     const [checkoutDate, setcheckoutDate] = useState(tomorrow)
     const [Adults, setAdults] = useState(1)
     const [kids, setkids] = useState(0)
-    const [maxAdult,setmaxAdult] = useState({})
+    const [maxAdult, setmaxAdult] = useState({})
 
     //   login-page-popup
 
@@ -84,6 +92,11 @@ export const AuthProvider = ({ children }) => {
     const [grandTotal, setGrandTotals] = useState("");
 
 
+
+    const [payment, setpayment] = useState(null);
+
+
+
     return (
         <AuthContext.Provider
             value={{
@@ -108,13 +121,17 @@ export const AuthProvider = ({ children }) => {
                 subTotal, setSubTotal,
                 taxes, setTaxes,
                 grandTotal, setGrandTotals,
-                maxAdult,setmaxAdult,
+                maxAdult, setmaxAdult,
 
 
 
 
 
                 selectedRoomDetails, setSelectedRoomDetails,
+
+                bookingDetails, setBookingDetails,
+
+                payment, setpayment,
 
 
             }}

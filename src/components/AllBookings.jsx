@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 export const AllBookings = () => {
   const [dateRange, setDateRange] = useState(false);
   const [singleBookingSearch, setSingleBookingSearch] = useState(false)
-  const [all, setAll]=useState(false);
+  const [all, setAll] = useState(false);
 
   const handleRadioChange = (event) => {
     if (event.target.id === "3") {
@@ -15,26 +15,29 @@ export const AllBookings = () => {
       setAll(false);
       setDateRange(false);
       setSingleBookingSearch(true);
-    } else if(event.target.id==="1") {
+    } else if (event.target.id === "1") {
       setDateRange(false);
       setSingleBookingSearch(false);
       setAll(true);
-    }else{
+    } else {
       setDateRange(false);
       setSingleBookingSearch(false);
       setAll(false);
     }
   }
 
+  const array = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
+
+
   return (
-    <div className="maxwidth px-5 mx-auto">
-      <div className="radio flex justify-start md:gap-4 max-md:flex-col flex-wrap">
+    <div className="maxwidth px-0 md:px-5 mx-auto">
+      <div className="radio flex justify-start md:gap-4 max-md:flex-col flex-wrap max-md:px-5">
         <div className='flex items-center'>
-          <input type="radio" id='1' name="bookingType" className="mt-[2px]" onChange={handleRadioChange}  />
+          <input type="radio" id='1' name="bookingType" className="mt-[2px]" onChange={handleRadioChange} />
           <label htmlFor="1" className='ms-1'>All</label>
         </div>
         <div className='flex items-center'>
-          <input type="radio" id='2' name="bookingType" className="mt-[2px]" onChange={handleRadioChange}  />
+          <input type="radio" id='2' name="bookingType" className="mt-[2px]" onChange={handleRadioChange} />
           <label htmlFor="2" className='ms-1'>This Month</label>
         </div>
         <div className='flex items-center'>
@@ -49,7 +52,7 @@ export const AllBookings = () => {
           <button className="border-2 border-blue-500 text-blue-500 px-[18px] rounded-md hover:bg-blue-500 hover:text-white hover:cursor-pointer">Close</button>
         </div>
       </div>
-      {dateRange && <div className="flex justify-between mt-2">
+      {dateRange && <div className="flex flex-wrap justify-between mt-2">
         <div className="flex items-center">
           <label htmlFor="" className=''>Playing Date From: </label>
           <input type="date" className='ms-4 border-2 border-opacity-25 border-black px-4 rounded-md' />
@@ -81,26 +84,26 @@ export const AllBookings = () => {
           <label htmlFor="2" className='ms-1'>SUCCESS</label>
         </div>
       </div>}
-      <div class="relative overflow-x-auto mt-4">
+      <div class="relative overflow-x-auto mt-4 h-[80vh] ">
         <table class="w-full text-sm text-left rtl:text-right">
           <thead class="text-xs text-white uppercase bg-zinc-700">
             <tr>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Product name
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Color
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Category
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Price
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Price
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Price
               </th>
               <th scope="col" class="px-6 py-3">
@@ -109,84 +112,34 @@ export const AllBookings = () => {
             </tr>
           </thead>
           <tbody className='bg-neutral-200'>
-            <tr class=" border-b">
-              <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap">
-                Apple MacBook Pro 17"
-              </th>
-              <td class="px-6 py-4">
-                Silver
-              </td>
-              <td class="px-6 py-4">
-                Laptop
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                <div className="flex gap-4">
-                  <button>Edit</button>
-                  <button>Update</button>
-                </div>
-              </td>
-            </tr>
-            <tr class=" border-b">
-              <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                Microsoft Surface Pro
-              </th>
-              <td class="px-6 py-4">
-                White
-              </td>
-              <td class="px-6 py-4">
-                Laptop PC
-              </td>
-              <td class="px-6 py-4">
-                $1999
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                <div className="flex gap-4">
-                  <button>Edit</button>
-                  <button>Update</button>
-                </div>
-              </td>
-            </tr>
-            <tr class="">
-              <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap ">
-                Magic Mouse 2
-              </th>
-              <td class="px-6 py-4">
-                Black
-              </td>
-              <td class="px-6 py-4">
-                Accessories
-              </td>
-              <td class="px-6 py-4">
-                $99
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                $2999
-              </td>
-              <td class="px-6 py-4">
-                <div className="flex gap-4">
-                  <button>Edit</button>
-                  <button>Update</button>
-                </div>
-              </td>
-            </tr>
+            {array.map((item, index) => (
+              <tr key={index} class=" border-b">
+                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap">
+                  Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                  Silver
+                </td>
+                <td class="px-6 py-4">
+                  Laptop
+                </td>
+                <td class="px-6 py-4">
+                  $2999
+                </td>
+                <td class="px-6 py-4">
+                  $2999
+                </td>
+                <td class="px-6 py-4">
+                  $2999
+                </td>
+                <td class="px-6 py-4">
+                  <div className="flex gap-4">
+                    <button>Edit</button>
+                    <button>Update</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
