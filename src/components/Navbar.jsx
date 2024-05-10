@@ -35,7 +35,7 @@ const Navbar = () => {
         navigate("/")
     }
     return (
-        <div className='maxwidth mx-auto px-2 py-2 relative'>
+        <div className='maxwidth mx-auto  px-2 py-2 relative '>
             <div className='h-[50px] flex justify-between items-center'>
                 <img
                     src={Logo}
