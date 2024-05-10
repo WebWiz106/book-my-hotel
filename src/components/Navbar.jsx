@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import Logo from "../assets/images/logo/logo-grey.png";
+import React, { useContext } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdClose } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
+import Logo from "../assets/images/logo/logo-grey.png";
+import AuthContext from '../context/AuthProvider';
 import Page from './Auth/Page';
 import MenuPage from './MenuPage';
-import AuthContext from '../context/AuthProvider';
-import { IoMdClose } from "react-icons/io";
-import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType } = useContext(AuthContext);
+    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType,isAuthenticated,setisAuthenticated } = useContext(AuthContext);
 
 
     const navigate = useNavigate()
@@ -28,14 +28,13 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen)
     }
 
-    const isAuthenticated = false;
 
 
     const handleRoute = () => {
         navigate("/")
     }
     return (
-        <div className='maxwidth mx-auto px-2 py-2 relative'>
+        <div className='maxwidth mx-auto  px-2 py-2 relative '>
             <div className='h-[50px] flex justify-between items-center'>
                 <img
                     src={Logo}

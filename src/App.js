@@ -10,6 +10,7 @@ import Room from "./components/Room";
 import AllBookings from "./components/AllBookings";
 import { useContext } from "react";
 import AuthContext from "./context/AuthProvider";
+import Success from "./components/Success";
 
 function App() {
   const { setIsMenuOpen } = useContext(AuthContext);
@@ -29,6 +30,7 @@ function App() {
         <Route path="/All Bookings" element={<AllBookings />} />
         <Route path="/Manage" element={<Mange />} />
         <Route path="/Room" element={<Room />} />
+        <Route path="/Success" element={<Success />} />
 
         {/* Wildcard route */}
         <Route path="*" element={<Home />} />

@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
-
+    const [isAuthenticated,setisAuthenticated] = useState(true)
     const [hotelDetails, setHotelDetails] = useState({
         "hotelName": "Ritz-Carlton Hotel",
         "hotelSlogan": "Stay once, carry memories forever",
@@ -19,6 +19,15 @@ export const AuthProvider = ({ children }) => {
         "adults": "0",
         "children": "0",
     });
+
+
+
+    const [bookingDetails, setBookingDetails] = useState({
+        "name": "",
+        "phone": "",
+        "email": "",
+        "request": ""
+    })
 
     useEffect(() => {
         localStorage.setItem("jiniId", "c94fcd4b-2625-4d5c-9177-2b62fbda9fe1");
@@ -39,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     const [checkoutDate, setcheckoutDate] = useState(tomorrow)
     const [Adults, setAdults] = useState(1)
     const [kids, setkids] = useState(0)
-    const [maxAdult,setmaxAdult] = useState({})
+    const [maxAdult, setmaxAdult] = useState({})
 
     //   login-page-popup
 
@@ -84,6 +93,11 @@ export const AuthProvider = ({ children }) => {
     const [grandTotal, setGrandTotals] = useState("");
 
 
+
+    const [payment, setpayment] = useState(null);
+
+
+
     return (
         <AuthContext.Provider
             value={{
@@ -108,13 +122,17 @@ export const AuthProvider = ({ children }) => {
                 subTotal, setSubTotal,
                 taxes, setTaxes,
                 grandTotal, setGrandTotals,
-                maxAdult,setmaxAdult,
+                maxAdult, setmaxAdult,
 
 
 
 
 
                 selectedRoomDetails, setSelectedRoomDetails,
+
+                bookingDetails, setBookingDetails,isAuthenticated,setisAuthenticated,
+
+                payment, setpayment,
 
 
             }}

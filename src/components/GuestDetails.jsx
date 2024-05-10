@@ -5,7 +5,9 @@ import useRazorpay from "react-razorpay";
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 
+import { useNavigate } from 'react-router-dom';
 const GuestDetails = () => {
+
     const { subTotal } = useContext(AuthContext)
 
 
@@ -34,15 +36,15 @@ const GuestDetails = () => {
 
 
 const Guest = () => {
-    const { grandTotal } = useContext(AuthContext)
+    const { grandTotal, bookingDetails, setBookingDetails,
+
+        setpayment,
+    } = useContext(AuthContext)
     const [selectedOption, setSelectedOption] = useState("option3");
 
-    const [bookingDetails, setBookingDetails] = useState({
-        "name": "",
-        "phone": "",
-        "email": "",
-        "request": ""
-    })
+    const navigate = useNavigate();
+
+
 
 
     const handleOptionChange = (event) => {
@@ -50,12 +52,13 @@ const Guest = () => {
     };
 
     const [Razorpay, createOrder] = useRazorpay();
-    const [loader_25, setLoader_25] = useState(false)
-    const [loader_50, setLoader_50] = useState(false)
-    const [loader_100, setLoader_100] = useState(false)
+
 
     const CreateSemiHalfBooking = () => {
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
+            setpayment(0.25)
+            HandlePaymentRazorpay()
+
             toast.success('Booking Success 25%');
 
         }
@@ -65,8 +68,11 @@ const Guest = () => {
         }
     }
     const CreateHalfBooking = () => {
+
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
+            setpayment(0.50)
             toast.success('Booking Success 50%');
+            HandlePaymentRazorpay()
 
 
         }
@@ -77,6 +83,9 @@ const Guest = () => {
     }
     const CreateFullBooking = () => {
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
+            setpayment(1)
+            HandlePaymentRazorpay()
+
             toast.success('Booking Success 100%');
 
         }
@@ -90,12 +99,12 @@ const Guest = () => {
         const { name, value } = e.target;
 
         setBookingDetails({ ...bookingDetails, [name]: value });
-        // console.log(bookingDetails)
 
     }
 
     const HandlePaymentRazorpay = (orderID, amnt, status) => {
-        alert('Payment')
+        navigate('/Success')
+        // alert('Payment')
         // try {
         //   // alert(props.GatewayConnected)
         //   const mockOrderData = {
@@ -178,7 +187,7 @@ const Guest = () => {
         <div className='w-full'>
             <ToastContainer floatingTime={5000} />
 
-            <div className="flex flex-col gap-2 px-0  md:px-5 py-3 text-sm leading-6  text-neutral-400">
+            <div className="flex flex-col gap-2 px-0 md:px-5 py-3 text-sm leading-6  text-neutral-400">
 
                 <div className='w-full'>
                     <input
@@ -218,7 +227,7 @@ const Guest = () => {
 
                 </div>
 
-                <div className='flex flex-col gap-5  text-neutral-700 bg-white rounded-md mt-2 border px-2 py-4 md:px-5 hover:border-blue-400 cursor-pointer'>
+                <div className='flex flex-col gap-5  text-neutral-700 bg-white rounded-md mt-2 border px-5 py-4 md:px-5 hover:border-blue-400 cursor-pointer'>
                     <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
                         <div className='flex gap-2 items-center' htmlFor="option1">
                             <input
@@ -295,9 +304,9 @@ const Guest = () => {
                     </div>
                 </div>
 
-                <div className='flex flex-col items-center py-2 text-neutral-700'>
+                <div className='flex flex-col items-center py-2 px-5 text-neutral-700'>
                     <div className='text-[#05db5c]'>Secure your stay before the prices change!</div>
-                    <div>By completing this reservation you are accepting our <Link to="" className="text-blue-900">Terms & Conditions</Link></div>
+                    <div className=''>By completing this reservation you are accepting our <Link to="" className="text-blue-900">Terms & Conditions</Link></div>
 
                     {selectedOption === "option1" ?
 
@@ -371,7 +380,7 @@ const BookingDetails = () => {
         <div className=''>
 
             <div className="flex flex-col gap-5 py-3 text-sm leading-6  text-neutral-700">
-                <div className='grid grid-cols-1 md:grid-cols-2 px-2  md:px-5 '>
+                <div className='grid grid-cols-1 md:grid-cols-2 px-5 '>
                     <div className='max-md:flex max-md:items-center max-md:justify-between'>
                         <div>Check In</div>
                         <div className='text-[18px]  font-[500]'>{formatDate(checkinInDate)}</div>
@@ -382,11 +391,11 @@ const BookingDetails = () => {
                     </div>
                 </div>
 
-                <div className=' flex justify-between  px-2  md:px-5 '>
+                <div className=' flex justify-between  px-5 '>
                     <div>No of Nights</div>
                     <div className='text-[16px] '>{handleCalculateNumberOfNights(checkinInDate, checkoutDate)} Night</div>
                 </div>
-                <div className='flex justify-between px-2  md:px-5 '>
+                <div className='flex justify-between px-5 '>
                     <div>Room</div>
                     <div className='flex flex-col items-end'>
 
@@ -404,7 +413,7 @@ const BookingDetails = () => {
 
                     </div>
                 </div>
-                <div className=' flex justify-between  px-2  md:px-5'>
+                <div className=' flex justify-between  px-5'>
                     <div>Guest</div>
                     <div className='text-[16px]'>{Adults} Adults, {kids} Kids</div>
                 </div>
@@ -441,10 +450,15 @@ const BookingDetails = () => {
                 </div>
             </div>
 
-        </div >
+        </div>
     )
 }
 
 
 
 export default GuestDetails
+
+
+
+
+

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { menuOptions, clientMenuOptions, adminMenuOptions } from '../utils/MenuOption';
 import AuthContext from '../context/AuthProvider';
+import { adminMenuOptions, clientMenuOptions, menuOptions } from '../utils/MenuOption';
 
 const MenuPage = () => {
-   const { isMenuOpen, menuType, setIsMenuOpen } = useContext(AuthContext);
+   const { isMenuOpen, menuType, setIsMenuOpen,setisAuthenticated } = useContext(AuthContext);
 
    const handleMenu = () => {
       setIsMenuOpen(!isMenuOpen)
@@ -23,6 +23,7 @@ const MenuPage = () => {
                      )
                   })}
                </div>}
+               <Link onClick={()=>{setisAuthenticated(false);localStorage.clear()}} to="/"><li className=' text-white hover:bg-white hover:text-black rounded-md p-2 hover:cursor-pointer'>Logout</li></Link>
                {menuType === "client" && <div className='flex flex-col gap-2'>
                   {clientMenuOptions.map((option) => {
                      return (
