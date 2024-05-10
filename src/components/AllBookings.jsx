@@ -30,8 +30,8 @@ export const AllBookings = () => {
 
 
   return (
-    <div className="maxwidth px-0 md:px-5 mx-auto">
-      <div className="radio flex justify-start md:gap-4 max-md:flex-col flex-wrap max-md:px-5">
+    <div className="maxwidth mx-auto">
+      <div className="radio flex justify-start md:gap-4 max-md:flex-col flex-wrap max-md:px-2">
         <div className='flex items-center'>
           <input type="radio" id='1' name="bookingType" className="mt-[2px]" onChange={handleRadioChange} />
           <label htmlFor="1" className='ms-1'>All</label>
