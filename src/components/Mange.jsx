@@ -10,36 +10,51 @@ import PriceTable from './Tables/PriceTable';
 
 
 const Mange = () => {
+  const [showAll, setShowAll] = useState(true)
   const [showInventory, setShowInventory] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
 
+  const handleAllClick = () => {
+    setShowAll(true)
+    setShowPrice(false);
+    setShowInventory(false)
+  }
   const handleInventoryClick = () => {
+    setShowAll(false)
     setShowPrice(false);
     setShowInventory(true)
   }
   const handlePriceClick = () => {
+    setShowAll(false)
     setShowInventory(false)
     setShowPrice(true);
   }
 
   return (
-    <div className='maxwidth px-5 mx-auto mt-4'>
-      <div className='flex justify-between'>
-        <div class="inline-flex rounded-md shadow-sm" role="group">
-          <button type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+    <div className='maxwidth mx-auto mt-4 md:px-2'>
+      <div className='flex justify-between max-md:px-2'>
+        <div class="inline-flex rounded-lg shadow-sm" role="group">
+          <button onClick={handleAllClick} type="button" className={`px-4 py-2 text-sm font-medium  rounded-s-lg   ${showAll === true ? "border border-orange-600 bg-orange-600 text-white" : "text-gray-900 bg-white border border-gray-200 hover:text-orange-600 hover:bg-neutral-100"} `}>
             All
           </button>
-          <button onClick={handleInventoryClick} type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+          <button onClick={handleInventoryClick} type="button" className={`px-4 py-2 text-sm font-medium ${showInventory === true ? "border-t border-b border-orange-600 bg-orange-600 text-white" : "text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-neutral-100 hover:text-orange-600 "}`}>
             Inventory
           </button>
-          <button onClick={handlePriceClick} type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+          <button onClick={handlePriceClick} type="button" className={`px-4 py-2 text-sm font-medium  rounded-e-lg ${showPrice ? "border border-orange-600 bg-orange-600 text-white" : "text-gray-900 bg-white border border-gray-200 hover:bg-neutral-100 hover:text-orange-600 "} `}>
             Price
           </button>
         </div>
-        <div>
-          <button className='px-4 py-2 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700'><BsThreeDots size={22} /></button>
-        </div>
+        {/* <div>
+          <button className='px-4 py-1 text-sm font-medium text-zinc-700 bg-white border border-zinc-700 rounded-lg hover:bg-zinc-700 hover:text-white'><BsThreeDots size={22} /></button>
+        </div> */}
       </div>
+
+
+      {
+        showAll && <>
+          <InventoryTable />
+        </>
+      }
       {
         showInventory && <>
           <InventoryTable />

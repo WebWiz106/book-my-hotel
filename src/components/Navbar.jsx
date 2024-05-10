@@ -28,14 +28,14 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen)
     }
 
-    const isAuthenticated = true;
+    const isAuthenticated = false;
 
 
     const handleRoute = () => {
         navigate("/")
     }
     return (
-        <div className='maxwidth mx-auto md:pl-3 md:pr-5 max-md:px-2 py-2 relative '>
+        <div className='maxwidth mx-auto  px-2 py-2 relative '>
             <div className='h-[50px] flex justify-between items-center'>
                 <img
                     src={Logo}

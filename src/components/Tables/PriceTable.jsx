@@ -9,124 +9,126 @@ const PriceTable = () => {
     return (
         <div className='mt-4'>
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 border-2 border-gray-300 rounded-md">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-gray-300 rounded-md">
                     <thead class="text-xs text-gray-700 uppercase">
                         <tr>
-                            <th scope="col" class="flex justify-between w-[16rem] h-[64px] px-4 py-2 bg-gray-200">
-                                <button className='px-4 py-1 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 flex items-center gap-1'><IoSync size={20} />Sync</button>
-                                <button className='px-4 py-1 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 flex items-center gap-1'><GiBackwardTime size={20} />Logs</button>
+                            <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-2 bg-gray-200">
+                                <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
+                                    <IoSync size={20} />Sync</button>
+                                <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
+                                    <GiBackwardTime size={20} />Logs</button>
                             </th>
-                            <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-2 border-gray-300">
-                                <input type="date" className="border-2 p-2 px-4 border-black border-opacity-25 rounded-md" /><button><FaArrowLeft /></button><button><FaArrowRight /></button>
+                            <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
+                                <input type="date" className="border p-2 px-4 border-black border-opacity-25 rounded-md" /><button><FaArrowLeft /></button><button><FaArrowRight /></button>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b-2 border-gray-300">
-                            <th scope="row" class="px-6 py-4 font-medium text-black  bg-gray-200 whitespace-nowrap w-[16rem]">
+                        <tr class="bg-white border-b border-gray-300 flex-grow">
+                            <th scope="row" class="px-4 py-4 font-medium text-zinc-700 bg-gray-200 whitespace-nowrap w-[16rem]">
                                 <span className="text-[2rem] font-bold">Rooms</span>
                             </th>
-                            <td class="w-full flex">
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                            <td class="w-full flex justify-between">
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
-                                <div className='flex flex-col text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">01</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">01</span>
                                 </div>
-                                <div className='flex flex-col  text-center border-r-2 border-gray-300'>
+                                <div className='flex flex-col  text-center border-r border-gray-300'>
                                     <span>May</span>
                                     <span>2024</span>
                                     <span>Tue</span>
-                                    <span className="bg-blue-500 text-white px-6 ">02</span>
+                                    <span className="bg-zinc-500 text-white px-6 ">02</span>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b">
-                            <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
+                        <tr class="bg-white border-b border-gray-300">
+                            <th scope="row" class="px-4 font-medium text-zinc-700 bg-gray-200  w-[16rem] py-2">
                                 <div className="gap-4 flex flex-col">
                                     <span className="font-extrabold text-1xl">Cottages</span>
                                     <div>
@@ -191,8 +193,8 @@ const PriceTable = () => {
                                 </div>
                             </td>
                         </tr>
-                        <tr class="bg-white border-t-2 border-gray-300">
-                            <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
+                        <tr class="bg-white border-t border-gray-300">
+                            <th scope="row" class="px-4 font-medium text-zinc-700  bg-gray-200  w-[16rem] py-2">
                                 <div className="gap-4 flex flex-col">
                                     <span className="font-extrabold text-1xl">Swiss tents</span>
                                     <div>
@@ -257,8 +259,8 @@ const PriceTable = () => {
                                 </div>
                             </td>
                         </tr>
-                        <tr class="bg-white border-t-2 border-gray-300">
-                            <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
+                        <tr class="bg-white border-t border-gray-300">
+                            <th scope="row" class="px-4 font-medium text-zinc-700  bg-gray-200  w-[16rem] py-2">
                                 <div className="gap-4 flex flex-col">
                                     <span className="font-extrabold text-1xl">family tents</span>
                                     <div>

@@ -18,10 +18,10 @@ const Page = () => {
                 {modalType === "login" &&
                     <section class=" w-full ">
                         <div class="flex flex-col items-center justify-center py-8 mx-auto h-screen lg:py-0">
-                            <a href="#" class="flex items-center h-[50px] mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                            {/* <a href="#" class="flex items-center h-[50px] mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                                 <img class="h-[100%]" srcSet={require("../../assets/images/logo/logo-white.png")} alt="logo" />
 
-                            </a>
+                            </a> */}
                             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
 
                                 <div class="px-6 pb-6 space-y-4 md:space-y-6 sm:p-8">
@@ -65,10 +65,10 @@ const Page = () => {
                 {modalType === "signup" &&
                     <section class=" w-full ">
                         <div class="flex flex-col items-center justify-center py-8 mx-auto md:h-screen lg:py-0">
-                            <a href="#" class="flex items-center h-[50px] mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                            {/* <a href="#" class="flex items-center h-[50px] mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                                 <img class="h-[100%]" srcSet={require("../../assets/images/logo/logo-white.png")} alt="logo" />
 
-                            </a>
+                            </a> */}
                             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
 
                                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
