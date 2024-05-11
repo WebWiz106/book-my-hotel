@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
-    const [isAuthenticated,setisAuthenticated] = useState(true)
+    const [isAuthenticated, setisAuthenticated] = useState(true)
     const [hotelDetails, setHotelDetails] = useState({
         "hotelName": "Ritz-Carlton Hotel",
         "hotelSlogan": "Stay once, carry memories forever",
@@ -39,11 +39,14 @@ export const AuthProvider = ({ children }) => {
 
     const today = new Date().toISOString().split('T')[0];
 
+
+
     // Get tomorrow's date by adding 1 day to the current date
     const tomorrowDate = new Date();
     tomorrowDate.setDate(tomorrowDate.getDate() + 1);
     const tomorrow = tomorrowDate.toISOString().split('T')[0];
 
+    const [currentDate, setCurrentDate] = useState(today)
     const [checkinInDate, setcheckinInDate] = useState(today)
     const [checkoutDate, setcheckoutDate] = useState(tomorrow)
     const [Adults, setAdults] = useState(1)
@@ -98,12 +101,20 @@ export const AuthProvider = ({ children }) => {
 
 
 
+
+    const [showAll, setShowAll] = useState(true)
+    const [showInventory, setShowInventory] = useState(false);
+    const [showPrice, setShowPrice] = useState(false);
+
+
+
     return (
         <AuthContext.Provider
             value={{
                 hotelDetails, setHotelDetails,
                 checkForAvailbilityInfo, setCheckForAvailbilityInfo,
 
+                currentDate, setCurrentDate,
                 checkinInDate, setcheckinInDate,
                 checkoutDate, setcheckoutDate,
                 Adults, setAdults,
@@ -130,9 +141,12 @@ export const AuthProvider = ({ children }) => {
 
                 selectedRoomDetails, setSelectedRoomDetails,
 
-                bookingDetails, setBookingDetails,isAuthenticated,setisAuthenticated,
+                bookingDetails, setBookingDetails, isAuthenticated, setisAuthenticated,
 
                 payment, setpayment,
+
+                showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,
+
 
 
             }}

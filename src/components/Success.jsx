@@ -81,8 +81,8 @@ const Success = () => {
 
 
     return (
-        <div className='px-2'>
-            <div id="success-content" className={`max-w-[800px] w-[800px] mx-auto border-2 border-zinc-400  ${isPDFGenerationInProgress ? '' : 'rounded-lg'} bg-white`}>
+        <div className='px-2 w-full'>
+            <div id="success-content" className={`max-w-[800px] md:w-[800px] mx-auto border-2 border-zinc-400  ${isPDFGenerationInProgress ? '' : 'rounded-lg'} bg-white`}>
                 <div className='flex max-md:flex-col gap-5 md:gap-10 py-4  px-5'>
                     <div className='w-full flex-col gap-1 md:w-[60%] flex justify-center '>
                         <p className='text-[20px]  text-neutral-700 font-semibold'>{hotelDetails?.hotelName}</p>

@@ -1,18 +1,126 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { BsThreeDots } from "react-icons/bs";
 import { IoSync } from "react-icons/io5";
 import { GiBackwardTime } from "react-icons/gi";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { CiCirclePlus } from "react-icons/ci";
-import InventoryTable from './Tables/InventoryTable';
-import PriceTable from './Tables/PriceTable';
+import AuthContext from '../context/AuthProvider';
 
 
 const Mange = () => {
-  const [showAll, setShowAll] = useState(true)
-  const [showInventory, setShowInventory] = useState(false);
-  const [showPrice, setShowPrice] = useState(false);
+  const { showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice, } = useContext(AuthContext)
+
+  const { currentDate, setCurrentDate } = useContext(AuthContext);
+
+  const inventoryDatas = {
+    "Inventory": {
+      "1": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 2,
+        "2024-05-15": 3,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      },
+      "2": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 4,
+        "2024-05-15": 2,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      },
+      "3": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 4,
+        "2024-05-15": 2,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      }
+    },
+    "Status": true,
+    "next": "2024-05-17",
+    "prev": "2024-05-10"
+  }
+  const priceDatas = {
+    "Price": {
+      "1": {
+        "2024-05-10": 2000,
+        "2024-05-11": 2008,
+        "2024-05-12": 2999,
+        "2024-05-13": 2999,
+        "2024-05-14": 2999,
+        "2024-05-15": 3999,
+        "2024-05-16": 2999,
+        "2024-05-17": 2999
+      },
+      "2": {
+        "2024-05-10": 2500,
+        "2024-05-11": 2500,
+        "2024-05-12": 2500,
+        "2024-05-13": 2500,
+        "2024-05-14": 4500,
+        "2024-05-15": 2500,
+        "2024-05-16": 2500,
+        "2024-05-17": 2500
+      },
+      "3": {
+        "2024-05-10": 2400,
+        "2024-05-11": 2400,
+        "2024-05-12": 2400,
+        "2024-05-13": 2400,
+        "2024-05-14": 4400,
+        "2024-05-15": 2400,
+        "2024-05-16": 2400,
+        "2024-05-17": 2400,
+      },
+    },
+    "Status": true,
+    "next": "2024-05-17",
+    "prev": "2024-05-10"
+  }
+
+  const [priceData, setPriceData] = useState(priceDatas.Price)
+  const [inventoryData, setInventoryData] = useState(inventoryDatas.Inventory)
+
+  const dates = Object.keys(inventoryData['1']);
+
+  const getDayFromDate = (dateString) => {
+    const dt = new Date(dateString);
+    return dt.getDate();
+  }
+
+  const getDayOfWeek = (date) => {
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayIndex = new Date(date).getDay();
+    return daysOfWeek[dayIndex];
+  };
+
+
+  const getMonthInWords = (dateString) => {
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const dt = new Date(dateString);
+    const monthIndex = dt.getMonth();
+    return monthNames[monthIndex];
+  };
+
+  const getYearFromDate = (dateString) => {
+    const yearIndex = new Date(dateString)
+    const year = yearIndex.getFullYear();
+
+    return year;
+  }
 
   const handleAllClick = () => {
     setShowAll(true)
@@ -50,7 +158,130 @@ const Mange = () => {
       </div>
 
 
-      {
+      <div class="relative overflow-x-auto mt-4">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-gray-300">
+          <thead class="text-xs text-gray-700 uppercase">
+            <tr>
+              <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-2 bg-gray-200">
+                <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
+                  <IoSync size={20} />Sync</button>
+                <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
+                  <GiBackwardTime size={20} />Logs</button>
+              </th>
+              <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
+                <input type="date"
+                  value={currentDate}
+                  // onChange={handleDateChange}
+                  className="border p-2 px-4 border-black border-opacity-25 rounded-md" /><button><FaArrowLeft /></button><button><FaArrowRight /></button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b border-gray-300 flex-grow">
+              <th scope="row" class="px-4 py-4 font-medium text-zinc-700 bg-gray-200 whitespace-nowrap w-[16rem]">
+                <span className="text-[2rem] font-bold">Rooms</span>
+              </th>
+
+              <td class="w-full flex justify-between">
+                {dates.map(date => (
+                  <div className='flex flex-col  w-full text-center border-r border-gray-300'>
+                    <span>{getMonthInWords(date)}</span>
+                    <span>{getYearFromDate(date)}</span>
+                    <span>{getDayOfWeek(date)}</span>
+                    <span className="bg-zinc-500 text-white max-md:px-7 ">{getDayFromDate(date)}</span>
+                  </div>
+                ))}
+
+
+              </td>
+            </tr>
+
+
+            {
+              showInventory && <>{
+                Object.keys(inventoryData).map((item, itemIndex) => (
+                  <tr key={itemIndex} className="bg-white border-t border-gray-300">
+                    <th className="px-4 font-medium text-zinc-700 bg-gray-200 w-[16rem] py-2">
+                      <div className="gap-4 flex flex-col">
+                        <span className="font-extrabold text-1xl">{item}</span>
+                        <div>
+                          <div className='flex items-center gap-2'>
+                            <CiCirclePlus fontSize={20} fontWeight={500} />
+                            <span className='text-bold'>Inventory</span>
+                          </div>
+                          <div className='ms-7'>
+                            <span className='font-light border-b-2 border-gray-400'>Multi Update</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+
+                    <td class="w-full flex">
+                      {dates.map(date => (
+                        <div key={date} className='flex flex-col justify-end py-2 px-[10px] w-full h-full border-l-2 border-white'>
+                          <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
+                          <span className="border-2 border-gray-300 rounded-md text-center overflow-hidden">
+                            <input type='text' value={inventoryData[item][date]} className="w-[100%]  py-1 text-center outline-none  h-[100%] " />
+
+                          </span>
+                        </div>
+                      ))}
+                    </td>
+                  </tr>
+                ))
+              }</>
+            }
+
+            {
+              showPrice && <>{
+                Object.keys(priceData).map((item, itemIndex) => (
+                  <tr key={itemIndex} className="bg-white border-t border-gray-300">
+                    <th className="px-4 font-medium text-zinc-700 bg-gray-200 w-[16rem] py-2">
+                      <div className="gap-4 flex flex-col">
+                        <span className="font-extrabold text-1xl">{item}</span>
+                        <div>
+                          <div className='flex items-center gap-2'>
+                            <CiCirclePlus fontSize={20} fontWeight={500} />
+                            <span className='text-bold'>Inventory</span>
+                          </div>
+                          <div className='ms-7'>
+                            <span className='font-light border-b-2 border-gray-400'>Multi Update</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+
+                    <td class="w-full flex">
+                      {dates.map(date => (
+                        <div key={date} className='flex flex-col justify-end py-2 px-[10px] w-full h-full border-l-2 border-white'>
+                          <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
+                          <span className="border-2 border-gray-300 rounded-md text-center overflow-hidden">
+                            <input type='text' value={priceData[item][date]} className="w-[100%] py-1 text-center outline-none  h-[100%] " />
+
+                          </span>
+                        </div>
+                      ))}
+                    </td>
+                  </tr>
+                ))
+              }</>
+            }
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+
+
+
+
+
+
+      {/* {
         showAll && <>
           <InventoryTable />
         </>
@@ -64,375 +295,8 @@ const Mange = () => {
         showPrice && <>
           <PriceTable />
         </>
-      }
-      {/* <div className='mt-4'>
-        <div class="relative overflow-x-auto">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 border-2 border-gray-300 rounded-md">
-            <thead class="text-xs text-gray-700 uppercase">
-              <tr>
-                <th scope="col" class="flex justify-between w-[16rem] h-[64px] px-4 py-2 bg-gray-200">
-                  <button className='px-4 py-1 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 flex items-center gap-1'><IoSync size={20} />Sync</button>
-                  <button className='px-4 py-1 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 flex items-center gap-1'><GiBackwardTime size={20} />Logs</button>
-                </th>
-                <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-2 border-gray-300">
-                  <input type="date" className="border-2 p-2 px-4 border-black border-opacity-25 rounded-md" /><button><FaArrowLeft /></button><button><FaArrowRight /></button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="bg-white border-b-2 border-gray-300">
-                <th scope="row" class="px-6 py-4 font-medium text-black  bg-gray-200 whitespace-nowrap w-[16rem]">
-                  <span className="text-[2rem] font-bold">Rooms</span>
-                </th>
-                <td class="w-full flex">
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                  <div className='flex flex-col text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">01</span>
-                  </div>
-                  <div className='flex flex-col  text-center border-r-2 border-gray-300'>
-                    <span>May</span>
-                    <span>2024</span>
-                    <span>Tue</span>
-                    <span className="bg-blue-500 text-white px-6 ">02</span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="bg-white border-b">
-                <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
-                  <div className="gap-4 flex flex-col">
-                    <span className="font-extrabold text-1xl">Cottages</span>
-                    <div>
-                      <div className='flex items-center gap-2'>
-                        <CiCirclePlus fontSize={20} fontWeight={500} />
-                        <span className='text-bold'>Inventory</span>
-                      </div>
-                      <div className='ms-7'>
-                        <span className='font-light border-b-2 border-gray-400'>Multi Update</span>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <td class="w-full flex">
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">1</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">4</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">3</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">8</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">2</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="bg-white border-t-2 border-gray-300">
-                <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
-                  <div className="gap-4 flex flex-col">
-                    <span className="font-extrabold text-1xl">Swiss tents</span>
-                    <div>
-                      <div className='flex items-center gap-2'>
-                        <CiCirclePlus fontSize={20} fontWeight={500} />
-                        <span className='text-bold'>Inventory</span>
-                      </div>
-                      <div className='ms-7'>
-                        <span className='font-light border-b-2 border-gray-400'>Multi Update</span>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <td class="w-full flex">
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">1</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">4</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">3</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">8</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">2</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="bg-white border-t-2 border-gray-300">
-                <th scope="row" class="px-6 font-medium text-black  bg-gray-200  w-[16rem] py-2">
-                  <div className="gap-4 flex flex-col">
-                    <span className="font-extrabold text-1xl">family tents</span>
-                    <div>
-                      <div className='flex items-center gap-2'>
-                        <CiCirclePlus fontSize={20} fontWeight={500} />
-                        <span className='text-bold'>Inventory</span>
-                      </div>
-                      <div className='ms-7'>
-                        <span className='font-light border-b-2 border-gray-400'>Multi Update</span>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <td class="w-full flex">
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">1</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">4</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">3</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">8</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">2</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">6</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                  <div className='flex flex-col justify-end py-2 px-[10px] h-full border-l-2 border-white'>
-                    <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
-                    <span className="border-2 border-gray-300 px-4 py-1 rounded-md">5</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> */}
+      } */}
+
     </div>
   )
 }
