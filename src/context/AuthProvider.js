@@ -214,8 +214,8 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    const [showAll, setShowAll] = useState(true)
-    const [showInventory, setShowInventory] = useState(false);
+    const [showAll, setShowAll] = useState(false)
+    const [showInventory, setShowInventory] = useState(true);
     const [showPrice, setShowPrice] = useState(false);
 
 
@@ -255,7 +255,7 @@ export const AuthProvider = ({ children }) => {
 
                 bookingDetails, setBookingDetails, isAuthenticated, setisAuthenticated,
 
-                payment, setpayment,AllBookings,setAllBookings
+                payment, setpayment,AllBookings,setAllBookings,
 
                 showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,
 
