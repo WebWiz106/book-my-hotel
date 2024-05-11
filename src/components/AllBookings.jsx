@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react';
+import AuthContext from '../context/AuthProvider';
 
 
 export const AllBookings = () => {
+  const {AllBookings} = useContext(AuthContext)
   const [dateRange, setDateRange] = useState(false);
   const [singleBookingSearch, setSingleBookingSearch] = useState(false)
   const [all, setAll] = useState(false);
@@ -89,22 +91,25 @@ export const AllBookings = () => {
           <thead class="text-xs text-white uppercase bg-zinc-700">
             <tr>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Product name
+                Booking Id
               </th>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Color
+                Name
               </th>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Category
+                Email-Id
               </th>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Price
+                Phone
               </th>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Price
+                Total Price
               </th>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                Price
+                Remaining
+              </th>
+              <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                Status
               </th>
               <th scope="col" class="px-6 py-3">
                 Operations
@@ -112,25 +117,28 @@ export const AllBookings = () => {
             </tr>
           </thead>
           <tbody className='bg-neutral-200'>
-            {array.map((item, index) => (
+            {AllBookings.map((item, index) => (
               <tr key={index} class=" border-b">
                 <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap">
-                  Apple MacBook Pro 17"
+                  {item.bookingId}
                 </th>
                 <td class="px-6 py-4">
-                  Silver
+                  {item.guestInfo.guestName}
                 </td>
                 <td class="px-6 py-4">
-                  Laptop
+                  {item.guestInfo.EmailId}
                 </td>
                 <td class="px-6 py-4">
-                  $2999
+                  {item.guestInfo.Phone}
                 </td>
                 <td class="px-6 py-4">
-                  $2999
+                  {item.price.Total}
                 </td>
                 <td class="px-6 py-4">
-                  $2999
+                  {item.price.Total - item.price.amountPay}
+                </td>
+                <td class="px-6 py-4">
+                  {item.payment.Status}
                 </td>
                 <td class="px-6 py-4">
                   <div className="flex gap-4">

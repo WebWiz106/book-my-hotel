@@ -97,6 +97,118 @@ export const AuthProvider = ({ children }) => {
     const [payment, setpayment] = useState(null);
 
 
+    const [AllBookings,setAllBookings] = useState([
+        {
+            "Adults": "1",
+            "Bookings": [
+                {
+                    "Qty": 1,
+                    "RoomType": "1"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "2"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "3"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "4"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "5"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "6"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "7"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "8"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "9"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "10"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "11"
+                },
+                {
+                    "Qty": 0,
+                    "RoomType": "12"
+                }
+            ],
+            "Kids": "0",
+            "_id": {
+                "$oid": "65d13267b3792b168ae21c67"
+            },
+            "bookingDate": "2024-02-18 03:55:43.453692",
+            "bookingId": "B2024021800001",
+            "checkIn": "2024-03-04",
+            "checkOut": "2024-03-05",
+            "guestInfo": {
+                "City": "Dhampur",
+                "Country": {
+                    "label": "India",
+                    "value": "IN"
+                },
+                "EmailId": "test@gmail.com",
+                "Phone": "+919119059286",
+                "address": "Dhampur",
+                "guestName": "Divyanshu Sharma"
+            },
+            "hId": "56369483",
+            "isCheckedIn": false,
+            "isCheckedOut": false,
+            "mealPlan": {
+                "PackageId": "",
+                "PackageName": "",
+                "PackagePrice": 0,
+                "PackageType": null
+            },
+            "ndid": "e3854af8-e62b-4fab-8236-2f6dbf3660a2",
+            "packages": {
+                "packageId": "NA",
+                "packageName": "NA",
+                "packagePrice": "NA",
+                "specialRequest": "NA"
+            },
+            "payment": {
+                "Mode": "Online",
+                "PaymentProvider": "RazorPay",
+                "RefNo": "NE2wdHDZVunnTeh6dzBTTR",
+                "Status": "SUCCESS",
+                "payId": "USER DASHBOARD"
+            },
+            "price": {
+                "Principal": 5800,
+                "Tax": 1044,
+                "Total": 6844,
+                "amountPay": 6844
+            },
+            "promocode": {
+                "Code": "NA",
+                "Discount": "NA",
+                "PromoId": "NA"
+            },
+            "roomNumbers": [
+                "101"
+            ]
+        }])
+
+
 
     return (
         <AuthContext.Provider
@@ -132,7 +244,7 @@ export const AuthProvider = ({ children }) => {
 
                 bookingDetails, setBookingDetails,isAuthenticated,setisAuthenticated,
 
-                payment, setpayment,
+                payment, setpayment,AllBookings,setAllBookings
 
 
             }}
