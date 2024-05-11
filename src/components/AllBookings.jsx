@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../context/AuthProvider';
+import BookingEditPopup from './BookingEditPopup';
 
 
 export const AllBookings = () => {
-  const {AllBookings} = useContext(AuthContext)
+  const { AllBookings, bookingPopup, setBookingPopup } = useContext(AuthContext)
   const [dateRange, setDateRange] = useState(false);
   const [singleBookingSearch, setSingleBookingSearch] = useState(false)
   const [all, setAll] = useState(false);
@@ -29,6 +30,11 @@ export const AllBookings = () => {
   }
 
   const array = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
+
+
+  const handleEditBookingPopup = () => {
+    setBookingPopup(!bookingPopup)
+  }
 
 
   return (
@@ -141,7 +147,7 @@ export const AllBookings = () => {
                   {item.payment.Status}
                 </td>
                 <td class="px-6 py-4">
-                  <div className="flex gap-4">
+                  <div onClick={handleEditBookingPopup} className="flex gap-4">
                     <button>Edit</button>
                     <button>Update</button>
                   </div>
@@ -151,6 +157,10 @@ export const AllBookings = () => {
           </tbody>
         </table>
       </div>
+
+
+
+      {bookingPopup && <BookingEditPopup />}
     </div>
   )
 }

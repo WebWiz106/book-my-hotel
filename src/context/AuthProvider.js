@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
     const [payment, setpayment] = useState(null);
 
 
-    const [AllBookings,setAllBookings] = useState([
+    const [AllBookings, setAllBookings] = useState([
         {
             "Adults": "1",
             "Bookings": [
@@ -214,6 +214,8 @@ export const AuthProvider = ({ children }) => {
 
 
 
+    const [bookingPopup, setBookingPopup] = useState(false)
+
     const [showAll, setShowAll] = useState(true)
     const [showInventory, setShowInventory] = useState(false);
     const [showPrice, setShowPrice] = useState(false);
@@ -255,10 +257,10 @@ export const AuthProvider = ({ children }) => {
 
                 bookingDetails, setBookingDetails, isAuthenticated, setisAuthenticated,
 
-                payment, setpayment,AllBookings,setAllBookings
+                payment, setpayment, AllBookings, setAllBookings,
 
                 showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,
-
+                bookingPopup, setBookingPopup
 
 
             }}
