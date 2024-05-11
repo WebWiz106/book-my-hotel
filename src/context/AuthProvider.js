@@ -216,8 +216,8 @@ export const AuthProvider = ({ children }) => {
 
     const [bookingPopup, setBookingPopup] = useState(false)
 
-    const [showAll, setShowAll] = useState(true)
-    const [showInventory, setShowInventory] = useState(false);
+    const [showAll, setShowAll] = useState(false)
+    const [showInventory, setShowInventory] = useState(true);
     const [showPrice, setShowPrice] = useState(false);
 
 
