@@ -17,7 +17,7 @@ const InventoryTable = () => {
                                 <button className='px-4 py-1 text-sm font-medium text-blue-400 bg-white border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 flex items-center gap-1'><GiBackwardTime size={20} />Logs</button>
                             </th>
                             <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-2 border-gray-300">
-                                <input type="date" className="border-2 p-2 px-4 border-black border-opacity-25 rounded-md" /><button><FaArrowLeft /></button><button><FaArrowRight /></button>
+                                <input type="date" className="border-2 p-2 px-4 border-black border-opacity-25 rounded-md" /><button className="ms-4 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowLeft /></button><button className="ms-2 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowRight /></button>
                             </th>
                         </tr>
                     </thead>
