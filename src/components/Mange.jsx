@@ -237,13 +237,13 @@ const Mange = () => {
                   <GiBackwardTime size={20} />Logs</button>
               </th>
               <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
-                <button onClick={(e)=>{GetDataForDate(date,"prev")}}><FaArrowLeft /></button>
+                <button onClick={(e)=>{GetDataForDate(date,"prev")}} className="me-1 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowLeft /></button>
                 <input type="date"
                   value={date}
                   onChange={(e)=>{GetDataForDate(e.target.value,"next")}}
                   className="border p-2 px-4 border-black border-opacity-25 rounded-md" />
                   
-                  <button onClick={(e)=>{GetDataForDate(date,"next")}}><FaArrowRight /></button>
+                  <button onClick={(e)=>{GetDataForDate(date,"next")}} className="ms-1 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowRight /></button>
                   
                   <button onClick={()=>{bulkupdateFunction()}}>Bulk Update</button>
               </th>
