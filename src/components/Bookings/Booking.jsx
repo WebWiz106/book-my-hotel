@@ -1,5 +1,5 @@
 import React from 'react'
-import HotelSlider from './HotelSlider/HotelSlider'
+import HotelSlider from '../HotelSlider/HotelSlider'
 const Booking = () => {
   return (
     <div className="w-3/4 mx-auto">

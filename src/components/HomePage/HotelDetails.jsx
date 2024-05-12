@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../context/AuthProvider'
+import AuthContext from '../../context/AuthProvider'
 
 const HotelDetails = () => {
     const { hotelDetails, setHotelDetails } = useContext(AuthContext);

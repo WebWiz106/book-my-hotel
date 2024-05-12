@@ -6,7 +6,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { Star } from '@mui/icons-material';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 const RoomDetails = () => {

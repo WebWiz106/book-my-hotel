@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { FaSquareMinus, FaSquarePlus } from 'react-icons/fa6';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 const CheckForAvailbility = ({ toggleAccordion }) => {
 

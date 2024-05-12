@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { RxCross2 } from "react-icons/rx";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 const BookingEditPopup = () => {
 
-    const {setBookingPopup} = useContext(AuthContext)
+    const { setBookingPopup } = useContext(AuthContext)
 
     const bookingInfo = {
         "Adults": "1",
@@ -116,7 +116,7 @@ const BookingEditPopup = () => {
             "101"
         ]
     }
-    
+
 
     const handleBookingCloseClick = () => {
         setBookingPopup(false)
@@ -135,7 +135,7 @@ const BookingEditPopup = () => {
         return `${formattedHours}:${minutes} ${ampm}`;
     }
 
-    
+
 
 
     return (
