@@ -230,22 +230,33 @@ const Mange = () => {
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-gray-300">
           <thead class="text-xs text-gray-700 uppercase">
             <tr>
-              <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-2 bg-gray-200">
+              <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-4 bg-gray-200">
                 <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
                   <IoSync size={20} />Sync</button>
                 <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
                   <GiBackwardTime size={20} />Logs</button>
               </th>
-              <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
-                <button onClick={(e) => { GetDataForDate(date, "prev") }}><FaArrowLeft /></button>
-                <input type="date"
-                  value={date}
-                  onChange={(e) => { GetDataForDate(e.target.value, "next") }}
-                  className="border p-2 px-4 border-black border-opacity-25 rounded-md" />
+              <th scope="col" class="px-4  py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
+                <div className='flex justify-between'>
+                  <div className='w-[33.33%] max-md:hidden'>
 
-                <button onClick={(e) => { GetDataForDate(date, "next") }}><FaArrowRight /></button>
+                  </div>
+                  <div className='w-[33.33%] max-md:w-[66.66%] flex gap-4 md:justify-center items-center'>
+                    <button onClick={(e) => { GetDataForDate(date, "prev") }} className="me-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowLeft /></button>
+                    <input type="date"
+                      value={date}
+                      onChange={(e) => { GetDataForDate(e.target.value, "next") }}
+                      className="border py-2 px-4 bg-white  rounded-md" />
 
-                <button onClick={() => { bulkupdateFunction() }}>Bulk Update</button>
+                    <button onClick={(e) => { GetDataForDate(date, "next") }} className="ms-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowRight /></button>
+
+                  </div>
+                  <div className='w-[33.33%] flex justify-end items-center'>
+                    <button onClick={() => { bulkupdateFunction() }} className='px-4 py-2 text-sm font-medium  rounded-lg   text-gray-900 bg-white border hover:bg-orange-600 hover:text-white flex items-center gap-1'>Bulk Update</button>
+
+                  </div>
+                </div>
+
               </th>
 
             </tr>

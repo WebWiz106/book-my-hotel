@@ -150,17 +150,17 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-3 max-md:gap-5'>
                 <div className='col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-5 flex-grow'>
                     <div className="flex flex-col">
-                        <div className="text-sm text-neutral-700">CHECK IN</div>
+                        <div className="text-sm text-neutral-700 font-medium">CHECK IN</div>
                         <input type='date' name='checkin' value={checkinInDate} onChange={(e) => { handleDateChange(e) }} className="calender outline-none flex flex-col justify-center px-5 py-2 mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5" />
                     </div>
                     <div className="flex flex-col">
-                        <div className="text-sm text-neutral-700">CHECK OUT</div>
+                        <div className="text-sm text-neutral-700 font-medium">CHECK OUT</div>
                         <input type='date' name='checkout' value={checkoutDate} onChange={(e) => { handleDateChangeCheckout(e) }} className="calender outline-none flex flex-col justify-center px-5 py-2 mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5" />
                     </div>
                     <div className="flex flex-col">
-                        <div className="text-sm text-neutral-700">ROOM 1</div>
+                        <div className="text-sm text-neutral-700 ">ROOM 1</div>
                         <div className='flex justify-between items-center px-5 gap-2 py-[9px] mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5'>
-                            <div>Adults</div>
+                            <div className='font-medium'>Adults</div>
                             <div className='flex items-center gap-5'>
                                 <FaSquareMinus onClick={() => { countofAdults("sub") }} size={18} className='text-zinc-700 cursor-pointer' />
                                 {Adults}
@@ -178,7 +178,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
                     <div className="flex flex-col">
                         <div className="text-sm text-neutral-700">Children(0-12)</div>
                         <div className='flex justify-between items-center gap-2 px-5 py-[9px] mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5'>
-                            <div>Kids</div>
+                            <div className='font-medium'>Kids</div>
                             <div className='flex items-center gap-5'>
                                 <FaSquareMinus onClick={() => { countofKids("sub") }} size={18} className='text-zinc-700 cursor-pointer' />
                                 {kids}
