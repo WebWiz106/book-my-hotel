@@ -13,7 +13,7 @@ const Booking = () => {
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
             <div className='flex flex-col gap-2'>
               <div className="flex justify-between">
-                <p className="text-white">Customer Name</p>
+                <p className="text-white">Guest Name</p>
                 <p className='text-white'><span>Aduls: </span>2 <span>Child: </span>2</p>
               </div>
               <div className="flex justify-between">
@@ -33,7 +33,7 @@ const Booking = () => {
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
             <div className='flex flex-col gap-2'>
               <div className="flex justify-between">
-                <p className="text-white">Customer Name</p>
+                <p className="text-white">Guest Name</p>
                 <p className='text-white'><span>Aduls: </span>2 <span>Child: </span>2</p>
               </div>
               <div className="flex justify-between">
@@ -53,7 +53,7 @@ const Booking = () => {
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
             <div className='flex flex-col gap-2'>
               <div className="flex justify-between">
-                <p className="text-white">Customer Name</p>
+                <p className="text-white">Guest Name</p>
                 <p className='text-white'><span>Aduls: </span>2 <span>Child: </span>2</p>
               </div>
               <div className="flex justify-between">
@@ -73,7 +73,7 @@ const Booking = () => {
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
             <div className='flex flex-col gap-2'>
               <div className="flex justify-between">
-                <p className="text-white">Customer Name</p>
+                <p className="text-white">Guest Name</p>
                 <p className='text-white'><span>Aduls: </span>2 <span>Child: </span>2</p>
               </div>
               <div className="flex justify-between">
