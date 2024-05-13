@@ -3,7 +3,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { GiBackwardTime } from "react-icons/gi";
 import { IoSync } from "react-icons/io5";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 const Mange = () => {
@@ -11,7 +11,7 @@ const Mange = () => {
 
 
   const today = new Date().toISOString().split('T')[0];
-  const [date,setDate] = useState(today)
+  const [date, setDate] = useState(today)
 
   const inventoryDatas = {
     "Inventory": {
@@ -90,7 +90,7 @@ const Mange = () => {
 
   const [priceData, setPriceData] = useState(priceDatas.Price)
   const [PriceBulkupdate, setPriceBulkupdate] = useState({})
-  
+
   const [inventoryData, setInventoryData] = useState(inventoryDatas.Inventory)
   const [InventoryBulkupdate, setInventoryBulkupdate] = useState({})
 
@@ -125,7 +125,7 @@ const Mange = () => {
     return year;
   }
 
-  
+
   const handleAllClick = () => {
     setShowAll(true)
     setShowPrice(false);
@@ -142,13 +142,13 @@ const Mange = () => {
     setShowPrice(true);
   }
 
-  const PriceUpdate = (value,roomtype,date)=>{
+  const PriceUpdate = (value, roomtype, date) => {
     const updatedBulkPriceUpdate = { ...PriceBulkupdate };
     const updatePriceData = { ...priceData };
 
 
     if (!updatedBulkPriceUpdate[roomtype]) {
-        updatedBulkPriceUpdate[roomtype] = {};
+      updatedBulkPriceUpdate[roomtype] = {};
     }
     if (!updatePriceData[roomtype]) {
       updatePriceData[roomtype] = {};
@@ -164,13 +164,13 @@ const Mange = () => {
     console.log(updatedBulkPriceUpdate)
   }
 
-  const InventoryUpdate = (value,roomtype,date)=>{
+  const InventoryUpdate = (value, roomtype, date) => {
     const updatedBulkPriceUpdate = { ...InventoryBulkupdate };
     const updatePriceData = { ...inventoryData };
 
 
     if (!updatedBulkPriceUpdate[roomtype]) {
-        updatedBulkPriceUpdate[roomtype] = {};
+      updatedBulkPriceUpdate[roomtype] = {};
     }
     if (!updatePriceData[roomtype]) {
       updatePriceData[roomtype] = {};
@@ -187,22 +187,22 @@ const Mange = () => {
   }
 
 
-  const GetDataForDate = (date,key)=>{
+  const GetDataForDate = (date, key) => {
     setDate(date)
     alert(key)
   }
 
-  const bulkupdateFunction = ()=>{
+  const bulkupdateFunction = () => {
     alert("Bulk Update")
-    if(showPrice){
+    if (showPrice) {
       console.log(PriceBulkupdate)
       alert("Price Bulk")
     }
-    if(showInventory){
+    if (showInventory) {
       console.log(InventoryBulkupdate)
       alert("Inventory Bulk")
     }
-   
+
   }
 
 
@@ -230,24 +230,35 @@ const Mange = () => {
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 border border-gray-300">
           <thead class="text-xs text-gray-700 uppercase">
             <tr>
-              <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-2 bg-gray-200">
+              <th scope="col" class="flex justify-between  gap-4 h-[64px] px-4 py-4 bg-gray-200">
                 <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
                   <IoSync size={20} />Sync</button>
                 <button className="px-4 text-sm font-medium  rounded-lg   text-gray-900 bg-white hover:bg-orange-600 hover:text-white flex items-center gap-1">
                   <GiBackwardTime size={20} />Logs</button>
               </th>
-              <th scope="col" class="px-6 py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
-                <button onClick={(e)=>{GetDataForDate(date,"prev")}} className="me-1 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowLeft /></button>
-                <input type="date"
-                  value={date}
-                  onChange={(e)=>{GetDataForDate(e.target.value,"next")}}
-                  className="border p-2 px-4 border-black border-opacity-25 rounded-md" />
-                  
-                  <button onClick={(e)=>{GetDataForDate(date,"next")}} className="ms-1 p-2 border-2 border-black border-opacity-25 rounded-full "><FaArrowRight /></button>
-                  
-                  <button onClick={()=>{bulkupdateFunction()}}>Bulk Update</button>
+              <th scope="col" class="px-4  py-3 bg-gray-100 w-full mx-auto text-center border-t border-r border-b border-gray-300">
+                <div className='flex justify-between'>
+                  <div className='w-[33.33%] max-md:hidden'>
+
+                  </div>
+                  <div className='w-[33.33%] max-md:w-[66.66%] flex gap-4 md:justify-center items-center'>
+                    <button onClick={(e) => { GetDataForDate(date, "prev") }} className="me-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowLeft /></button>
+                    <input type="date"
+                      value={date}
+                      onChange={(e) => { GetDataForDate(e.target.value, "next") }}
+                      className="border py-2 px-4 bg-white  rounded-md" />
+
+                    <button onClick={(e) => { GetDataForDate(date, "next") }} className="ms-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowRight /></button>
+
+                  </div>
+                  <div className='w-[33.33%] flex justify-end items-center'>
+                    <button onClick={() => { bulkupdateFunction() }} className='px-4 py-2 text-sm font-medium  rounded-lg   text-gray-900 bg-white border hover:bg-orange-600 hover:text-white flex items-center gap-1'>Bulk Update</button>
+
+                  </div>
+                </div>
+
               </th>
-              
+
             </tr>
           </thead>
           <tbody>
@@ -295,10 +306,10 @@ const Mange = () => {
                         <div key={date} className='flex flex-col justify-end py-2 px-[10px] w-full h-full border-l-2 border-white'>
                           <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
                           <span className="border-2 border-gray-300 rounded-md text-center overflow-hidden">
-                            <input type='text' 
-                            value={inventoryData[item][date]} 
-                            onChange={(e) => InventoryUpdate(e.target.value,item,date)} 
-                            className="w-[100%]  py-1 text-center outline-none  h-[100%] " />
+                            <input type='text'
+                              value={inventoryData[item][date]}
+                              onChange={(e) => InventoryUpdate(e.target.value, item, date)}
+                              className="w-[100%]  py-1 text-center outline-none  h-[100%] " />
 
                           </span>
                         </div>
@@ -333,9 +344,9 @@ const Mange = () => {
                         <div key={date} className='flex flex-col justify-end py-2 px-[10px] w-full h-full border-l-2 border-white'>
                           <span className="bg-green-600 h-[8px] rounded-md mb-[3px] mt-6"></span>
                           <span className="border-2 border-gray-300 rounded-md text-center overflow-hidden">
-                            <input type='text' 
-                              value={priceData[item][date]} 
-                              onChange={(e) => PriceUpdate(e.target.value,item,date)} 
+                            <input type='text'
+                              value={priceData[item][date]}
+                              onChange={(e) => PriceUpdate(e.target.value, item, date)}
                               className="w-[100%] py-1 text-center outline-none  h-[100%] " />
 
                           </span>

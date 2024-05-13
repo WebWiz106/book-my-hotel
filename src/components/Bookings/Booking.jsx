@@ -1,5 +1,5 @@
 import React from 'react'
-import HotelSlider from './HotelSlider/HotelSlider'
+import HotelSlider from '../HotelSlider/HotelSlider'
 const Booking = () => {
   return (
     <div className="maxwidth mx-auto p-4">

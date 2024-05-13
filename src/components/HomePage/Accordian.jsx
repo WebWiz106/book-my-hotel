@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 import CheckForAvailbility from './CheckForAvailbility';
 import GuestDetails from './GuestDetails';
-import Rooms1 from './Rooms';
+import Rooms1 from '../Rooms/Rooms';
 
 const Accordian = () => {
     const [openAccordion, setOpenAccordion] = useState(1);

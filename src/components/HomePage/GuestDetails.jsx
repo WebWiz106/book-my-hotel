@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-custom-alert';
 import 'react-custom-alert/dist/index.css'; // import css file from root.
 import useRazorpay from "react-razorpay";
 import { Link } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 import { useNavigate } from 'react-router-dom';
 const GuestDetails = () => {
@@ -339,7 +339,7 @@ const BookingDetails = () => {
 
     const computeTotalPrice = () => {
         let totalPrice = 0;
-       
+
         // Iterate over keys in the dictionary
         for (let key in subTotal) {
             // Convert the value to a number and add it to totalPrice

@@ -1,16 +1,17 @@
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import RoomDetails from "./components/RoomDetails";
-import Profile from "./components/Profile";
-import Booking from "./components/Booking";
-import Mange from "./components/Mange";
-import Room from "./components/Room";
-import AllBookings from "./components/AllBookings";
-import { useContext } from "react";
-import AuthContext from "./context/AuthProvider";
-import Success from "./components/Success";
+import AuthContext from "./context/AuthProvider"
+
+import Navbar from "./components/Navbar/Navbar.jsx"
+import Home from "./pages/Home.jsx"
+import RoomDetails from "./components/Rooms/RoomDetails.jsx"
+import Profile from "./components/Profile/Profile.jsx"
+import Booking from "./components/Bookings/Booking.jsx"
+import AllBookings from "./components/AllBookings/AllBookings.jsx"
+import BookingManage from "./components/BookingManage/Mange.jsx"
+import Room from "./components/Rooms/Room.jsx"
+import Success from "./components/Success/Success.jsx"
+import Footer from "./components/Footer/Footer.jsx"
 
 function App() {
   const { setIsMenuOpen } = useContext(AuthContext);
@@ -25,12 +26,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/room-details" element={<RoomDetails />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Bookings" element={<Booking />} />
-        <Route path="/All Bookings" element={<AllBookings />} />
-        <Route path="/Manage" element={<Mange />} />
-        <Route path="/Room" element={<Room />} />
-        <Route path="/Success" element={<Success />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/bookings" element={<Booking />} />
+        <Route path="/all-bookings" element={<AllBookings />} />
+        <Route path="/manage" element={<BookingManage />} />
+        <Route path="/room" element={<Room />} />
+        <Route path="/success" element={<Success />} />
 
         {/* Wildcard route */}
         <Route path="*" element={<Home />} />
