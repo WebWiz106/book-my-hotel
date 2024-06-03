@@ -39,6 +39,9 @@ export const AuthProvider = ({ children }) => {
 
     const today = new Date().toISOString().split('T')[0];
 
+    
+    
+
 
 
     // Get tomorrow's date by adding 1 day to the current date

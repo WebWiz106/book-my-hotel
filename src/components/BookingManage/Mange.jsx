@@ -4,62 +4,65 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { GiBackwardTime } from "react-icons/gi";
 import { IoSync } from "react-icons/io5";
 import AuthContext from '../../context/AuthProvider';
-import { inventoryGetApi } from '../../Api-helpers/Api';
+import axios from "axios";
+// import { inventoryGetApi, priceGetApi } from '../../Api-helpers/Api';
 
 const Mange = () => {
   const { showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice, } = useContext(AuthContext)
- const [inventory, setInventory]=useState([])
- const strinventory= JSON.stringify(inventory);
+  const [inventory, setInventory] = useState({})
+  const [price, setPrice] = useState([])
+  ;
+  const getInventoryApi = async() => {
+    const res = await axios.get("http://127.0.0.1:5000/inventory/getinventory/all/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZjllYzIxNDItNmM0MS00OGRlLWExYjYtNGNlZWY2ZmRjYTc3IiwiaWQiOiIyYjk1Y2UzZi03MTYyLTRhM2QtYTAwNi1jYWIwOGE1OTZlZWEiLCJleHAiOjE3MTg1NTc0ODQuMTI0Mjc5fQ.la20f4IfFiBXOyD_QKFIXrWNfAzdEBSkL4JE72CloAA/95291122")
+    const result = res.data;
+    setInventory(result);
+  }
   useEffect(() => {
-    inventoryGetApi().then((data)=>setInventory(data)).catch((err) => {
-      // Log any errors that occur during the API call
-      console.log("Error fetching inventory:", err);
-    });
+      getInventoryApi();
   }, []);
-
-  console.log(strinventory);
-  
+  console.log("inventory", inventory.Inventory?.["1"]);
 
   const today = new Date().toISOString().split('T')[0];
   const [date, setDate] = useState(today)
 
-  // const inventoryDatas = {
-  //   "Inventory": {
-  //     "1": {
-  //       "2024-05-10": 2,
-  //       "2024-05-11": 2,
-  //       "2024-05-12": 2,
-  //       "2024-05-13": 2,
-  //       "2024-05-14": 2,
-  //       "2024-05-15": 3,
-  //       "2024-05-16": 2,
-  //       "2024-05-17": 2
-  //     },
-  //     "2": {
-  //       "2024-05-10": 2,
-  //       "2024-05-11": 2,
-  //       "2024-05-12": 2,
-  //       "2024-05-13": 2,
-  //       "2024-05-14": 4,
-  //       "2024-05-15": 2,
-  //       "2024-05-16": 2,
-  //       "2024-05-17": 2
-  //     },
-  //     "3": {
-  //       "2024-05-10": 2,
-  //       "2024-05-11": 2,
-  //       "2024-05-12": 2,
-  //       "2024-05-13": 2,
-  //       "2024-05-14": 4,
-  //       "2024-05-15": 2,
-  //       "2024-05-16": 2,
-  //       "2024-05-17": 2
-  //     }
-  //   },
-  //   "Status": true,
-  //   "next": "2024-05-17",
-  //   "prev": "2024-05-10"
-  // }
+  const inventoryDatas = {
+    "Inventory": {
+      "1": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 2,
+        "2024-05-15": 3,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      },
+      "2": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 4,
+        "2024-05-15": 2,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      },
+      "3": {
+        "2024-05-10": 2,
+        "2024-05-11": 2,
+        "2024-05-12": 2,
+        "2024-05-13": 2,
+        "2024-05-14": 4,
+        "2024-05-15": 2,
+        "2024-05-16": 2,
+        "2024-05-17": 2
+      }
+    },
+    "Status": true,
+    "next": "2024-05-17",
+    "prev": "2024-05-10"
+  }
+  console.log("inventory-datas", inventoryDatas.Inventory["1"]);
   const priceDatas = {
     "Price": {
       "1": {
@@ -101,11 +104,11 @@ const Mange = () => {
   const [priceData, setPriceData] = useState(priceDatas.Price)
   const [PriceBulkupdate, setPriceBulkupdate] = useState({})
 
-  const [inventoryData, setInventoryData] = useState(strinventory.Inventory)
+  const [inventoryData, setInventoryData] = useState(inventoryDatas.Inventory)
   const [InventoryBulkupdate, setInventoryBulkupdate] = useState({})
-  console.log(inventoryData);
+  // console.log(inventoryData);
 
-  const dates = Object.keys(inventoryData['1']);
+  const dates = Object.keys(inventoryData?.['1']);
 
   const getDayFromDate = (dateString) => {
     const dt = new Date(dateString);
@@ -297,6 +300,7 @@ const Mange = () => {
               showInventory && <>{
                 Object.keys(inventoryData).map((item, itemIndex) => (
                   <tr key={itemIndex} className="bg-white border-t border-gray-300">
+
                     <th className="px-4 font-medium text-zinc-700 bg-gray-200 w-[16rem] py-2">
                       <div className="gap-4 flex flex-col">
                         <span className="font-extrabold text-1xl">{item}</span>
