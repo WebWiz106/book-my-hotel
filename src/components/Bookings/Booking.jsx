@@ -6,7 +6,7 @@ const Booking = () => {
       <div className="flex p-2 justify-center border-2 border-black border-opacity-25 rounded-md">
         <p className="font-bold text-xl">Your Rooms</p>
       </div>
-      <div className=" mt-2 grid grid-cols-1 gap-2 md:grid-cols-2 md:mt-6 cards">
+      <div className=" mt-2 md:ms-[29.5px] grid grid-cols-1 gap-2 md:grid-cols-2 md:mt-6 cards">
         <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
           <img class="object-cover w-full rounded-t-lg h-96 md:h-[12rem] md:w-48 md:rounded-none md:rounded-s-lg" src="https://t3.ftcdn.net/jpg/02/71/08/28/360_F_271082810_CtbTjpnOU3vx43ngAKqpCPUBx25udBrg.jpg" alt="" />
           <div class="flex flex-col justify-between p-4 leading-normal">
