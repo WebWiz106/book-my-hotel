@@ -8,7 +8,7 @@ import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 const GuestDetails = () => {
 
-    const { subTotal } = useContext(AuthContext)
+    const { subTotal,baseUrl } = useContext(AuthContext)
 
 
     // console.log(subTotal)
@@ -36,9 +36,12 @@ const GuestDetails = () => {
 
 
 const Guest = () => {
-    const { grandTotal, bookingDetails, setBookingDetails,
+    const { grandTotal, bookingDetails, setBookingDetails,subTotal,
 
-        setpayment,
+        setpayment,baseUrl,taxes,checkinInDate,
+        checkoutDate,hotelProfile,selectedRooms,
+        selectedRoomDetails,Adults,
+        kids
     } = useContext(AuthContext)
     const [selectedOption, setSelectedOption] = useState("option3");
 
@@ -52,14 +55,94 @@ const Guest = () => {
     };
 
     const [Razorpay, createOrder] = useRazorpay();
+    const computeTotalPrice = () => {
+        let totalPrice = 0;
+       
+        // Iterate over keys in the dictionary
+        for (let key in subTotal) {
+            // Convert the value to a number and add it to totalPrice
+            totalPrice += parseInt(subTotal[key]);
+        }
+
+        
+        return totalPrice;
+    }
 
 
-    const CreateSemiHalfBooking = () => {
+    const CreateSemiHalfBooking = async() => {
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
+            const bookedRooms = [];
+
+            for (let  i = 0; i < Object.keys(selectedRooms).length; ++i) {
+                const temp = {
+                    RoomType: Object.keys(selectedRooms)[i],
+                    Qty: Object.values(selectedRooms)[i]
+                }
+                bookedRooms.push(temp);
+            }
             setpayment(0.25)
-            HandlePaymentRazorpay()
+            const response = await fetch(`${baseUrl}/order/create_order`, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json, text/plain, /",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  "roomNumbers": [],
+                  "hId": localStorage.getItem("locationid"),
+                  "jiniId": localStorage.getItem("hotelid"),
+                  "amount": 0.25 * grandTotal,
+                  "currency": hotelProfile.currency,
+                  "guestInfo": {
+                        guestName: bookingDetails.name,
+                        EmailId: bookingDetails.email,
+                        Phone: bookingDetails.phone,
+                        Requests: bookingDetails.request
+                    },
+                  "Adults": Adults,
+                  "Kids": kids,
+                  "Bookings": bookedRooms,
+                  "payment": {
+                    Status: "PENDING",
+                    RefNo: "",
+                    PaymentProvider: "RazorPay",
+                    Mode: "Online",
+                  },
+                  "mealPlan": {
+                    PackageId: "NA",
+                    PackageName: "NA",
+                    PackagePrice: "NA",
+                    PackageperRoom: "NA",
+                  },
+                  "promocode": {
+                    PromoId: "NA",
+                    Code: "NA",
+                    Discount: "NA",
+                  },
+                  "packages": {
+                    packageId: "NA",
+                    packageName: "NA",
+                    packagePrice: "NA",
+                    specialRequest: "NA",
+                  },
+                  "checkIn": checkinInDate,
+                  "checkOut": checkoutDate,
+                  "price": {
+                    amountPay: 0.25 * grandTotal,
+                    Principal: computeTotalPrice(),
+                    Tax: taxes,
+                    Total: grandTotal,
+                  },
+                  "isCheckedIn": false,
+                  "isCheckedOut": false
+                 }),
+             });
 
-            toast.success('Booking Success 25%');
+            const bookingResponse = await response.json()
+            console.log(bookingResponse)
+          
+            //   const json = await response.json();
+            toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
 
         }
 
@@ -67,13 +150,80 @@ const Guest = () => {
             toast.warning("Please fill your details")
         }
     }
-    const CreateHalfBooking = () => {
+    const CreateHalfBooking = async() => {
 
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
+            const bookedRooms = [];
+
+            for (let  i = 0; i < Object.keys(selectedRooms).length; ++i) {
+                const temp = {
+                    RoomType: Object.keys(selectedRooms)[i],
+                    Qty: Object.values(selectedRooms)[i]
+                }
+                bookedRooms.push(temp);
+            }
             setpayment(0.50)
-            toast.success('Booking Success 50%');
-            HandlePaymentRazorpay()
+            const response = await fetch(`${baseUrl}/order/create_order`, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json, text/plain, /",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  "roomNumbers": [],
+                  "hId": localStorage.getItem("locationid"),
+                  "jiniId": localStorage.getItem("hotelid"),
+                  "amount": 0.5 * grandTotal,
+                  "currency": hotelProfile.currency,
+                  "guestInfo": {
+                        guestName: bookingDetails.name,
+                        EmailId: bookingDetails.email,
+                        Phone: bookingDetails.phone,
+                        Requests: bookingDetails.request
+                    },
+                  "Adults": Adults,
+                  "Kids": kids,
+                  "Bookings": bookedRooms,
+                  "payment": {
+                    Status: "PENDING",
+                    RefNo: "",
+                    PaymentProvider: "RazorPay",
+                    Mode: "Online",
+                  },
+                  "mealPlan": {
+                    PackageId: "NA",
+                    PackageName: "NA",
+                    PackagePrice: "NA",
+                    PackageperRoom: "NA",
+                  },
+                  "promocode": {
+                    PromoId: "NA",
+                    Code: "NA",
+                    Discount: "NA",
+                  },
+                  "packages": {
+                    packageId: "NA",
+                    packageName: "NA",
+                    packagePrice: "NA",
+                    specialRequest: "NA",
+                  },
+                  "checkIn": checkinInDate,
+                  "checkOut": checkoutDate,
+                  "price": {
+                    amountPay: 0.5 * grandTotal,
+                    Principal: computeTotalPrice(),
+                    Tax: taxes,
+                    Total: grandTotal,
+                  },
+                  "isCheckedIn": false,
+                  "isCheckedOut": false
+                 }),
+             });
 
+            const bookingResponse = await response.json()
+            console.log(bookingResponse)
+          
+            toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
 
         }
 
@@ -81,12 +231,81 @@ const Guest = () => {
             toast.warning("Please fill your details")
         }
     }
-    const CreateFullBooking = () => {
+    const CreateFullBooking = async() => {
         if (bookingDetails.name.length > 0 && bookingDetails.email.length > 0 && bookingDetails.phone.length > 0) {
-            setpayment(1)
-            HandlePaymentRazorpay()
+            const bookedRooms = [];
 
-            toast.success('Booking Success 100%');
+            for (let  i = 0; i < Object.keys(selectedRooms).length; ++i) {
+                const temp = {
+                    RoomType: Object.keys(selectedRooms)[i],
+                    Qty: Object.values(selectedRooms)[i]
+                }
+                bookedRooms.push(temp);
+            }
+            setpayment(1)
+            const response = await fetch(`${baseUrl}/order/create_order`, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json, text/plain, /",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  "roomNumbers": [],
+                  "hId": localStorage.getItem("locationid"),
+                  "jiniId": localStorage.getItem("hotelid"),
+                  "amount": 1 * grandTotal,
+                  "currency": hotelProfile.currency,
+                  "guestInfo": {
+                        guestName: bookingDetails.name,
+                        EmailId: bookingDetails.email,
+                        Phone: bookingDetails.phone,
+                        Requests: bookingDetails.request
+                    },
+                  "Adults": Adults,
+                  "Kids": kids,
+                  "Bookings": bookedRooms,
+                  "payment": {
+                    Status: "PENDING",
+                    RefNo: "",
+                    PaymentProvider: "RazorPay",
+                    Mode: "Online",
+                  },
+                  "mealPlan": {
+                    PackageId: "NA",
+                    PackageName: "NA",
+                    PackagePrice: "NA",
+                    PackageperRoom: "NA",
+                  },
+                  "promocode": {
+                    PromoId: "NA",
+                    Code: "NA",
+                    Discount: "NA",
+                  },
+                  "packages": {
+                    packageId: "NA",
+                    packageName: "NA",
+                    packagePrice: "NA",
+                    specialRequest: "NA",
+                  },
+                  "checkIn": checkinInDate,
+                  "checkOut": checkoutDate,
+                  "price": {
+                    amountPay: 1 * grandTotal,
+                    Principal: computeTotalPrice(),
+                    Tax: taxes,
+                    Total: grandTotal,
+                  },
+                  "isCheckedIn": false,
+                  "isCheckedOut": false
+                 }),
+             });
+
+            const bookingResponse = await response.json()
+            console.log(bookingResponse)
+            // alert(bookingResponse.order_id)
+          
+            //   const json = await response.json();
+            toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
 
         }
 
@@ -310,11 +529,11 @@ const Guest = () => {
 
                     {selectedOption === "option1" ?
 
-                        <button onClick={CreateSemiHalfBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now & Pay Later</button>
+                        <button onClick={CreateSemiHalfBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now</button>
                         :
-                        selectedOption === "option2" ? <button onClick={CreateHalfBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now & Pay Later</button>
+                        selectedOption === "option2" ? <button onClick={CreateHalfBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now</button>
                             :
-                            <button onClick={CreateFullBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now & Pay Later</button>
+                            <button onClick={CreateFullBooking} className='text-center mt-2 justify-center items-center px-24 py-2 text-white  bg-orange-600 hover:bg-orange-700 rounded-md max-md:px-5 text-[18px]'>Book Now</button>
                     }
                 </div>
             </div>

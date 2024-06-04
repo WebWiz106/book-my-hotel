@@ -8,7 +8,7 @@ import Page from './Auth/Page';
 import MenuPage from './MenuPage';
 
 const Navbar = () => {
-    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType,isAuthenticated,setisAuthenticated } = useContext(AuthContext);
+    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType,isAuthenticated,setisAuthenticated,hotelDetails } = useContext(AuthContext);
 
 
     const navigate = useNavigate()
@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className='maxwidth mx-auto  px-2 py-2 relative '>
             <div className='h-[50px] flex justify-between items-center'>
                 <img
-                    src={Logo}
+                    src={hotelDetails.Footer.Logo==="None"?Logo:hotelDetails.Footer.Logo}
                     alt="Logo"
                     className='h-[100%] cursor-pointer'
                     onClick={handleRoute}

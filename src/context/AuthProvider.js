@@ -3,15 +3,74 @@ import { createContext, useEffect, useState } from "react";
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
-    const [isAuthenticated, setisAuthenticated] = useState(true)
+
+    const baseUrl = "http://127.0.0.1:5000"
+    const [isAuthenticated, setisAuthenticated] = useState(false)
     const [hotelDetails, setHotelDetails] = useState({
-        "hotelName": "Ritz-Carlton Hotel",
-        "hotelSlogan": "Stay once, carry memories forever",
-        "phone": "9724384753",
-        "alternatePhone": "9724384753",
-        "hotelEmail": "sam@webjini.com",
-        "hotelAddress": "Sultanpur, Lucknow, UttarPradesh",
+        "AboutUs": "About us of booking engine",
+        "Clarity": "",
+        "Colors": {
+            "BackgroundColor": "#311807",
+            "BoardColor": "#0A3A75",
+            "ButtonColor": "#f78708"
+        },
+        "Footer": {
+            "AboutText": "",
+            "Address": "-- address --",
+            "City": "-- city --",
+            "Email": "-- Email --",
+            "Logo": "None",
+            "NewsLetterText": "Hi this text is for newsletter",
+            "Phone": "-- number --",
+            "WhatsApp": "-- alternate number --"
+        },
+        "Gateway": {
+            "API_KEY": "rzp_test_UZ0V9jh3jMC0C9",
+            "SECRET_KEY": "XHctZxmnMhzkkwcAlDtF0Xuc",
+            "Type": "Razorpay"
+        },
+        "HotelName": "-- Hotel Name --",
+        "Labels": {
+            "ConfirmButton": "Book",
+            "PayButton": "Pay Now",
+            "ReserveBoard": "Reservation Here",
+            "ReserveButton": "Look For Rooms"
+        },
+        "Links": {
+            "Facebook": "https://www.facebook.com/testhotel",
+            "FacebookRequired": true,
+            "Instagram": "https://www.instagram.com/EazyHotel",
+            "InstagramRequired": true,
+            "Linkedin": "https://www.linkedin.com/EazyHotel",
+            "LinkedinRequired": true,
+            "Pinterest": "https://www.pinterest.com/EazyHotel",
+            "PinterestRequired": true,
+            "Reddit": "https://www.reddit.com/EazyHotel",
+            "RedditRequired": true,
+            "Snapchat": "https://www.snapchat.com/EazyHotel",
+            "SnapchatRequired": true,
+            "Tripadvisor": "https://www.tripadvisor.com/EazyHotel",
+            "TripadvisorRequired": true,
+            "Tripadvisors": null,
+            "Tumblr": "https://www.tumblr.com/EazyHotel",
+            "TumblrRequired": true,
+            "Twitter": "https://www.twitter.com/EazyHotel",
+            "TwitterRequired": true,
+            "Whatsapp": "https://www.whatsapp.com/EazyHotel",
+            "WhatsappRequired": true,
+            "Youtube": "https://www.youtube.com/EazyHotel",
+            "YoutubeRequired": true
+        },
+        "Location": "https://www.google.com/maps/embed/v1/place?key=AIzaSyB7275VpUoxX56JWDwoISq00bXcq2LSHtI&q=Eazy%20Hotel+addr+State+Dhampur+India",
+        "PrivacyPolicy": "Privacy policy",
+        "TermsConditions": "TermsConditions policy",
+        "addTax": true,
+        "isOnlinePayment": true,
+        "isPayatHotel": true,
+        "isSemiPayment": true
     });
+
+    const [hotelProfile,sethotelProfile] = useState()
 
     const [checkForAvailbilityInfo, setCheckForAvailbilityInfo] = useState({
         "checkin": "",
@@ -29,17 +88,44 @@ export const AuthProvider = ({ children }) => {
         "request": ""
     })
 
+
+
+    const LoginUserToEngine = async()=>{
+
+    }
+
+    const FetchProfileOfEngine = async()=>{
+        const response = await fetch(`${baseUrl}/bookings/getenginedetails/${localStorage.getItem("hotelid")}/${localStorage.getItem("locationid")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json);
+        if(json.Status){
+            setHotelDetails(json.Details)
+            sethotelProfile(json.Profile)
+        }
+    }
+
     useEffect(() => {
-        localStorage.setItem("jiniId", "c94fcd4b-2625-4d5c-9177-2b62fbda9fe1");
-        localStorage.setItem("hId", "45813642");
+        const urlParams = new URLSearchParams(window.location.search);
+        const hotelid = urlParams.get("hotelid");
+        const locationid = urlParams.get("locationid");
+        localStorage.setItem("hotelid", hotelid);
+        localStorage.setItem("locationid", locationid);
+        FetchProfileOfEngine()
     }, []);
 
-
+    
 
 
     const today = new Date().toISOString().split('T')[0];
-
-
 
     // Get tomorrow's date by adding 1 day to the current date
     const tomorrowDate = new Date();
@@ -76,8 +162,8 @@ export const AuthProvider = ({ children }) => {
 
 
     const [fetchDynamicRoomInventory, setFetchDynamicRoomInventory] = useState({
-        "1": 5,
-        "2": 3,
+        "1": 0,
+        "2": 0,
     })
 
 
@@ -260,9 +346,11 @@ export const AuthProvider = ({ children }) => {
                 payment, setpayment, AllBookings, setAllBookings,
 
                 showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,
-                bookingPopup, setBookingPopup
+                bookingPopup, setBookingPopup,
 
-
+                baseUrl,hotelProfile,
+                FetchProfileOfEngine
+  
             }}
         >
             {children}

@@ -122,7 +122,7 @@ const BookingEditPopup = () => {
         setBookingPopup(false)
     }
 
-    console.log(bookingInfo);
+    // console.log(bookingInfo);
 
     function formatTime(timeString) {
         const [hours, minutes] = timeString.split(':');

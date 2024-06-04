@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../context/AuthProvider'
+import React, { useContext, useEffect, useState } from 'react';
+import AuthContext from '../context/AuthProvider';
 
 const HotelDetails = () => {
     const { hotelDetails, setHotelDetails } = useContext(AuthContext);
-    console.log(hotelDetails);
+    // console.log(hotelDetails);
 
 
     const [email, setEmail] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Email submitted:', email);
+        // console.log('Email submitted:', email);
         setEmail('');
     };
 
@@ -34,18 +34,17 @@ const HotelDetails = () => {
                 Hotel Details
             </div>
             <div className="flex flex-col gap-[13px] px-4 py-2  w-full text-base border-t-0 bg-stone-50 border-2 rounded-b-lg">
-                <div className="font-medium">{hotelDetails.hotelName}</div>
-                <div className=" text-stone-500">{hotelDetails.hotelSlogan}</div>
+                <div className="font-medium">{hotelDetails.HotelName}</div>
                 <div className=" font-medium">Phone:</div>
-                <div className=" text-stone-500">{hotelDetails.phone}</div>
-                <div className=" text-stone-500">{hotelDetails.alternatePhone}</div>
+                <div className=" text-stone-500">{hotelDetails.Footer.Phone}</div>
+                <div className=" text-stone-500">{hotelDetails.Footer.WhatsApp}</div>
                 <div className="self-start font-medium">Email:</div>
                 <div className="self-start text-stone-500">
-                    {hotelDetails.hotelEmail}
+                    {hotelDetails.Footer.Email}
                 </div>
                 <div className=" font-medium">Hotel Address:</div>
                 <div className=" text-stone-500">
-                    {hotelDetails.hotelAddress}
+                    {hotelDetails.Footer.Address}, {hotelDetails.Footer.City}
                 </div>
                 <div className=" text-sm text-sky-900">Reservation Policy</div>
                 <div className=" text-sm text-sky-900">Cancellation Policy</div>

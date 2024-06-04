@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react'
-import AuthContext from '../../context/AuthProvider';
+import React, { useContext } from 'react';
 import { IoMdClose } from "react-icons/io";
+import AuthContext from '../../context/AuthProvider';
 
 
 const Page = () => {
 
-    const { modalType, setIsModalOpen } = useContext(AuthContext);
-    console.log(modalType);
+    const { modalType, setIsModalOpen,hotelDetails } = useContext(AuthContext);
+    // console.log(modalType);
 
     const closeModal = () => {
         setIsModalOpen(false);

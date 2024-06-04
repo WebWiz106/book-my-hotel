@@ -4,7 +4,7 @@ import AuthContext from '../context/AuthProvider';
 
 const CheckForAvailbility = ({ toggleAccordion }) => {
 
-    const { checkForAvailbilityInfo, setCheckForAvailbilityInfo, checkinInDate, setcheckinInDate,
+    const { baseUrl,checkForAvailbilityInfo,setFetchDynamicRoomInventory, setCheckForAvailbilityInfo, checkinInDate, setcheckinInDate,
         checkoutDate, setcheckoutDate, Adults, setAdults,
         kids, setkids, Rooms, setRooms, loading, setLoading, customPrice, setCustomPrice, RoomTypeToName, setRoomTypeToName } = useContext(AuthContext);
 
@@ -63,6 +63,8 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
         setcheckoutDate(nextSelectDate);
 
         setcheckinInDate(event.target.value);
+
+        
         // var date1 = new Date(event.target.value);
         // var date2 = new Date(nextSelectDate);
         // var Difference_In_Time = date2.getTime() - date1.getTime();
@@ -83,21 +85,21 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
 
 
 
-    const roomhost = "https://nexon.eazotel.com/room/engine/c94fcd4b-2625-4d5c-9177-2b62fbda9fe1"
+    
 
-    const CheckRoomsAvaiblity = async () => {
-
-        setLoading(true);
+    const CheckRoomsInventoryAvaiblity = async () => {
 
         try {
+            
 
             const body = {
-                "checkIn": checkinInDate,
-                "checkOut": checkoutDate,
-                "hId": "45813642"
-            }
+                    "ndid":localStorage.getItem("hotelid"),
+                    "hId":localStorage.getItem("locationid"),
+                    "checkin":checkinInDate,
+                    "checkout":checkoutDate
+                }
 
-            const response = await fetch(roomhost, {
+            const response = await fetch(`${baseUrl}/rooms/availablity`, {
 
                 method: "POST",
                 headers: {
@@ -106,17 +108,12 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
                 body: JSON.stringify(body),
             });
 
+            // console.log(response)
+
             if (response.ok) {
                 const data = await response.json();
-                setRooms(data.Details);
-                const dictionary = data.Details.reduce((acc, curr) => {
-                    acc[curr.roomType] = curr.roomName;
-                    return acc;
-                }, {});
-                setRoomTypeToName(dictionary);
-                setCustomPrice(data.Price);
-                setLoading(false);
-                toggleAccordion(2)
+               
+                setFetchDynamicRoomInventory(data.Avaiblity)
             }
             else {
                 // console.log("Error:", response.statusText);
@@ -129,19 +126,49 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
     }
 
 
-    const fetchDynamicRoomInventory = {
-        "DELUX": 5,
-        "EliteSuite": 0,
-        "ExclusiveRetreat": 0,
-        "GrandDeluxe": 0,
-        "ImperialSuite": 0,
-        "PREMIUM": 0,
-        "PremiereRetreat": 0,
-        "PrestigeSuite": 0,
-        "RoyalDeluxe": 0,
-        "SUITE": 0,
-        "SUPERDELUX": 0,
-        "SupremeRetreat": 0
+    const CheckRoomsAvaiblity = async () => {
+
+        setLoading(true);
+
+        try {
+            const body = {
+                "checkIn": checkinInDate,
+                "checkOut": checkoutDate,
+                "hId": localStorage.getItem("locationid") //localStorage.getItem("locationid")
+            }
+
+            const response = await fetch(`${baseUrl}/rooms/engine/${localStorage.getItem("hotelid")}`, {
+
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body),
+            });
+
+            // console.log(response)
+
+            if (response.ok) {
+                const data = await response.json();
+                setRooms(data.Details);
+                const dictionary = data.Details.reduce((acc, curr) => {
+                    acc[curr.roomType] = curr.roomName;
+                    return acc;
+                }, {});
+                setRoomTypeToName(dictionary);
+                setCustomPrice(data.Price);
+                CheckRoomsInventoryAvaiblity()
+                setLoading(false);
+                toggleAccordion(2)
+            }
+            else {
+                // console.log("Error:", response.statusText);
+            }
+
+        } catch (error) {
+            setLoading(false);
+            // console.log("Error", error);
+        }
     }
 
 
@@ -158,7 +185,7 @@ const CheckForAvailbility = ({ toggleAccordion }) => {
                         <input type='date' name='checkout' value={checkoutDate} onChange={(e) => { handleDateChangeCheckout(e) }} className="calender outline-none flex flex-col justify-center px-5 py-2 mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5" />
                     </div>
                     <div className="flex flex-col">
-                        <div className="text-sm text-neutral-700">ROOM 1</div>
+                        <div className="text-sm text-neutral-700">Adult(s)</div>
                         <div className='flex justify-between items-center px-5 gap-2 py-[9px] mt-2 w-full text-base leading-6 bg-white rounded-md border border-solid border-zinc-700 text-neutral-700 max-md:px-5'>
                             <div>Adults</div>
                             <div className='flex items-center gap-5'>

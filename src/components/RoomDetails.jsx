@@ -1,11 +1,10 @@
-import React, { useContext } from 'react'
-import { Button } from "@mui/joy";
-import { IoShareOutline } from "react-icons/io5";
-import { CiHeart } from "react-icons/ci";
-import { IoChevronBackSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { Star } from '@mui/icons-material';
+import { Button } from "@mui/joy";
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import React, { useContext } from 'react';
+import { CiHeart } from "react-icons/ci";
+import { IoChevronBackSharp, IoShareOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import AuthContext from '../context/AuthProvider';
 
 
@@ -14,7 +13,7 @@ const RoomDetails = () => {
 
     const { selectedRoomDetails, setSelectedRoomDetails } = useContext(AuthContext);
 
-    console.log("roomData:", selectedRoomDetails);
+    // console.log("roomData:", selectedRoomDetails);
 
 
 
