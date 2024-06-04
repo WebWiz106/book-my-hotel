@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { CiHeart } from "react-icons/ci";
 import { IoChevronBackSharp, IoShareOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 const RoomDetails = () => {

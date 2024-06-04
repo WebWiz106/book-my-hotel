@@ -5,7 +5,7 @@ export const AuthProvider = ({ children }) => {
 
 
     const baseUrl = "http://127.0.0.1:5000"
-    const [isAuthenticated, setisAuthenticated] = useState(false)
+    const [isAuthenticated, setisAuthenticated] = useState(true)
     const [hotelDetails, setHotelDetails] = useState({
         "AboutUs": "About us of booking engine",
         "Clarity": "",

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 import RoomCard from './RoomCard';
 
 const Rooms = ({ toggleAccordion }) => {

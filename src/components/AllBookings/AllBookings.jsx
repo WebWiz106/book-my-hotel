@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 import BookingEditPopup from './BookingEditPopup';
 
 
@@ -149,7 +149,7 @@ export const AllBookings = () => {
                 <td class="px-6 py-4">
                   <div onClick={handleEditBookingPopup} className="flex gap-4">
                     <button>Edit</button>
-                    <button>Update</button>
+                    <button>Delete</button>
                   </div>
                 </td>
               </tr>

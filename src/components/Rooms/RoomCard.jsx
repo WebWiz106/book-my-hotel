@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 
@@ -75,7 +75,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     handleUpdateMaxAdult(roomType, roomData.adult, maxvalue)
 
                 }
-                else{
+                else {
                     handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
                     handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
                 }
@@ -107,7 +107,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     handleUpdatePrice(roomType, customPrice[roomType].Price, 0)
                     handleUpdateMaxAdult(roomType, roomData.adult, 0)
                 }
-                else{
+                else {
                     handleUpdatePrice(roomType, customPrice[roomType].Price, updatedSelectedRooms[roomType])
                     handleUpdateMaxAdult(roomType, roomData.adult, updatedSelectedRooms[roomType])
                 }

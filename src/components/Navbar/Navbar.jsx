@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
-import Logo from "../assets/images/logo/logo-grey.png";
-import AuthContext from '../context/AuthProvider';
-import Page from './Auth/Page';
+import Logo from "../../assets/images/logo/logo-grey.png";
+import AuthContext from '../../context/AuthProvider';
+import Page from '../Auth/Page';
 import MenuPage from './MenuPage';
 
 const Navbar = () => {

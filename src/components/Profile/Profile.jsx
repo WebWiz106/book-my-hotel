@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { FaUserLarge } from "react-icons/fa6";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 const Profile = () => {
   const {hotelDetails} = useContext(AuthContext)
   return (

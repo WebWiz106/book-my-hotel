@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { RxCross2 } from "react-icons/rx";
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 
 
 const BookingEditPopup = () => {
 
-    const {setBookingPopup} = useContext(AuthContext)
+    const { setBookingPopup } = useContext(AuthContext)
 
     const bookingInfo = {
         "Adults": "1",
@@ -116,7 +116,7 @@ const BookingEditPopup = () => {
             "101"
         ]
     }
-    
+
 
     const handleBookingCloseClick = () => {
         setBookingPopup(false)
@@ -135,14 +135,14 @@ const BookingEditPopup = () => {
         return `${formattedHours}:${minutes} ${ampm}`;
     }
 
-    
+
 
 
     return (
         <div className='fixed max-md:overflow-auto top-0 left-0 z-10 max-md:pb-[4rem] w-full h-full max-md:h-[100%] max-md:px-5 flex justify-center items-center  bg-[#000000A6]'>
-            <div className=" flex max-md:overflow-scroll max-md:mt-[100%]  flex-col items-center max-md:h-[auto] py-3 px-3 bg-white rounded-2xl max-md:w-full max-w-[786px] lg:w-[786px]">
+            <div className=" flex max-md:overflow-scroll max-md:mt-[100%]  flex-col items-center max-md:h-[auto] py-3 px-3 bg-white rounded-lg  max-md:w-full max-w-[786px] lg:w-[786px]">
                 <div className='flex w-full justify-end'>
-                    <RxCross2 style={{ cursor: "pointer" }} size={24} onClick={handleBookingCloseClick} color='#333333' />
+                    <RxCross2 className='cursor-pointer text-[] hover:text-orange-700' size={24} onClick={handleBookingCloseClick} />
                 </div>
                 <div className='w-full'>
                     <h1 className='heading  !text-center'>Booking ID: {bookingInfo.sportBookingId}</h1>

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 import { Link } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 
