@@ -5,7 +5,9 @@ export const AuthProvider = ({ children }) => {
 
 
     const baseUrl = "http://127.0.0.1:5000"
-    const [isAuthenticated, setisAuthenticated] = useState(true)
+    const [isAuthenticated, setisAuthenticated] = useState(false)
+    const [isAdmin,setisAdmin] = useState(true)
+    const [bookingId,setbookingId] = useState("")
     const [hotelDetails, setHotelDetails] = useState({
         "AboutUs": "About us of booking engine",
         "Clarity": "",
@@ -90,8 +92,32 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    const LoginUserToEngine = async()=>{
-
+    const FetchUserExistance = async()=>{
+        const response = await fetch(`${baseUrl}/auth/getuser/engine/${localStorage.getItem("engineUserToken")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json);
+        if(json.Status){
+            setisAuthenticated(true)
+            if(json.isAdmin){
+                setisAdmin(true)
+            }
+            else{
+                setisAdmin(false)
+            }
+        }
+        else{
+            setisAuthenticated(false)
+            localStorage.clear()
+        }
     }
 
     const FetchProfileOfEngine = async()=>{
@@ -119,6 +145,10 @@ export const AuthProvider = ({ children }) => {
         const locationid = urlParams.get("locationid");
         localStorage.setItem("hotelid", hotelid);
         localStorage.setItem("locationid", locationid);
+
+        if(localStorage.getItem("engineUserToken")!==null){
+            FetchUserExistance()
+        }
         FetchProfileOfEngine()
     }, []);
 
@@ -297,7 +327,42 @@ export const AuthProvider = ({ children }) => {
             ]
         }])
 
+    const FetchAllBookings = async()=>{
+        const response = await fetch(`${baseUrl}/bookings/bookings/${localStorage.getItem("engineUserToken")}/${localStorage.getItem("locationid")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json);
+        if(json.Status){
+            setAllBookings(json.Details)
+        }
+    }
 
+    const [AllRooms,setAllRooms] = useState([])
+    const FetchAllRooms = async()=>{
+        const response = await fetch(`${baseUrl}/rooms/${localStorage.getItem("engineUserToken")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json);
+        if(json.Status){
+            setAllRooms(json.data)
+        }
+    }
 
 
     const [bookingPopup, setBookingPopup] = useState(false)
@@ -339,9 +404,9 @@ export const AuthProvider = ({ children }) => {
 
 
 
-                selectedRoomDetails, setSelectedRoomDetails,
+                selectedRoomDetails, setSelectedRoomDetails,FetchUserExistance,
 
-                bookingDetails, setBookingDetails, isAuthenticated, setisAuthenticated,
+                bookingDetails, setBookingDetails, isAuthenticated,isAdmin, setisAuthenticated,
 
                 payment, setpayment, AllBookings, setAllBookings,
 
@@ -349,7 +414,8 @@ export const AuthProvider = ({ children }) => {
                 bookingPopup, setBookingPopup,
 
                 baseUrl,hotelProfile,
-                FetchProfileOfEngine
+                FetchProfileOfEngine,bookingId,setbookingId,FetchAllBookings,
+                AllRooms,FetchAllRooms
   
             }}
         >

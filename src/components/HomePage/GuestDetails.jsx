@@ -41,7 +41,7 @@ const Guest = () => {
         setpayment,baseUrl,taxes,checkinInDate,
         checkoutDate,hotelProfile,selectedRooms,
         selectedRoomDetails,Adults,
-        kids
+        kids,hotelDetails,setbookingId
     } = useContext(AuthContext)
     const [selectedOption, setSelectedOption] = useState("option3");
 
@@ -139,11 +139,10 @@ const Guest = () => {
              });
 
             const bookingResponse = await response.json()
-            console.log(bookingResponse)
-          
-            //   const json = await response.json();
+            console.log(bookingResponse);
             toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
-
+            HandlePaymentRazorpay(bookingResponse.order_id,0.25 * grandTotal,"25% Payment")
+        
         }
 
         else {
@@ -221,9 +220,10 @@ const Guest = () => {
              });
 
             const bookingResponse = await response.json()
-            console.log(bookingResponse)
-          
+            // console.log(bookingResponse)
             toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
+            HandlePaymentRazorpay(bookingResponse.order_id,0.5 * grandTotal,"Half Payment")
+            
 
         }
 
@@ -306,6 +306,7 @@ const Guest = () => {
           
             //   const json = await response.json();
             toast.success(`Initiating Booking with ${bookingResponse.order_id}`);
+            HandlePaymentRazorpay(bookingResponse.order_id,1 * grandTotal,"Full Payment")
 
         }
 
@@ -321,87 +322,75 @@ const Guest = () => {
 
     }
 
-    const HandlePaymentRazorpay = (orderID, amnt, status) => {
-        navigate('/Success')
-        // alert('Payment')
-        // try {
-        //   // alert(props.GatewayConnected)
-        //   const mockOrderData = {
-        //     amount: parseInt(Number(amnt)) * 100, // Convert amount to paise (assuming INR)
-        //     orderId: "98032028092", // Generate a unique order ID
-        //   };
+    const UpdateBooking = async(orderID, razorpay_payment_id, status)=>{
+        const response = await fetch(`${baseUrl}/bookings/update`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, /",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                    "jiniId": localStorage.getItem("hotelid"),
+                    "hId": localStorage.getItem("locationid"),
+                    "orderid":orderID,
+                    "paymentid":razorpay_payment_id,
+                    "Status":status
+            }),
+        });
 
-        //   const options = {
-        //     key: GatewayConnected.API_KEY, // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
-        //     amount: mockOrderData.amount.toString(), // Use the amount from the order data
-        //     currency: currency,
-        //     name: HotelName,
-        //     description: "Test Transaction",
-        //     image: websiteData?.Footer?.Logo,
-        //     order_id: OrderId, // Use the order ID from the order data
-        //     handler: async function (response) {
-        //       setOrderId(response.razorpay_order_id);
-        //       UpdateBooking(orderID, response.razorpay_payment_id, status);
-        //       setPayment({
-        //         Status: true,
-        //         Logo: websiteData?.Footer?.Logo,
-        //         HotelName: HotelName,
-        //         Order: orderID,
-        //         Payment: response.razorpay_payment_id,
-        //         Name: Name,
-        //         Phone: Phone,
-        //         Email: Email,
-        //         City: "",
-        //         Country: "",
-        //         Checkin: selectedDate,
-        //         Checkout: nextselectedDate,
-        //         Adult: Adult,
-        //         Kid: kids,
-        //         Tax: tax,
-        //         Total: Subtotal,
-        //         Grandtotal: Grandtotal,
-        //         Paid: amnt,
-        //         PayStatus: status,
-        //         Delux: Delux,
-        //         Sd: SuperDelux,
-        //         Suite: Suite,
-        //         Premium: Premium,
-        //         PremiereRetreat: PremiereRetreat,
-        //         EliteSuite: EliteSuite,
-        //         GrandDeluxe: GrandDeluxe,
-        //         ImperialSuite: ImperialSuite,
-        //         SupremeRetreat: SupremeRetreat,
-        //         RoyalDeluxe: RoyalDeluxe,
-        //         PrestigeSuite: PrestigeSuite,
-        //         ExclusiveRetreat: ExclusiveRetreat,
-        //         MealPlan: "",
-        //         Mealprice: "",
-        //         Rooms: RoomCategoryCombination,
-        //       });
-        //     },
+        const json = await response.json()
+        if(json.status){
+            setbookingId(json.bookingId)
+            navigate(`/Success?hotelid=${localStorage.getItem("hotelid")}&locationid=${localStorage.getItem("locationid")}`)
+        }
 
-        //     theme: {
-        //       color: "#978667",
-        //     },
-        //   };
-
-        //   const rzp1 = new Razorpay(options);
-
-        //   rzp1.on("payment.failed", function (response) {
-        //     alert(response.error.code);
-        //     alert(response.error.description);
-        //     alert(response.error.source);
-        //     alert(response.error.step);
-        //     alert(response.error.reason);
-        //     alert(response.error.metadata.order_id);
-        //     alert(response.error.metadata.payment_id);
-        //   });
-
-        //   rzp1.open();
-        // } catch (error) {
-        //   console.log("Payment Error:", error);
-        // }
     }
+
+    const HandlePaymentRazorpay = (orderID, amnt, status) => {
+        // navigate('/Success')
+
+        try {
+          // alert(props.GatewayConnected)
+          const mockOrderData = {
+            amount: parseInt(Number(amnt)) * 100, // Convert amount to paise (assuming INR)
+            orderId: orderID, // Generate a unique order ID
+          };
+
+          const options = {
+            key: hotelDetails.Gateway.API_KEY, // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
+            amount: mockOrderData.amount.toString(), // Use the amount from the order data
+            currency: hotelProfile.currency,
+            name: hotelDetails.HotelName,
+            description: "Test Transaction",
+            image: hotelDetails?.Footer?.Logo,
+            order_id: orderID, // Use the order ID from the order data
+            handler: async function (response) {
+              UpdateBooking(orderID, response.razorpay_payment_id, status);
+            },
+
+            theme: {
+              color: "#978667",
+            },
+          };
+
+          const rzp1 = new Razorpay(options);
+
+          rzp1.on("payment.failed", function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+          });
+
+          rzp1.open();
+        } catch (error) {
+          console.log("Payment Error:", error);
+        }
+    }
+    
     return (
         <div className='w-full'>
             <ToastContainer floatingTime={5000} />

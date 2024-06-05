@@ -31,7 +31,7 @@ const Navbar = () => {
 
 
     const handleRoute = () => {
-        navigate("/")
+        navigate(`/?hotelid=${localStorage.getItem("hotelid")}&locationid=${localStorage.getItem("locationid")}`)
     }
     return (
         <div className='maxwidth mx-auto  px-2 py-2 relative '>
@@ -58,7 +58,7 @@ const Navbar = () => {
                             :
 
                             <>
-                                <button className="hover:text-orange-600 flex items-center px-3 md:px-5 rounded-md" onClick={() => openModal("signup")}>Signup</button>
+                                {/* <button className="hover:text-orange-600 flex items-center px-3 md:px-5 rounded-md" onClick={() => openModal("signup")}>Signup</button> */}
 
                                 <button className="text-[18px] text-white bg-orange-600 py-1 flex items-center h-full px-3 md:px-5 rounded-md hover:bg-orange-700 hover:text-white" onClick={() => openModal("login")}>Login</button>
                             </>

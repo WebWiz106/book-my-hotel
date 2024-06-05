@@ -1,18 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import AuthContext from '../../context/AuthProvider';
 
 
 const Page = () => {
 
-    const { modalType, setIsModalOpen,hotelDetails } = useContext(AuthContext);
+    const { modalType, setIsModalOpen,hotelDetails,baseUrl,FetchUserExistance } = useContext(AuthContext);
     // console.log(modalType);
+
+    const [userName,setuserName] = useState("")
+    const [userPassword,setuserPassword] = useState("")
 
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
+    const LoginAccountFunction = async()=>{
+        const response = await fetch(`${baseUrl}/auth/createuser`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, /",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "register":"false",
+                "emailId":userName,
+                "userName":"-",
+                "accesskey":userPassword
+            }),
+        });
+
+        const json = await response.json()
+        if(json.Status){
+            localStorage.setItem("engineUserToken",json.Token)
+            FetchUserExistance()
+            setIsModalOpen(false)
+        }
+        else{
+            alert("Wrong Combination")
+        }
+    }
+
     return (
-        <div onBlur={closeModal} className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+        <div  className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
             <div className="bg-black/20 p-6  flex flex-col gap-4 w-full">
 
                 {modalType === "login" &&
@@ -27,18 +57,18 @@ const Page = () => {
                                 <div class="px-6 pb-6 space-y-4 md:space-y-6 sm:p-8">
                                     <div className="flex justify-between items-center">
                                         <h1 class="text-xl font-bold leading-tight tracking-tight  md:text-2xl ">
-                                            Sign up to your account
+                                            Sign in to your account
                                         </h1>
                                         <IoMdClose size={24} onClick={closeModal} className="hover:text-orange-500 hover:cursor-pointer" />
                                     </div>
-                                    <form class="space-y-4 md:space-y-6" action="#">
+                                    <div class="space-y-4 md:space-y-6" action="#">
                                         <div>
                                             <label for="email" class="block mb-2 text-sm font-medium ">Your email</label>
-                                            <input type="email" name="email" id="email" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required="" />
+                                            <input type="email" value={userName} onChange={(e)=>{setuserName(e.target.value)}} name="email" id="email" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required="" />
                                         </div>
                                         <div>
                                             <label for="password" class="block mb-2 text-sm font-medium ">Password</label>
-                                            <input type="password" name="password" id="password" placeholder="••••••••" class="outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" />
+                                            <input type="password" value={userPassword} onChange={(e)=>{setuserPassword(e.target.value)}} name="password" id="password" placeholder="••••••••" class="outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="" />
                                         </div>
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-start">
@@ -51,11 +81,11 @@ const Page = () => {
                                             </div>
                                             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                                         </div>
-                                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                                        <button type="submit" onClick={()=>{LoginAccountFunction()}} class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
                                         <p class="text-sm font-light ">
-                                            Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                                            {/* Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a> */}
                                         </p>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

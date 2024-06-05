@@ -1,17 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react'
-import AuthContext from '../../context/AuthProvider';
-import { Link } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import AuthContext from '../../context/AuthProvider';
 
 
 
-import { MdPhone, MdEmail } from "react-icons/md";
+import { MdEmail, MdPhone } from "react-icons/md";
 const Success = () => {
     const { hotelDetails, setHotelDetails, Adults,
         kids, bookingDetails, checkinInDate,
         checkoutDate, selectedRooms, RoomTypeToName, subTotal,
         setTaxes, grandTotal, setGrandTotals,
-        payment
+        payment,bookingId
     } = useContext(AuthContext);
 
 
@@ -89,7 +89,7 @@ const Success = () => {
                         <p className='text-[16px]   text-neutral-700 font-semibold'>{hotelDetails.hotelAddress}</p>
                     </div>
                     <div className='w-full flex-col gap-1 md:w-[40%] flex justify-center md:items-end'>
-                        <p className='text-[20px]  text-neutral-700 font-semibold'>Booking ID - {"4567890"}</p>
+                        <p className='text-[20px]  text-neutral-700 font-semibold'>Booking ID - {bookingId}</p>
                         <Link onClick={() => handleDownloadClick()} className='text-[12px] text-blue-500 '> {isPDFGenerationInProgress ? '' : 'PRINT / DOWNLOAD RECEIPT'}</Link>
 
                     </div>
@@ -184,15 +184,15 @@ const Success = () => {
                         </div>
 
                         <div className='text-neutral-400 font-semibold'>
-                            Hotel Owner :   <span className='text-neutral-700'>Suresh Khanna</span>
+                            Hotel Details :   <span className='text-neutral-700'>{hotelDetails.HotelName}</span>
                         </div>
                         <div className='text-neutral-700 font-semibold flex items-center gap-1'>
                             <MdPhone size={20} className='text-neutral-700' />
-                            {hotelDetails.phone}
+                            {hotelDetails.Footer.Phone}
                         </div>
                         <div className='text-neutral-700 font-semibold flex items-center gap-1'>
                             <MdEmail size={20} className='text-neutral-700' />
-                            {hotelDetails.hotelEmail}
+                            {hotelDetails.Footer.Email}
                         </div>
                         <Link to="/" className='absolute bottom-0 right-0 text-blue-600 underline' > {isPDFGenerationInProgress ? 'Booked by Webjini.booking' : 'go to home'}</Link>
 
