@@ -1,14 +1,14 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { GiBackwardTime } from "react-icons/gi";
 import { IoSync } from "react-icons/io5";
 import AuthContext from '../../context/AuthProvider';
-import axios from "axios";
 // import { inventoryGetApi, priceGetApi } from '../../Api-helpers/Api';
 
 const Mange = () => {
-  const { showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice, } = useContext(AuthContext)
+  const { showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,baseUrl } = useContext(AuthContext)
   const [inventory, setInventory] = useState({})
   const [price, setPrice] = useState([])
   ;
@@ -20,12 +20,14 @@ const Mange = () => {
   useEffect(() => {
       getInventoryApi();
   }, []);
-  console.log("inventory", inventory.Inventory?.["1"]);
+  // console.log("inventory", inventory.Inventory?.["1"]);
 
   const today = new Date().toISOString().split('T')[0];
   const [date, setDate] = useState(today)
+  const [prevDate,setprevDate] = useState()
+  const [nextDate,setnextDate] = useState()
 
-  const inventoryDatas = {
+  const [inventoryDatas,setinventoryDatas] = useState({
     "Inventory": {
       "1": {
         "2024-05-10": 2,
@@ -61,9 +63,10 @@ const Mange = () => {
     "Status": true,
     "next": "2024-05-17",
     "prev": "2024-05-10"
-  }
-  console.log("inventory-datas", inventoryDatas.Inventory["1"]);
-  const priceDatas = {
+  })
+  
+  // console.log("inventory-datas", inventoryDatas.Inventory["1"]);
+  const [priceDatas,setpriceDatas] = useState({
     "Price": {
       "1": {
         "2024-05-10": 2000,
@@ -99,7 +102,7 @@ const Mange = () => {
     "Status": true,
     "next": "2024-05-17",
     "prev": "2024-05-10"
-  }
+  })
 
   const [priceData, setPriceData] = useState(priceDatas.Price)
   const [PriceBulkupdate, setPriceBulkupdate] = useState({})
@@ -108,7 +111,15 @@ const Mange = () => {
   const [InventoryBulkupdate, setInventoryBulkupdate] = useState({})
   // console.log(inventoryData);
 
-  const dates = Object.keys(inventoryData?.['1']);
+  const x = Object.keys(inventoryData);
+  if(x.length !== 0) {
+    var dates = Object.keys(inventoryData[x[0]])
+    
+  }
+  else{
+    var dates = []
+  }
+  
 
   const getDayFromDate = (dateString) => {
     const dt = new Date(dateString);
@@ -175,7 +186,7 @@ const Mange = () => {
 
     setPriceBulkupdate(updatedBulkPriceUpdate)
     setPriceData(updatePriceData)
-    console.log(updatedBulkPriceUpdate)
+    // console.log(updatedBulkPriceUpdate)
   }
 
   const InventoryUpdate = (value, roomtype, date) => {
@@ -196,29 +207,163 @@ const Mange = () => {
 
 
     setInventoryBulkupdate(updatedBulkPriceUpdate)
-    setInventoryData(updatePriceData)
+    // setInventoryData(updatePriceData)
     console.log(updatedBulkPriceUpdate)
   }
 
 
   const GetDataForDate = (date, key) => {
-    setDate(date)
-    alert(key)
+    FetchDateRangePrice(date,key)
+    FetchDateRangeInventory(date,key)
   }
 
   const bulkupdateFunction = () => {
-    alert("Bulk Update")
+    // alert("Bulk Update")
     if (showPrice) {
-      console.log(PriceBulkupdate)
-      alert("Price Bulk")
+      // console.log(PriceBulkupdate)
+      BulkUpdatePrice(PriceBulkupdate)
     }
     if (showInventory) {
-      console.log(InventoryBulkupdate)
-      alert("Inventory Bulk")
+      BulkUpdateInventory(InventoryBulkupdate)
+      
     }
 
   }
 
+  const FetchInventoryManage=async()=>{
+    const response = await fetch(`${baseUrl}/inventory/getinventory/all/${localStorage.getItem("engineUserToken")}/${localStorage.getItem("locationid")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json)
+        if(json.Status){
+            setinventoryDatas(json)
+            setInventoryData(json.Inventory)
+            setnextDate(json.next)
+            setprevDate(json.prev)
+        }
+
+    
+  }
+
+  const FetchPriceManage=async()=>{
+    const response = await fetch(`${baseUrl}/price/getprice/all/${localStorage.getItem("engineUserToken")}/${localStorage.getItem("locationid")}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+              },
+            }
+        );
+      
+        const json = await response.json();
+        // console.log(json)
+        if(json.Status){
+          setpriceDatas(json)
+          setPriceData(json.Prices)
+      }
+
+    
+  }
+
+  const FetchDateRangePrice = async(date,operation)=>{
+    const response = await fetch(`${baseUrl}/price/getprice/all/nextprev/${localStorage.getItem("engineUserToken")}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "operation":operation,
+        "hId":localStorage.getItem("locationid"),
+        "date":date
+    }),
+    });
+    const json1 = await response.json()
+    console.log(json1)
+    if(json1.Status){
+        setpriceDatas(json1)
+        setPriceData(json1.Prices)
+        setDate(date)
+        setnextDate(json1.next)
+        setprevDate(json1.prev)
+    }
+  }
+
+  const FetchDateRangeInventory = async(date,operation)=>{
+    const response = await fetch(`${baseUrl}/inventory/getinventory/all/nextprev/${localStorage.getItem("engineUserToken")}/${localStorage.getItem("locationid")}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "date":date,
+        "operation":operation
+      }),
+    });
+    const json1 = await response.json()
+    console.log(json1)
+    if(json1.Status){
+        setinventoryDatas(json1)
+        setInventoryData(json1.Inventory)
+    }
+  }
+
+  const BulkUpdatePrice = async(bulkupdateData)=>{
+    const response = await fetch(`${baseUrl}/price/update/bulkprice`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "token":localStorage.getItem("engineUserToken"),
+        "hId":localStorage.getItem("locationid"),
+        "bulkprice":bulkupdateData
+    }),
+    });
+    const json1 = await response.json()
+    console.log(json1)
+    if(json1.Status){
+      FetchInventoryManage()
+      FetchPriceManage()
+    }
+  }
+
+  const BulkUpdateInventory = async(bulkupdateData)=>{
+    const response = await fetch(`${baseUrl}/inventory/update/bulk/inventory`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "token":localStorage.getItem("engineUserToken"),
+        "hId":localStorage.getItem("locationid"),
+        "bulkinventory":bulkupdateData
+    }),
+    });
+    const json1 = await response.json()
+    console.log(json1)
+    if(json1.Status){
+      FetchInventoryManage()
+      FetchPriceManage()
+    }
+  }
+
+  useEffect(()=>{
+    FetchInventoryManage()
+    FetchPriceManage()
+  },[])
 
   return (
     <div className='maxwidth mx-auto mt-4 md:px-2'>
@@ -256,13 +401,13 @@ const Mange = () => {
 
                   </div>
                   <div className='w-[33.33%] max-md:w-[66.66%] flex gap-4 md:justify-center items-center'>
-                    <button onClick={(e) => { GetDataForDate(date, "prev") }} className="me-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowLeft /></button>
+                    <button onClick={(e) => { GetDataForDate(prevDate, "prev") }} className="me-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowLeft /></button>
                     <input type="date"
                       value={date}
                       onChange={(e) => { GetDataForDate(e.target.value, "next") }}
                       className="border py-2 px-4 bg-white  rounded-md" />
 
-                    <button onClick={(e) => { GetDataForDate(date, "next") }} className="ms-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowRight /></button>
+                    <button onClick={(e) => { GetDataForDate(nextDate, "next") }} className="ms-1 p-2 bg-white border hover:bg-orange-600 hover:text-white rounded-full "><FaArrowRight /></button>
 
                   </div>
                   <div className='w-[33.33%] flex justify-end items-center'>

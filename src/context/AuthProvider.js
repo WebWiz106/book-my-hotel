@@ -371,6 +371,10 @@ export const AuthProvider = ({ children }) => {
     const [showInventory, setShowInventory] = useState(true);
     const [showPrice, setShowPrice] = useState(false);
 
+    
+    
+    
+
 
 
     return (
