@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../../context/AuthProvider'
-import { VscDiffRemoved } from "react-icons/vsc";
+import React, { useContext, useEffect, useState } from 'react';
 import { IoRemoveCircleSharp } from "react-icons/io5";
 import { addRoom, deleteRoom } from '../../Api-helpers/Api';
+import AuthContext from '../../context/AuthProvider';
 const Booking = () => {
 
   const { AllRooms, FetchAllRooms } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
+    roomType:"1",
     roomName: "",
     roomDescription: "",
     child: "",
@@ -25,6 +25,7 @@ const Booking = () => {
 
   const handleClosePopup = () => {
     setIsPopupVisible(false);
+    FetchAllRooms()
   };
   //To add Images Url
   const handleAddMoreClick = () => {
@@ -64,11 +65,12 @@ const Booking = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(inputs, imageInputs, selectedFacilities);
-    addRoom({ ...inputs, roomImage: imageInputs, roomFacilities: selectedFacilities }).then(res => console.log(res)).catch((err) => console.log(err))
+    addRoom({ ...inputs, roomImage: imageInputs, roomFacilities: selectedFacilities }).then(res => FetchAllRooms()).catch((err) => console.log(err))
+    
   }
 
   const handleDelete = ({ hId, roomtype }) => {
-    deleteRoom({hId, roomtype}).then((res) => console.log(res)).catch((err) => console.log(err));
+    deleteRoom({hId, roomtype}).then((res) => FetchAllRooms()).catch((err) => console.log(err));
   }
 
   useEffect(() => {
@@ -98,7 +100,20 @@ const Booking = () => {
               </button>
             </div>
             <div class="space-y-4 md:space-y-6" action="#">
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label for="roomName" class="block mb-2 text-sm font-medium ">Type</label>
+                  <select class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " name="roomType" id="roomType" onChange={handleChange}>
+                    <option value="1">DELUX</option>
+                    <option value="2">SUPER DELUX</option>
+                    <option value="3">SUITE</option>
+                    <option value="4">PREMIUM</option>
+                    <option value="5">PREMIUM RETREAT</option>
+                    <option value="6">ELITE SUITE</option>
+                    
+                  </select>
+                  {/* <input onChange={handleChange} value={inputs.roomName} type="text" name="roomName" id="roomName" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Name" required="" /> */}
+                </div>
                 <div>
                   <label for="roomName" class="block mb-2 text-sm font-medium ">Room Name</label>
                   <input onChange={handleChange} value={inputs.roomName} type="text" name="roomName" id="roomName" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Name" required="" />
@@ -107,12 +122,9 @@ const Booking = () => {
                   <label for="price" class="block mb-2 text-sm font-medium ">Price</label>
                   <input onChange={handleChange} value={inputs.price} type="number" name="price" id="price" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Price" required="" />
                 </div>
+                
               </div>
-              <div>
-                <label for="roomDescription" class="block mb-2 text-sm font-medium ">Room Description</label>
-                <input onChange={handleChange} value={inputs.roomDescription} type="text" name="roomDescription" id="roomDescription" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Description" required="" />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <div>
                   <label for="adult" class="block mb-2 text-sm font-medium ">Adult</label>
                   <input onChange={handleChange} value={inputs.adult} type="number" name="adult" id="adult" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Adult Capacity" required="" />
@@ -121,11 +133,18 @@ const Booking = () => {
                   <label for="child" class="block mb-2 text-sm font-medium ">Child</label>
                   <input onChange={handleChange} value={inputs.child} type="number" name="child" id="child" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Children Capacity" required="" />
                 </div>
+                <div>
+                  <label for="noOfRooms" class="block mb-2 text-sm font-medium ">No Of Rooms</label>
+                  <input onChange={handleChange} value={inputs.noOfRooms} type="number" name="noOfRooms" id="noOfRooms" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Number of Rooms" required="" />
+                </div>
               </div>
+             
               <div>
-                <label for="noOfRooms" class="block mb-2 text-sm font-medium ">No Of Rooms</label>
-                <input onChange={handleChange} value={inputs.noOfRooms} type="number" name="noOfRooms" id="noOfRooms" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Number of Rooms" required="" />
+                <label for="roomDescription" class="block mb-2 text-sm font-medium ">Room Description</label>
+                <input onChange={handleChange} value={inputs.roomDescription} type="text" name="roomDescription" id="roomDescription" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Description" required="" />
               </div>
+             
+              
               <div>
                 <label for="roomImage" class="block mb-2 text-sm font-medium ">Room Images</label>
                 <div className='flex gap-2'>
@@ -210,7 +229,7 @@ const Booking = () => {
                 onClick={handleSubmit}
                 className="border-2 border-orange-700 text-orange-700 rounded-md hover:bg-orange-700 hover:text-white px-4"
               >
-                Submit
+                Add Room
               </button>
             </div>
           </div>
