@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/AuthProvider'
 import { VscDiffRemoved } from "react-icons/vsc";
 import { IoRemoveCircleSharp } from "react-icons/io5";
-import { addRoom } from '../../Api-helpers/Api';
+import { addRoom, deleteRoom } from '../../Api-helpers/Api';
 const Booking = () => {
 
   const { AllRooms, FetchAllRooms } = useContext(AuthContext);
@@ -63,13 +63,23 @@ const Booking = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(inputs,imageInputs,selectedFacilities);
-    addRoom({...inputs,roomImage:imageInputs,roomFacilities:selectedFacilities}).then(res=>console.log(res)).catch((err)=>console.log(err))
+    console.log(inputs, imageInputs, selectedFacilities);
+    addRoom({ ...inputs, roomImage: imageInputs, roomFacilities: selectedFacilities }).then(res => console.log(res)).catch((err) => console.log(err))
+  }
+
+  const handleDelete = ({ hId, roomtype }) => {
+    deleteRoom({hId, roomtype}).then((res) => console.log(res)).catch((err) => console.log(err));
   }
 
   useEffect(() => {
     FetchAllRooms()
   }, [])
+  // const roomdata= AllRooms.forEach((data)=>{
+  //   const hId= data.hId;
+  //   const roomtype= data.roomType
+  //   console.log(hId, roomtype)
+  // })
+
   return (
     <div className="maxwidth mx-auto p-4">
       <div className="flex p-2 justify-between border-2 border-black border-opacity-25 rounded-md ">
@@ -209,6 +219,7 @@ const Booking = () => {
       <div className=" mt-2 md:ms-[29.5px] grid grid-cols-1 gap-2 md:grid-cols-2 md:mt-6 cards">
         {AllRooms.map((room) => {
           return <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+
             <img class="object-cover w-full rounded-t-lg h-96 md:h-[12rem] md:w-48 md:rounded-none md:rounded-s-lg" src="https://t3.ftcdn.net/jpg/02/71/08/28/360_F_271082810_CtbTjpnOU3vx43ngAKqpCPUBx25udBrg.jpg" alt="" />
             <div class="flex flex-col justify-between p-4 leading-normal">
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{room.roomName}</h5>
@@ -222,8 +233,8 @@ const Booking = () => {
                   <p className="text-white">{room.price}</p>
                 </div>
                 <div className="flex justify-between">
-                  <p className="text-white"><button>edit</button> </p>
-                  <p className="text-white"><button>del</button> </p>
+                  <button className='text-white px-6 border-2 border-white rounded-md hover:bg-white hover:text-black'>Edit</button>
+                  <button onClick={() => handleDelete({ hId: room.hId, roomtype: room.roomType })} className='text-white px-6 border-2 border-white rounded-md hover:bg-white hover:text-black'>Delete</button>
                 </div>
               </div>
             </div>

@@ -14,7 +14,6 @@ export const inventoryGetApi = async () => {
 }
 
 export const addRoom = async (data) => {
-
     const res = await axios.post("http://127.0.0.1:5000/rooms/create/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjVhZDFjZTUtYzY2OC00MzhiLWI0NTItYzBiY2NhZTM3YmNkIiwiaWQiOiIzNWI3MmVjOS0zNzhkLTQ5YjQtYjM0Mi1jYjgyMWYyNWNiNDkiLCJleHAiOjE3MTg3NDg1MzYuMzY5NDA2fQ.ExfaipXOvRhQz3d5dc_p27eSfY_vMDQgejSe-RqIkVk", {
         roomType: 1,
         hId: 95291122,
@@ -35,6 +34,15 @@ export const addRoom = async (data) => {
     })
 
     const result = await res.data;
+    return result;
+}
+
+export const deleteRoom=async({hId,roomtype})=>{
+    const res= await axios.post(`http://127.0.0.1:5000/rooms/delete/${roomtype}`,{
+        token:localStorage.getItem("engineUserToken"),
+        hId:hId
+    })
+    const result= res.data;
     return result;
 }
 
