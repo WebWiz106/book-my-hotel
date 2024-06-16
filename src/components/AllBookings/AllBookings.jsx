@@ -95,7 +95,7 @@ export const AllBookings = () => {
       <div class="relative overflow-x-auto mt-4 h-[80vh] ">
         <table class="w-full text-sm text-left rtl:text-right">
           <thead class="text-xs text-white uppercase bg-zinc-700">
-            <tr>
+            <tr className='border border-zinc-700'>
               <th scope="col" class="px-6 py-3 whitespace-nowrap">
                 Booking Id
               </th>
@@ -122,9 +122,9 @@ export const AllBookings = () => {
               </th>
             </tr>
           </thead>
-          <tbody className='bg-neutral-200'>
+          <tbody className='bg-white'>
             {AllBookings.map((item, index) => (
-              <tr key={index} class=" border-b">
+              <tr key={index} class=" border">
                 <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap">
                   {item.bookingId}
                 </th>
