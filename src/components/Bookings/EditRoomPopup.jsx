@@ -11,7 +11,7 @@ const EditRoomPopup = ({ setIsEditPopupVisible, selectedRoomDetail }) => {
         adult: "",
         noOfRooms: "",
         price: "",
-        roomImages: []
+        roomImage: []
     })
 
     const [editSelectedFacilities, setEditSelectedFacilities] = useState([]);
@@ -27,11 +27,18 @@ const EditRoomPopup = ({ setIsEditPopupVisible, selectedRoomDetail }) => {
                 adult: selectedRoomDetail.adult || "",
                 noOfRooms: selectedRoomDetail.noOfRooms || "",
                 price: selectedRoomDetail.price || "",
-                roomImages: selectedRoomDetail.roomImages || []
+                roomImage: selectedRoomDetail.roomImage || []
             });
-            setEditSelectedFacilities(Object.values(selectedRoomDetail.roomFacilities) || []);
+            if (selectedRoomDetail.roomFacilities) {
+                const facilities = Object.keys(selectedRoomDetail.roomFacilities).filter(facility => selectedRoomDetail.roomFacilities[facility] === true);
+                setEditSelectedFacilities(facilities);
+              } else {
+                setEditSelectedFacilities([]);
+              }
         }
     }, [selectedRoomDetail]);
+
+    console.log(editSelectedFacilities,selectedRoomDetail,editInputs.roomImage);
 
     const handleEditClosePopup = () => {
         setIsEditPopupVisible(false);
@@ -42,7 +49,7 @@ const EditRoomPopup = ({ setIsEditPopupVisible, selectedRoomDetail }) => {
     }
 
     const handleImageChange = (index, e) => {
-        const newImages = [...editInputs.roomImages];
+        const newImages = [...editInputs.roomImage];
         newImages[index] = e.target.value;
         setEditInputs((prevInputs) => ({
             ...prevInputs,
@@ -53,12 +60,12 @@ const EditRoomPopup = ({ setIsEditPopupVisible, selectedRoomDetail }) => {
     const handleAddMoreImage = () => {
         setEditInputs((prevInputs) => ({
             ...prevInputs,
-            roomImages: [...prevInputs.roomImages, ""]
+            roomImages: [...prevInputs.roomImage, ""]
         }));
     };
 
     const handleRemoveImage = (index) => {
-        const newImages = editInputs.roomImages.filter((_, i) => i !== index);
+        const newImages = editInputs.roomImage.filter((_, i) => i !== index);
         setEditInputs((prevInputs) => ({
             ...prevInputs,
             roomImages: newImages
@@ -147,11 +154,10 @@ const EditRoomPopup = ({ setIsEditPopupVisible, selectedRoomDetail }) => {
                                     name="roomImage"
                                     className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                     placeholder="Enter Image URL"
-                                    value={editInputs.roomImages}
                                     onChange={handleImageChange}
                                     required
                                 />
-                                {editInputs.roomImages.map((input, index) => (
+                                {editInputs.roomImage.map((input, index) => (
                                     <div className='flex flex-col justify-center gap-1'>
                                         <img src={input} alt="" />
                                         <button
