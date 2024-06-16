@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { IoRemoveCircleSharp } from "react-icons/io5";
 import { addRoom, deleteRoom } from '../../Api-helpers/Api';
 import AuthContext from '../../context/AuthProvider';
+import EditRoomPopup from './EditRoomPopup';
 const Booking = () => {
 
   const { AllRooms, FetchAllRooms } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
-    roomType:"1",
+    roomType: "1",
     roomName: "",
     roomDescription: "",
     child: "",
@@ -18,6 +19,16 @@ const Booking = () => {
   const [imageInputs, setImageInputs] = useState(['']);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
   const [currentFacility, setCurrentFacility] = useState('');
+
+  //edit popup states start
+
+  const [isEditPopupVisible, setIsEditPopupVisible] = useState(false);
+  const [selectedRoomdetail, setSelectedRoomdetail] = useState({})
+  const [editImageInputs, setEditImageInputs] = useState(['']);
+  const [editSelectedFacilities, seteditSelectedFacilities] = useState([]);
+  const [editcurrentFacility, seteditCurrentFacility] = useState('');
+ 
+
 
   const handleAddRoomClick = () => {
     setIsPopupVisible(true);
@@ -66,21 +77,38 @@ const Booking = () => {
     event.preventDefault();
     console.log(inputs, imageInputs, selectedFacilities);
     addRoom({ ...inputs, roomImage: imageInputs, roomFacilities: selectedFacilities }).then(res => FetchAllRooms()).catch((err) => console.log(err))
-    
+
   }
 
   const handleDelete = ({ hId, roomtype }) => {
-    deleteRoom({hId, roomtype}).then((res) => FetchAllRooms()).catch((err) => console.log(err));
+    deleteRoom({ hId, roomtype }).then((res) => FetchAllRooms()).catch((err) => console.log(err));
   }
+
+  //Functions for edit buttons
+
+  
+
+  const handleEditRoomClick = (room) => {
+    setIsEditPopupVisible(true);
+    console.log(room);
+    setSelectedRoomdetail(room);
+  }
+
+  const handleEditInputChange = (index, event) => {
+    const newImageInputs = [...editImageInputs];
+    newImageInputs[index] = event.target.value;
+    setEditImageInputs(newImageInputs);
+  };
+
+  const handleEditRemoveClick = (index) => {
+    const newImageInputs = editImageInputs.filter((_, i) => i !== index);
+    setEditImageInputs(newImageInputs);
+  };
 
   useEffect(() => {
     FetchAllRooms()
   }, [])
-  // const roomdata= AllRooms.forEach((data)=>{
-  //   const hId= data.hId;
-  //   const roomtype= data.roomType
-  //   console.log(hId, roomtype)
-  // })
+
 
   return (
     <div className="maxwidth mx-auto p-4">
@@ -110,7 +138,7 @@ const Booking = () => {
                     <option value="4">PREMIUM</option>
                     <option value="5">PREMIUM RETREAT</option>
                     <option value="6">ELITE SUITE</option>
-                    
+
                   </select>
                   {/* <input onChange={handleChange} value={inputs.roomName} type="text" name="roomName" id="roomName" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Name" required="" /> */}
                 </div>
@@ -122,7 +150,7 @@ const Booking = () => {
                   <label for="price" class="block mb-2 text-sm font-medium ">Price</label>
                   <input onChange={handleChange} value={inputs.price} type="number" name="price" id="price" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Price" required="" />
                 </div>
-                
+
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div>
@@ -138,13 +166,13 @@ const Booking = () => {
                   <input onChange={handleChange} value={inputs.noOfRooms} type="number" name="noOfRooms" id="noOfRooms" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Number of Rooms" required="" />
                 </div>
               </div>
-             
+
               <div>
                 <label for="roomDescription" class="block mb-2 text-sm font-medium ">Room Description</label>
                 <input onChange={handleChange} value={inputs.roomDescription} type="text" name="roomDescription" id="roomDescription" class="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Enter Room Description" required="" />
               </div>
-             
-              
+
+
               <div>
                 <label for="roomImage" class="block mb-2 text-sm font-medium ">Room Images</label>
                 <div className='flex gap-2'>
@@ -235,12 +263,16 @@ const Booking = () => {
           </div>
         </div>
       )}
+
+      {
+        isEditPopupVisible && (<EditRoomPopup setIsEditPopupVisible={setIsEditPopupVisible} selectedRoomDetail={selectedRoomdetail} />)
+      }
       <div className=" mt-2 md:ms-[29.5px] grid grid-cols-1 gap-2 md:grid-cols-2 md:mt-6 cards">
         {AllRooms.map((room) => {
           return <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
             <img class="object-cover w-full rounded-t-lg h-96 md:h-[12rem] md:w-48 md:rounded-none md:rounded-s-lg" src="https://t3.ftcdn.net/jpg/02/71/08/28/360_F_271082810_CtbTjpnOU3vx43ngAKqpCPUBx25udBrg.jpg" alt="" />
-            <div class="flex flex-col justify-between p-4 leading-normal">
+            <div class="flex flex-col justify-between p-4 leading-normal w-full">
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{room.roomName}</h5>
               <div className='flex flex-col gap-2'>
                 <div className="flex justify-between">
@@ -252,7 +284,7 @@ const Booking = () => {
                   <p className="text-white">{room.price}</p>
                 </div>
                 <div className="flex justify-between">
-                  <button className='text-white px-6 border-2 border-white rounded-md hover:bg-white hover:text-black'>Edit</button>
+                  <button onClick={() => handleEditRoomClick(room)} className='text-white px-6 border-2 border-white rounded-md hover:bg-white hover:text-black'>Edit</button>
                   <button onClick={() => handleDelete({ hId: room.hId, roomtype: room.roomType })} className='text-white px-6 border-2 border-white rounded-md hover:bg-white hover:text-black'>Delete</button>
                 </div>
               </div>
