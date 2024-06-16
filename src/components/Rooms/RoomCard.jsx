@@ -63,7 +63,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
         setSelectedRooms(prevSelectedRooms => {
             // Create a copy of the previous state
 
-            let maxvalue = fetchDynamicRoomInventory[roomType];
+            let maxvalue = Number(fetchDynamicRoomInventory[roomType]);
 
             const updatedSelectedRooms = { ...prevSelectedRooms };
 
@@ -122,7 +122,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
 
             // Return the updated state to update the state
-            console.log(updatedSelectedRooms)
+            // console.log(updatedSelectedRooms)
             return updatedSelectedRooms;
         });
     }
@@ -261,7 +261,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
                         :
 
-                        fetchDynamicRoomInventory[roomData.roomType] !== 0 ? <button onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-zinc-700 rounded-md leading-[150%] max-md:px-5">Book</button> : "Sold out"
+                        Number(roomData.noOfRooms) !== 0 ? <button onClick={() => { handleSelectedRoomCounter(roomData.roomType) }} className="justify-center px-12 py-2 text-white whitespace-nowrap bg-zinc-700 rounded-md leading-[150%] max-md:px-5">Book</button> : "Sold out"
 
                     }
                 </div>

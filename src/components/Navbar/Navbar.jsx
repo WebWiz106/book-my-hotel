@@ -8,7 +8,7 @@ import Page from '../Auth/Page';
 import MenuPage from './MenuPage';
 
 const Navbar = () => {
-    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType, isAuthenticated, setisAuthenticated } = useContext(AuthContext);
+    const { isModalOpen, setIsModalOpen, modalType, setModalType, isMenuOpen, setIsMenuOpen, menuType, setMenuType,isAuthenticated,setisAuthenticated,hotelDetails } = useContext(AuthContext);
 
 
     const navigate = useNavigate()
@@ -31,13 +31,13 @@ const Navbar = () => {
 
 
     const handleRoute = () => {
-        navigate("/")
+        navigate(`/?hotelid=${localStorage.getItem("hotelid")}&locationid=${localStorage.getItem("locationid")}`)
     }
     return (
         <div className='maxwidth mx-auto  px-2 py-2 relative '>
             <div className='h-[50px] flex justify-between items-center'>
                 <img
-                    src={Logo}
+                    src={hotelDetails.Footer.Logo==="None"?Logo:hotelDetails.Footer.Logo}
                     alt="Logo"
                     className='h-[100%] cursor-pointer'
                     onClick={handleRoute}
@@ -58,7 +58,7 @@ const Navbar = () => {
                             :
 
                             <>
-                                <button className="hover:text-orange-600 flex items-center px-3 md:px-5 rounded-md" onClick={() => openModal("signup")}>Signup</button>
+                                {/* <button className="hover:text-orange-600 flex items-center px-3 md:px-5 rounded-md" onClick={() => openModal("signup")}>Signup</button> */}
 
                                 <button className="text-[18px] text-white bg-orange-600 py-1 flex items-center h-full px-3 md:px-5 rounded-md hover:bg-orange-700 hover:text-white" onClick={() => openModal("login")}>Login</button>
                             </>

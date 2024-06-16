@@ -16,6 +16,9 @@ code {
     monospace;
 }
 
+.badge_success{
+  border: 1px solid green;
+}
 
 body::-webkit-scrollbar {
   display: none;

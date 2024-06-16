@@ -12,6 +12,7 @@ import BookingManage from "./components/BookingManage/Mange.jsx"
 import Room from "./components/Rooms/Room.jsx"
 import Success from "./components/Success/Success.jsx"
 import Footer from "./components/Footer/Footer.jsx"
+import YourBookings from "./components/YourBooking/YourBookings.jsx";
 
 function App() {
   const { setIsMenuOpen } = useContext(AuthContext);
@@ -26,8 +27,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/room-details" element={<RoomDetails />} />
+        <Route path="/yourBooking" element={<YourBookings />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/bookings" element={<Booking />} />
+        <Route path="/rooms" element={<Booking />} />
         <Route path="/all-bookings" element={<AllBookings />} />
         <Route path="/manage" element={<BookingManage />} />
         <Route path="/room" element={<Room />} />
