@@ -1,39 +1,58 @@
-import html2pdf from 'html2pdf.js';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthProvider';
 
-
-
 import { MdEmail, MdPhone } from "react-icons/md";
+import generatePDF from 'react-to-pdf';
+
 const Success = () => {
     const { hotelDetails, setHotelDetails, Adults,
         kids, bookingDetails, checkinInDate,
         checkoutDate, selectedRooms, RoomTypeToName, subTotal,
         setTaxes, grandTotal, setGrandTotals,
-        payment,bookingId
+        payment, bookingId
     } = useContext(AuthContext);
 
+
+    const targetRef = useRef();
 
     const [isPDFGenerationInProgress, setPDFGenerationInProgress] = useState(false);
 
 
+    console.log("Line number 24 ", hotelDetails,)
+
     const handleDownloadClick = () => {
-        if (!isPDFGenerationInProgress) {
-            setPDFGenerationInProgress(true);
-            const element = document.getElementById('success-content');
-            html2pdf()
-                .from(element)
-                .save('receipt.pdf')
-                .then(() => setPDFGenerationInProgress(false))
-                .catch(error => {
-                    console.error('Error generating PDF:', error);
-                    setPDFGenerationInProgress(false);
-                });
-        }
+        // if (!isPDFGenerationInProgress) {
+        //     setPDFGenerationInProgress(true);
+
+        //     const element = document.getElementById('success-content');
+
+        //     if (!element) {
+        //         console.error('Element with id "success-content" not found.');
+        //         setPDFGenerationInProgress(false);
+        //         return;
+        //     }
+
+        //     try {
+        //         html2pdf()
+        //             .from(element)
+        //             .save('receipt.pdf')
+        //             .then(() => {
+        //                 console.log('PDF generated successfully');
+        //                 setPDFGenerationInProgress(false);
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error generating PDF:', error);
+        //                 setPDFGenerationInProgress(false);
+        //             });
+        //     } catch (error) {
+        //         console.error('Synchronous error in HTML2PDF processing:', error);
+        //         setPDFGenerationInProgress(false);
+        //     }
+        // } else {
+        //     console.log('PDF generation is already in progress.');
+        // }
     };
-
-
     const getDayOfWeek = (date) => {
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const dayIndex = new Date(date).getDay();
@@ -82,15 +101,15 @@ const Success = () => {
 
     return (
         <div className='px-2 w-full'>
-            <div id="success-content" className={`max-w-[800px] md:w-[800px] mx-auto border-2 border-zinc-400  ${isPDFGenerationInProgress ? '' : 'rounded-lg'} bg-white`}>
+            <div ref={targetRef} className={`max-w-[800px] md:w-[800px] mx-auto border-2 border-zinc-400  ${isPDFGenerationInProgress ? '' : 'rounded-lg'} bg-white`}>
                 <div className='flex max-md:flex-col gap-5 md:gap-10 py-4  px-5'>
                     <div className='w-full flex-col gap-1 md:w-[60%] flex justify-center '>
-                        <p className='text-[20px]  text-neutral-700 font-semibold'>{hotelDetails?.hotelName}</p>
-                        <p className='text-[16px]   text-neutral-700 font-semibold'>{hotelDetails.hotelAddress}</p>
+                        <p className='text-[20px]  text-neutral-700 font-semibold'>{hotelDetails?.HotelName}</p>
+                        <p className='text-[16px]   text-neutral-700 font-semibold'>{hotelDetails.Footer.Address}, {hotelDetails.Footer.City}</p>
                     </div>
                     <div className='w-full flex-col gap-1 md:w-[40%] flex justify-center md:items-end'>
                         <p className='text-[20px]  text-neutral-700 font-semibold'>Booking ID - {bookingId}</p>
-                        <Link onClick={() => handleDownloadClick()} className='text-[12px] text-blue-500 '> {isPDFGenerationInProgress ? '' : 'PRINT / DOWNLOAD RECEIPT'}</Link>
+                        <Link onClick={() => generatePDF(targetRef, { filename: 'page.pdf' })} className='text-[12px] text-blue-500 '> {isPDFGenerationInProgress ? '' : 'PRINT / DOWNLOAD RECEIPT'}</Link>
 
                     </div>
                 </div>

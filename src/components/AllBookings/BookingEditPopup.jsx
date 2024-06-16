@@ -3,11 +3,11 @@ import { RxCross2 } from "react-icons/rx";
 import AuthContext from '../../context/AuthProvider';
 
 
-const BookingEditPopup = ({bookingInfo}) => {
+const BookingEditPopup = ({ bookingInfo }) => {
 
-    const { setBookingPopup,FetchAllBookings,baseUrl } = useContext(AuthContext)
+    const { setBookingPopup, FetchAllBookings, baseUrl } = useContext(AuthContext)
 
-    
+
 
 
     const handleBookingCloseClick = () => {
@@ -30,42 +30,42 @@ const BookingEditPopup = ({bookingInfo}) => {
     function formatDateString(dateString) {
         // Parse the input date string into a Date object
         const date = new Date(dateString);
-      
+
         // Check if the date is valid
         if (isNaN(date.getTime())) {
-          throw new Error("Invalid date format");
+            throw new Error("Invalid date format");
         }
-      
+
         // Extract date components
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
         const year = date.getFullYear();
-      
+
         // Format and return the date in DD-MM-YYYY format
         return `${day}-${month}-${year}`;
-      }
+    }
 
-    
-    const updateBookingStatus = async(bookingid)=>{
+
+    const updateBookingStatus = async (bookingid) => {
         const response = await fetch(`${baseUrl}/bookings/payment/status/SUCCESS`, {
             method: "POST",
             headers: {
-              Accept: "application/json, text/plain, /",
-              "Content-Type": "application/json",
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "token":localStorage.getItem("engineUserToken"),
-                "bookingId":bookingid,
-                "hId":localStorage.getItem("locationid")
+                "token": localStorage.getItem("engineUserToken"),
+                "bookingId": bookingid,
+                "hId": localStorage.getItem("locationid")
             }),
         });
 
         const json = await response.json()
-        if(json.Status){
+        if (json.Status) {
             FetchAllBookings()
             setBookingPopup(false)
         }
-        else{
+        else {
             // alert("Wrong Combination")
         }
     }
@@ -82,8 +82,8 @@ const BookingEditPopup = ({bookingInfo}) => {
                 <div className='w-full'>
                     <h1 className='heading  !text-center'>Booking ID: {bookingInfo.bookingId}</h1>
                 </div>
-                <div className='grid grid-cols-2 w-full gap-10 max-md:grid-cols-1 max-md:gap-5 mt-5'>
-                    <div className='flex flex-col gap-5'>
+                <div className='grid grid-cols-2 w-full  gap-10 max-md:grid-cols-1 max-md:gap-5 mt-5'>
+                    <div className='flex flex-col gap-5 '>
                         <div className='flex items-center justify-between'>
                             <h1 className='text-[18px] max-md:text-[16px]'>Payment Id:</h1>
                             <h1 className='max-md:text-[14px]'>{bookingInfo.payment.payId}</h1>
@@ -101,7 +101,7 @@ const BookingEditPopup = ({bookingInfo}) => {
                             <h1 className='max-md:text-[14px]'>{bookingInfo.guestInfo.Phone}</h1>
                         </div>
 
-                       
+
 
                         <div className='flex items-center justify-between'>
                             <h1 className='text-[18px] max-md:text-[16px]'>Bookings: </h1>
@@ -118,18 +118,18 @@ const BookingEditPopup = ({bookingInfo}) => {
                             <h1 className='text-[18px] max-md:text-[16px]'>Payment Status:</h1>
                             <p>
                                 {bookingInfo.payment.Status === "PENDING" ? (
-                                    <span className='badge_pending'>{bookingInfo.payment.Status}</span>
+                                    <span className='bg-orange-600 px-5 rounded-sm py-1 text-white'>{bookingInfo.payment.Status}</span>
                                 ) : bookingInfo.payment.Status === "ADVANCED" ? <span className='badge_advance'>{bookingInfo.payment.Status}</span> :
                                     bookingInfo.payment.Status === "CANCELLED" ? <span className='badge_cancelled'>{bookingInfo.payment.Status}</span> : (
                                         <span>
-                                            <span className=''>{bookingInfo.payment.Status}</span>
+                                            <span className='bg-green-600 px-5 rounded-sm py-1 text-white'>{bookingInfo.payment.Status}</span>
 
                                         </span>
                                     )}
                             </p>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-5'>
+                    <div className='flex flex-col gap-5 '>
                         <div className='flex items-center justify-between'>
                             <h1 className='text-[18px] max-md:text-[16px]'>Reservation Date:</h1>
                             <h1 className='max-md:text-[14px]'>{formatDateString(bookingInfo.bookingDate)}</h1>
@@ -170,8 +170,8 @@ const BookingEditPopup = ({bookingInfo}) => {
                             </table>
                         </div>
 
-                        <div className='flex items-center justify-end' style={{cursor:"pointer"}}>
-                            {bookingInfo.price.amountPay === bookingInfo.price.Total ?"" :<spna className={'badge_success'} onClick={()=>{updateBookingStatus(bookingInfo.bookingId)}} >Full Payment Paid</spna>}
+                        <div className='flex items-center justify-end' style={{ cursor: "pointer" }}>
+                            {bookingInfo.price.amountPay === bookingInfo.price.Total ? "" : <spna className={'badge_success'} onClick={() => { updateBookingStatus(bookingInfo.bookingId) }} >Full Payment Paid</spna>}
                         </div>
                     </div>
                 </div>

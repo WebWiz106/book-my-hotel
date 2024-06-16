@@ -16,8 +16,8 @@ code {
     monospace;
 }
 
-.badge_success{
-  border: 1px solid green;
+.badge_success {
+  background-color: green;
 }
 
 body::-webkit-scrollbar {

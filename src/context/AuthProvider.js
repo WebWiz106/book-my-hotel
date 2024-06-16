@@ -6,8 +6,8 @@ export const AuthProvider = ({ children }) => {
 
     const baseUrl = "http://127.0.0.1:5000"
     const [isAuthenticated, setisAuthenticated] = useState(false)
-    const [isAdmin,setisAdmin] = useState(true)
-    const [bookingId,setbookingId] = useState("")
+    const [isAdmin, setisAdmin] = useState(true)
+    const [bookingId, setbookingId] = useState("")
     const [hotelDetails, setHotelDetails] = useState({
         "AboutUs": "About us of booking engine",
         "Clarity": "",
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         "isSemiPayment": true
     });
 
-    const [hotelProfile,sethotelProfile] = useState()
+    const [hotelProfile, sethotelProfile] = useState()
 
     const [checkForAvailbilityInfo, setCheckForAvailbilityInfo] = useState({
         "checkin": "",
@@ -92,48 +92,48 @@ export const AuthProvider = ({ children }) => {
 
 
 
-    const FetchUserExistance = async()=>{
+    const FetchUserExistance = async () => {
         const response = await fetch(`${baseUrl}/auth/getuser/engine/${localStorage.getItem("engineUserToken")}`,
             {
-              method: "GET",
-              headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-              },
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, /",
+                    "Content-Type": "application/json",
+                },
             }
         );
-      
+
         const json = await response.json();
         // console.log(json);
-        if(json.Status){
+        if (json.Status) {
             setisAuthenticated(true)
-            if(json.isAdmin){
+            if (json.isAdmin) {
                 setisAdmin(true)
             }
-            else{
+            else {
                 setisAdmin(false)
             }
         }
-        else{
+        else {
             setisAuthenticated(false)
             localStorage.clear()
         }
     }
 
-    const FetchProfileOfEngine = async()=>{
+    const FetchProfileOfEngine = async () => {
         const response = await fetch(`${baseUrl}/bookings/getenginedetails/${localStorage.getItem("hotelid")}/${localStorage.getItem("locationid")}`,
             {
-              method: "GET",
-              headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-              },
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, /",
+                    "Content-Type": "application/json",
+                },
             }
         );
-      
+
         const json = await response.json();
         // console.log(json);
-        if(json.Status){
+        if (json.Status) {
             setHotelDetails(json.Details)
             sethotelProfile(json.Profile)
         }
@@ -146,13 +146,13 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("hotelid", hotelid);
         localStorage.setItem("locationid", locationid);
 
-        if(localStorage.getItem("engineUserToken")!==null){
+        if (localStorage.getItem("engineUserToken") !== null) {
             FetchUserExistance()
         }
         FetchProfileOfEngine()
     }, []);
 
-    
+
 
 
     const today = new Date().toISOString().split('T')[0];
@@ -327,39 +327,39 @@ export const AuthProvider = ({ children }) => {
             ]
         }])
 
-    const FetchAllBookings = async()=>{
+    const FetchAllBookings = async () => {
         const response = await fetch(`${baseUrl}/bookings/bookings/${localStorage.getItem("engineUserToken")}/${localStorage.getItem("locationid")}`,
             {
-              method: "GET",
-              headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-              },
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, /",
+                    "Content-Type": "application/json",
+                },
             }
         );
-      
+
         const json = await response.json();
         // console.log(json);
-        if(json.Status){
+        if (json.Status) {
             setAllBookings(json.Details)
         }
     }
 
-    const [AllRooms,setAllRooms] = useState([])
-    const FetchAllRooms = async()=>{
+    const [AllRooms, setAllRooms] = useState([])
+    const FetchAllRooms = async () => {
         const response = await fetch(`${baseUrl}/rooms/${localStorage.getItem("engineUserToken")}`,
             {
-              method: "GET",
-              headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-              },
+                method: "GET",
+                headers: {
+                    Accept: "application/json, text/plain, /",
+                    "Content-Type": "application/json",
+                },
             }
         );
-      
+
         const json = await response.json();
         // console.log(json);
-        if(json.Status){
+        if (json.Status) {
             setAllRooms(json.data)
         }
     }
@@ -371,12 +371,12 @@ export const AuthProvider = ({ children }) => {
     const [showInventory, setShowInventory] = useState(true);
     const [showPrice, setShowPrice] = useState(false);
 
-    
-    
-    
 
 
 
+
+
+    const [roomImagePopup, setRoomImagePopup] = useState(false)
     return (
         <AuthContext.Provider
             value={{
@@ -408,19 +408,23 @@ export const AuthProvider = ({ children }) => {
 
 
 
-                selectedRoomDetails, setSelectedRoomDetails,FetchUserExistance,
+                selectedRoomDetails, setSelectedRoomDetails, FetchUserExistance,
 
-                bookingDetails, setBookingDetails, isAuthenticated,isAdmin, setisAuthenticated,
+                bookingDetails, setBookingDetails, isAuthenticated, isAdmin, setisAuthenticated,
 
                 payment, setpayment, AllBookings, setAllBookings,
 
                 showAll, setShowAll, showInventory, setShowInventory, showPrice, setShowPrice,
                 bookingPopup, setBookingPopup,
 
-                baseUrl,hotelProfile,
-                FetchProfileOfEngine,bookingId,setbookingId,FetchAllBookings,
-                AllRooms,FetchAllRooms
-  
+                baseUrl, hotelProfile,
+                FetchProfileOfEngine, bookingId, setbookingId, FetchAllBookings,
+                AllRooms, FetchAllRooms,
+
+
+
+                roomImagePopup, setRoomImagePopup
+
             }}
         >
             {children}

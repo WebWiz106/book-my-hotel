@@ -6,12 +6,13 @@ import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import AuthContext from '../../context/AuthProvider';
+import ImagePopup from './ImagePopup';
 
 
 
 const RoomCard = ({ toggleAccordion, roomData }) => {
 
-    const { customPrice, setCustomPrice, } = useContext(AuthContext);
+    const { customPrice, setCustomPrice, roomImagePopup, setRoomImagePopup } = useContext(AuthContext);
 
     const navigation = useNavigate();
     const { setisRoomSelected, setSelectedRoomDetails, Adults,
@@ -133,8 +134,9 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
 
 
     const handleViewDetailRooms = () => {
-        setSelectedRoomDetails(roomData);
-        navigation('/room-details');
+        setRoomImagePopup(true)
+        // setSelectedRoomDetails(roomData);
+        // navigation('/room-details');
     }
 
 
@@ -143,13 +145,12 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
             <div className="flex flex-col gap-5">
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-md:flex-wrap">
-                    <div className="flex flex-col gap-0 justify-center text-xs leading-6 text-white">
-                        <div className="relative lg:h-[300px] rounded-lg  overflow-hidden aspect-[1.31]">
+                    <div className="flex flex-col gap-0 justify-center text-xs leading-6 text-white ">
+                        <div className="relative lg:h-[300px] rounded-lg  overflow-hidden object-cover ">
                             <Swiper
                                 loop={true}
-
                                 autoplay={{
-                                    delay: 4000,
+                                    delay: 2000,
                                 }}
                                 pagination={{
                                     el: "#bullets-Portfolio",
@@ -159,6 +160,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                                     nextEl: ".next-btn",
                                 }}
                                 modules={[Pagination, Autoplay, Navigation]}
+                                className='h-[100%]'
                             >
                                 {roomData?.roomImage?.map((roomImg, index) => {
                                     return (
@@ -168,7 +170,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                                                 loading="lazy"
                                                 src={roomImg}
                                                 alt="room"
-                                                className=" w-[100%] h-[100%] border"
+                                                className=" w-[100%] h-[100%] object-cover "
                                             />
                                         </SwiperSlide>
                                     );
@@ -188,6 +190,7 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                                 <div className="gap-0">View Photos</div>
                             </button>
                         </div>
+
                     </div>
                     <div className="flex flex-col self-start text-base font-medium text-neutral-700">
                         <div className="text-[16px] gap-0">{roomData.roomName}</div>
@@ -282,6 +285,9 @@ const RoomCard = ({ toggleAccordion, roomData }) => {
                     </button>
                 </div> */}
             </div>
+
+
+            {roomImagePopup && <ImagePopup roomImages={roomData?.roomImage} />}
         </div>
     )
 }
